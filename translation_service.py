@@ -59,7 +59,7 @@ async def translate_menu_with_pixtral(dishes, target_language):
         
         client = AsyncOpenAI(
             api_key=api_key,
-            base_url=f"{base_endpoint.rstrip('/')}/v1"
+            base_url=base_endpoint.rstrip('/')
         )
         
         # Prepare menu text for translation

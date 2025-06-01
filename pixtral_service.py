@@ -14,7 +14,7 @@ async def call_pixtral(prompt, image_base64=None, max_tokens=1000, temperature=0
         
         client = AsyncOpenAI(
             api_key=api_key,
-            base_url=f"{base_endpoint.rstrip('/')}/v1"
+            base_url=base_endpoint.rstrip('/')
         )
         
         # Prepare message content
