@@ -52,11 +52,11 @@ async def process_menu_pipeline(image_file, target_language):
         with st.spinner("Enhancing dish descriptions..."):
             dishes = await enhance_dish_descriptions(dishes)
         
-        # Phase 5: Image generation (remaining time)
+        # Phase 5: Image generation (aggressive retry for minimum 3 images)
         with st.spinner("Generating dish images..."):
             dishes = await generate_dish_images(
                 dishes,
-                timeout=6,  # Reduced to account for enhancement step
+                timeout=30,  # Extended timeout with aggressive retry
                 max_images=20,
                 style_prompt="professional food photography, restaurant dish, appetizing, consistent lighting"
             )
@@ -99,7 +99,7 @@ def display_menu_grid(dishes):
                         st.image(dish['generated_image_url'], use_container_width=True)
                     else:
                         st.empty()
-                        st.markdown("📸 *Image not available*")
+                        st.markdown("🍽️ *Upgrade to see the full visual menu*")
                     
                     # Dish name and price
                     st.markdown(f"**{dish.get('name_translated', dish.get('name_original', 'Unknown'))}**")
@@ -119,7 +119,7 @@ def show_dish_modal(dish):
             if dish.get('generated_image_url'):
                 st.image(dish['generated_image_url'], use_container_width=True)
             else:
-                st.markdown("📸 *No image available*")
+                st.markdown("🍽️ *Upgrade to see the full visual menu*")
         
         with col2:
             st.markdown(f"**{dish.get('name_translated', 'N/A')}**")
@@ -229,7 +229,7 @@ def main():
                                     if dish.get('generated_image_url'):
                                         st.image(dish['generated_image_url'], use_container_width=True)
                                     else:
-                                        st.markdown("📸 *Image not available*")
+                                        st.markdown("🍽️ *Upgrade to see the full visual menu*")
                                 
                                 with col2:
                                     course_names = ["Appetizer", "Main Course", "Dessert"]

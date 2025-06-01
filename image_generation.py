@@ -4,10 +4,11 @@ import time
 import random
 import os
 
-async def generate_dish_images(dishes, timeout=8, max_images=20, style_prompt=""):
-    """Generate images for dishes with timeout constraint, ensuring minimum 3 images"""
+async def generate_dish_images(dishes, timeout=30, max_images=20, style_prompt=""):
+    """Generate images for dishes with aggressive retry to ensure minimum 3 images"""
     start_time = time.time()
     min_images = 3  # Minimum required images
+    max_timeout = 30  # Hard maximum timeout
     
     # Prioritize dishes - spread across categories if possible
     priority_dishes = prioritize_dishes_for_images(dishes, max_images)
@@ -16,119 +17,136 @@ async def generate_dish_images(dishes, timeout=8, max_images=20, style_prompt=""
     for dish in dishes:
         dish['generated_image_url'] = None
     
-    # Phase 1: Generate images for priority dishes (ensure minimum)
+    print(f"🎯 MISSION: Generate minimum {min_images} images within {max_timeout}s")
+    
+    # Aggressive Phase: Keep trying until we get 3 images or hit max timeout
     successful_count = 0
-    priority_count = min(min_images, len(priority_dishes))
+    attempt_round = 1
+    dish_pool = priority_dishes.copy()  # Pool of dishes to try
     
-    print(f"🎨 Phase 1: Generating {priority_count} priority images (minimum required)")
-    
-    for i, dish in enumerate(priority_dishes[:priority_count]):
-        if (time.time() - start_time) > timeout * 0.8:  # Reserve 20% of time for phase 2
-            print(f"⏰ Phase 1 timeout reached")
-            break
+    while successful_count < min_images and (time.time() - start_time) < max_timeout:
+        elapsed = time.time() - start_time
+        remaining = max_timeout - elapsed
+        
+        print(f"🔄 Round {attempt_round}: {successful_count}/{min_images} images so far, {remaining:.1f}s remaining")
+        
+        if remaining < 5:  # Less than 5 seconds left, be more aggressive
+            print("⚡ SPRINT MODE: Using simple prompts for speed")
             
-        try:
-            dish_name = dish.get('name_translated') or dish.get('name_original', '')
-            description = (dish.get('enhanced_description') or 
-                         dish.get('description_translated') or 
-                         dish.get('description_original', ''))
-            
-            prompt = f"{style_prompt}. Dish: {dish_name}. {description}"
-            
-            print(f"🔥 Priority dish {i+1}/{priority_count}: {dish_name}")
-            image_url = await flux_generate_image(prompt)
-            
-            if image_url:
-                dish['generated_image_url'] = image_url
-                successful_count += 1
-                print(f"✅ Priority image {successful_count} generated: {dish_name}")
-            else:
-                print(f"❌ Priority image failed: {dish_name}")
+        # Try to generate images for dishes that don't have them yet
+        failed_dishes = [d for d in dish_pool if not d.get('generated_image_url')]
+        
+        if not failed_dishes:
+            # All priority dishes tried, expand pool
+            failed_dishes = [d for d in dishes if not d.get('generated_image_url')]
+            if not failed_dishes:
+                break  # All dishes have been tried
+        
+        # Limit attempts per round to avoid infinite loops
+        dishes_this_round = failed_dishes[:min(5, min_images - successful_count + 2)]
+        
+        for dish in dishes_this_round:
+            if successful_count >= min_images:
+                break
                 
-        except Exception as e:
-            print(f"❌ Priority image error for {dish.get('name_translated', 'unknown')}: {str(e)}")
-    
-    # Check if we have minimum images
-    if successful_count < min_images:
-        print(f"⚠️  Only {successful_count}/{min_images} priority images generated. Trying backup strategy...")
-        
-        # Phase 1.5: Retry with simpler prompts for failed priority dishes
-        for dish in priority_dishes[:priority_count]:
-            if dish.get('generated_image_url') is None and successful_count < min_images:
-                if (time.time() - start_time) > timeout * 0.9:
-                    break
-                    
-                try:
-                    # Use simpler prompt
-                    dish_name = dish.get('name_translated') or dish.get('name_original', '')
-                    simple_prompt = f"food photography, {dish_name}, restaurant dish"
-                    
-                    print(f"🔄 Retry with simple prompt: {dish_name}")
-                    image_url = await flux_generate_image(simple_prompt)
-                    
-                    if image_url:
-                        dish['generated_image_url'] = image_url
-                        successful_count += 1
-                        print(f"✅ Retry success {successful_count}: {dish_name}")
-                        
-                except Exception as e:
-                    print(f"❌ Retry failed for {dish.get('name_translated', 'unknown')}: {str(e)}")
-    
-    # Phase 2: Generate remaining images if time allows
-    remaining_time = timeout - (time.time() - start_time)
-    if remaining_time > 2 and successful_count < max_images:  # Need at least 2 seconds
-        remaining_dishes = [d for d in priority_dishes[priority_count:] if not d.get('generated_image_url')]
-        concurrent_count = min(len(remaining_dishes), max_images - successful_count)
-        
-        if concurrent_count > 0:
-            print(f"🎨 Phase 2: Generating {concurrent_count} additional images concurrently")
+            if (time.time() - start_time) >= max_timeout:
+                print("⏰ Hard timeout reached")
+                break
             
-            semaphore = asyncio.Semaphore(2)
+            try:
+                dish_name = dish.get('name_translated') or dish.get('name_original', '')
+                
+                # Choose prompt strategy based on time remaining and attempt round
+                if remaining < 10 or attempt_round > 2:
+                    # Use simple prompt for speed
+                    prompt = f"food photography, {dish_name}"
+                    print(f"⚡ FAST attempt {attempt_round}: {dish_name}")
+                else:
+                    # Use full prompt
+                    description = (dish.get('enhanced_description') or 
+                                 dish.get('description_translated') or 
+                                 dish.get('description_original', ''))
+                    prompt = f"{style_prompt}. Dish: {dish_name}. {description}"
+                    print(f"🔥 Full attempt {attempt_round}: {dish_name}")
+                
+                # Generate with shorter individual timeout as we get more aggressive
+                individual_timeout = max(3, min(10, remaining / 3))
+                image_url = await flux_generate_image_with_timeout(prompt, individual_timeout)
+                
+                if image_url:
+                    dish['generated_image_url'] = image_url
+                    successful_count += 1
+                    print(f"✅ SUCCESS {successful_count}/{min_images}: {dish_name} (Round {attempt_round})")
+                else:
+                    print(f"❌ Failed: {dish_name}")
+                    
+            except Exception as e:
+                print(f"❌ Error for {dish.get('name_translated', 'unknown')}: {str(e)}")
+        
+        attempt_round += 1
+        
+        # Quick break between rounds if we still need more
+        if successful_count < min_images and (time.time() - start_time) < max_timeout - 1:
+            await asyncio.sleep(0.5)  # Brief pause between rounds
+    
+    # Concurrent bonus phase if we achieved minimum and have time
+    final_elapsed = time.time() - start_time
+    remaining_time = max_timeout - final_elapsed
+    
+    if successful_count >= min_images and remaining_time > 3:
+        print(f"🎨 BONUS PHASE: {remaining_time:.1f}s left for additional images")
+        
+        bonus_dishes = [d for d in dishes if not d.get('generated_image_url')][:5]
+        if bonus_dishes:
+            semaphore = asyncio.Semaphore(3)  # More aggressive concurrency
             
-            async def generate_concurrent_image(dish, dish_index):
+            async def generate_bonus_image(dish):
                 async with semaphore:
                     try:
                         dish_name = dish.get('name_translated') or dish.get('name_original', '')
-                        description = (dish.get('enhanced_description') or 
-                                     dish.get('description_translated') or 
-                                     dish.get('description_original', ''))
-                        
-                        prompt = f"{style_prompt}. Dish: {dish_name}. {description}"
-                        image_url = await flux_generate_image(prompt)
+                        prompt = f"food photography, {dish_name}, restaurant dish"
+                        image_url = await flux_generate_image_with_timeout(prompt, 4)
                         
                         if image_url:
                             dish['generated_image_url'] = image_url
-                            print(f"✅ Additional image generated: {dish_name}")
+                            print(f"🎁 Bonus image: {dish_name}")
                             return True
-                        else:
-                            print(f"❌ Additional image failed: {dish_name}")
-                            return False
-                            
-                    except Exception as e:
-                        print(f"❌ Additional image error: {str(e)}")
+                        return False
+                    except:
                         return False
             
-            # Run concurrent generation with timeout
-            tasks = [generate_concurrent_image(dish, i) for i, dish in enumerate(remaining_dishes[:concurrent_count])]
-            
+            tasks = [generate_bonus_image(dish) for dish in bonus_dishes]
             try:
                 await asyncio.wait_for(
                     asyncio.gather(*tasks, return_exceptions=True),
-                    timeout=remaining_time - 1  # Reserve 1 second buffer
+                    timeout=remaining_time - 1
                 )
             except asyncio.TimeoutError:
-                print(f"⏰ Phase 2 concurrent generation timed out")
+                print("⏰ Bonus phase timeout")
     
-    # Final count
+    # Final count and status
     final_count = sum(1 for dish in dishes if dish.get('generated_image_url'))
-    print(f"🎨 Image generation complete: {final_count}/{len(dishes)} images generated")
+    total_time = time.time() - start_time
     
-    if final_count < min_images:
-        print(f"⚠️  WARNING: Only {final_count}/{min_images} minimum images generated")
+    print(f"🏁 FINAL RESULT: {final_count}/{len(dishes)} images in {total_time:.1f}s")
+    
+    if final_count >= min_images:
+        print(f"🎉 SUCCESS! Generated {final_count} images (minimum {min_images} achieved)")
     else:
-        print(f"✅ Success: {final_count} images generated (minimum {min_images} achieved)")
+        print(f"⚠️  PARTIAL SUCCESS: Only {final_count}/{min_images} minimum images generated")
     
     return dishes
+
+async def flux_generate_image_with_timeout(prompt, timeout_seconds):
+    """Generate image with specific timeout"""
+    try:
+        return await asyncio.wait_for(
+            flux_generate_image(prompt),
+            timeout=timeout_seconds
+        )
+    except asyncio.TimeoutError:
+        print(f"   ⏰ Individual timeout ({timeout_seconds}s)")
+        return None
 
 def prioritize_dishes_for_images(dishes, max_count):
     """Prioritize dishes for image generation to ensure variety across categories"""

@@ -1,5 +1,7 @@
 # Snapmenu
 
+![Architecture Diagram](architecture.jpg)
+
 ## Project Description
 
 **Snapmenu** is an AI-powered web application that streamlines restaurant menu processing, translation, and visualization. Users can upload menu images or PDFs, and the app will automatically extract, categorize, and translate dish information, as well as generate representative images for each dish. Snapmenu supports multiple languages and leverages state-of-the-art AI services for OCR, translation, and image generation.

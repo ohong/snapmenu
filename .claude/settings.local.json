@@ -3,7 +3,8 @@
     "allow": [
       "Bash(pip install:*)",
       "Bash(python test_endpoints.py:*)",
-      "Bash(grep:*)"
+      "Bash(grep:*)",
+      "Bash(python test_pixtral_health.py:*)"
     ],
     "deny": []
   }
