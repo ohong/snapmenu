@@ -73,6 +73,11 @@ def display_menu_grid(dishes):
         st.warning("No dishes found in menu")
         return
     
+    # Add unique IDs to dishes if they don't have them
+    for i, dish in enumerate(dishes):
+        if 'id' not in dish:
+            dish['id'] = f"dish_{i}"
+    
     # Group dishes by category
     categories = {}
     for dish in dishes:
@@ -91,7 +96,7 @@ def display_menu_grid(dishes):
                 with st.container():
                     # Display image or placeholder
                     if dish.get('generated_image_url'):
-                        st.image(dish['generated_image_url'], use_column_width=True)
+                        st.image(dish['generated_image_url'], use_container_width=True)
                     else:
                         st.empty()
                         st.markdown("📸 *Image not available*")
@@ -101,8 +106,8 @@ def display_menu_grid(dishes):
                     if dish.get('price'):
                         st.markdown(f"💰 {dish['price']}")
                     
-                    # Click for details
-                    if st.button(f"View Details", key=f"detail_{dish.get('id', idx)}"):
+                    # Click for details - use unique dish ID
+                    if st.button(f"View Details", key=f"detail_{dish['id']}"):
                         show_dish_modal(dish)
 
 def show_dish_modal(dish):
@@ -112,7 +117,7 @@ def show_dish_modal(dish):
         
         with col1:
             if dish.get('generated_image_url'):
-                st.image(dish['generated_image_url'], use_column_width=True)
+                st.image(dish['generated_image_url'], use_container_width=True)
             else:
                 st.markdown("📸 *No image available*")
         
@@ -222,7 +227,7 @@ def main():
                                 
                                 with col1:
                                     if dish.get('generated_image_url'):
-                                        st.image(dish['generated_image_url'], use_column_width=True)
+                                        st.image(dish['generated_image_url'], use_container_width=True)
                                     else:
                                         st.markdown("📸 *Image not available*")
                                 

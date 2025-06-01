@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Bash(pip install:*)",
-      "Bash(python test_endpoints.py:*)"
+      "Bash(python test_endpoints.py:*)",
+      "Bash(grep:*)"
     ],
     "deny": []
   }
