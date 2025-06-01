@@ -67,40 +67,84 @@ async def flux_generate_image(prompt, resolution="512x512"):
         api_key = os.getenv('KOYEB_API_KEY')
         
         if not endpoint or not api_key:
-            raise ValueError("Missing FLUX_ENDPOINT or KOYEB_API_KEY environment variables")
+            print("Missing FLUX_ENDPOINT or KOYEB_API_KEY - using placeholder")
+            return get_placeholder_image_url()
         
         headers = {
             "Authorization": f"Bearer {api_key}",
             "Content-Type": "application/json"
         }
         
-        payload = {
-            "prompt": prompt,
-            "num_inference_steps": 20,  # Reduced for speed
-            "guidance_scale": 7.5,
-            "width": 512,
-            "height": 512
-        }
+        # Try different payload formats
+        payloads_to_try = [
+            # Format 1: Standard FLUX format
+            {
+                "prompt": prompt,
+                "num_inference_steps": 20,
+                "guidance_scale": 7.5,
+                "width": 512,
+                "height": 512
+            },
+            # Format 2: Simplified format
+            {
+                "prompt": prompt,
+                "steps": 20,
+                "guidance": 7.5
+            },
+            # Format 3: Minimal format
+            {
+                "prompt": prompt
+            }
+        ]
         
         # Set timeout for individual image generation
-        timeout = aiohttp.ClientTimeout(total=4)  # 4 seconds per image
+        timeout = aiohttp.ClientTimeout(total=10)  # Increased timeout
         
         async with aiohttp.ClientSession(timeout=timeout) as session:
-            async with session.post(endpoint, json=payload, headers=headers) as response:
-                if response.status == 200:
-                    result = await response.json()
-                    return result.get('image_url')
-                else:
-                    error_text = await response.text()
-                    print(f"FLUX API failed with status {response.status}: {error_text}")
-                    return None
+            for i, payload in enumerate(payloads_to_try):
+                try:
+                    async with session.post(endpoint, json=payload, headers=headers) as response:
+                        if response.status == 200:
+                            result = await response.json()
+                            # Handle FLUX /predict response format
+                            if 'images' in result and result['images']:
+                                # FLUX returns images as base64 strings or URLs
+                                image_data = result['images'][0]
+                                if image_data.startswith('data:image'):
+                                    return image_data  # Already a data URL
+                                elif image_data.startswith('http'):
+                                    return image_data  # Direct URL
+                                else:
+                                    # Assume base64, convert to data URL
+                                    return f"data:image/png;base64,{image_data}"
+                            
+                            # Try other response formats as fallback
+                            image_url = (result.get('image_url') or 
+                                       result.get('url') or 
+                                       result.get('image') or
+                                       result.get('data', {}).get('url'))
+                            if image_url:
+                                return image_url
+                        elif response.status == 404:
+                            print(f"FLUX endpoint not found: {endpoint}")
+                            break  # Don't try other payloads if endpoint doesn't exist
+                        else:
+                            error_text = await response.text()
+                            print(f"FLUX API attempt {i+1} failed with status {response.status}: {error_text[:100]}...")
+                            
+                except asyncio.TimeoutError:
+                    print(f"FLUX API attempt {i+1} timed out")
+                    continue
+                except Exception as e:
+                    print(f"FLUX API attempt {i+1} error: {str(e)}")
+                    continue
+        
+        print("All FLUX API attempts failed - using placeholder")
+        return get_placeholder_image_url()
                     
-    except asyncio.TimeoutError:
-        print("Individual image generation timed out")
-        return None
     except Exception as e:
-        print(f"Image generation error: {str(e)}")
-        return None
+        print(f"Image generation error: {str(e)} - using placeholder")
+        return get_placeholder_image_url()
 
 def get_placeholder_image_url():
     """Return placeholder image URL for dishes without generated images"""

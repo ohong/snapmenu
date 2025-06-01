@@ -1,42 +1,57 @@
-import aiohttp
 import asyncio
 import os
 import base64
+from openai import AsyncOpenAI
 
 async def call_pixtral(prompt, image_base64=None, max_tokens=1000, temperature=0.3):
-    """General purpose Pixtral 12B API call"""
+    """General purpose Pixtral 12B API call via OpenAI SDK"""
     try:
-        endpoint = os.getenv('PIXTRAL_ENDPOINT')
-        api_key = os.getenv('KOYEB_API_KEY')
+        base_endpoint = os.getenv('PIXTRAL_ENDPOINT')
+        api_key = os.getenv('OPENAI_API_KEY')
         
-        if not endpoint or not api_key:
-            raise ValueError("Missing PIXTRAL_ENDPOINT or KOYEB_API_KEY environment variables")
+        if not base_endpoint or not api_key:
+            raise ValueError("Missing PIXTRAL_ENDPOINT or OPENAI_API_KEY environment variables")
         
-        headers = {
-            "Authorization": f"Bearer {api_key}",
-            "Content-Type": "application/json"
-        }
+        client = AsyncOpenAI(
+            api_key=api_key,
+            base_url=f"{base_endpoint.rstrip('/')}/v1"
+        )
         
-        payload = {
-            "prompt": prompt,
-            "max_tokens": max_tokens,
-            "temperature": temperature
-        }
-        
-        # Add image if provided (for vision tasks)
+        # Prepare message content
         if image_base64:
-            payload["image"] = image_base64
+            # Vision request with image
+            content = [
+                {
+                    "type": "text", 
+                    "text": prompt
+                },
+                {
+                    "type": "image_url",
+                    "image_url": {
+                        "url": f"data:image/jpeg;base64,{image_base64}"
+                    }
+                }
+            ]
+        else:
+            # Text-only request
+            content = prompt
         
-        timeout = aiohttp.ClientTimeout(total=10)
+        response = await asyncio.wait_for(
+            client.chat.completions.create(
+                model="mistralai/Pixtral-12B-2409",
+                messages=[
+                    {
+                        "role": "user",
+                        "content": content
+                    }
+                ],
+                max_tokens=max_tokens,
+                temperature=temperature
+            ),
+            timeout=10.0
+        )
         
-        async with aiohttp.ClientSession(timeout=timeout) as session:
-            async with session.post(endpoint, json=payload, headers=headers) as response:
-                if response.status == 200:
-                    result = await response.json()
-                    return result.get('text', '')
-                else:
-                    error_text = await response.text()
-                    raise Exception(f"Pixtral API failed with status {response.status}: {error_text}")
+        return response.choices[0].message.content
                     
     except asyncio.TimeoutError:
         raise Exception("Pixtral API call timed out")

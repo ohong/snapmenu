@@ -1,6 +1,6 @@
-import aiohttp
 import asyncio
 import os
+from openai import AsyncOpenAI
 
 LANGUAGE_CODES = {
     "en": "English",
@@ -49,13 +49,18 @@ async def translate_dishes(dishes, target_language):
         return dishes
 
 async def translate_menu_with_pixtral(dishes, target_language):
-    """Use Pixtral 12B to translate entire menu at once"""
+    """Use Pixtral 12B to translate entire menu at once via OpenAI SDK"""
     try:
-        endpoint = os.getenv('PIXTRAL_ENDPOINT')
-        api_key = os.getenv('KOYEB_API_KEY')
+        base_endpoint = os.getenv('PIXTRAL_ENDPOINT')
+        api_key = os.getenv('OPENAI_API_KEY')
         
-        if not endpoint or not api_key:
-            raise ValueError("Missing PIXTRAL_ENDPOINT or KOYEB_API_KEY")
+        if not base_endpoint or not api_key:
+            raise ValueError("Missing PIXTRAL_ENDPOINT or OPENAI_API_KEY")
+        
+        client = AsyncOpenAI(
+            api_key=api_key,
+            base_url=f"{base_endpoint.rstrip('/')}/v1"
+        )
         
         # Prepare menu text for translation
         menu_items = []
@@ -77,28 +82,22 @@ Menu items to translate:
 
 Translated menu:"""
         
-        headers = {
-            "Authorization": f"Bearer {api_key}",
-            "Content-Type": "application/json"
-        }
+        response = await asyncio.wait_for(
+            client.chat.completions.create(
+                model="mistralai/Pixtral-12B-2409",
+                messages=[
+                    {
+                        "role": "user",
+                        "content": translation_prompt
+                    }
+                ],
+                max_tokens=2000,
+                temperature=0.3
+            ),
+            timeout=10.0  # 10 seconds for translation
+        )
         
-        payload = {
-            "prompt": translation_prompt,
-            "max_tokens": 2000,
-            "temperature": 0.3
-        }
-        
-        timeout = aiohttp.ClientTimeout(total=5)  # 5 seconds for batch translation
-        
-        async with aiohttp.ClientSession(timeout=timeout) as session:
-            async with session.post(endpoint, json=payload, headers=headers) as response:
-                if response.status == 200:
-                    result = await response.json()
-                    return result.get('text', '')
-                else:
-                    error_text = await response.text()
-                    print(f"Pixtral translation failed with status {response.status}: {error_text}")
-                    return None
+        return response.choices[0].message.content
                     
     except Exception as e:
         print(f"Pixtral translation error: {str(e)}")

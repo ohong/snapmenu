@@ -1,11 +1,10 @@
-import aiohttp
-import asyncio
 import os
 import base64
-from io import BytesIO
+import asyncio
+from openai import AsyncOpenAI
 
 async def process_menu_ocr(image_file):
-    """Process menu image using Pixtral 12B vision model on Koyeb"""
+    """Process menu image using Pixtral 12B vision model via OpenAI SDK"""
     try:
         # Convert uploaded file to base64
         image_bytes = image_file.read()
@@ -14,22 +13,30 @@ async def process_menu_ocr(image_file):
         # Reset file pointer for potential reuse
         image_file.seek(0)
         
-        # Prepare API request
-        endpoint = os.getenv('PIXTRAL_ENDPOINT')
-        api_key = os.getenv('KOYEB_API_KEY')
+        # Initialize OpenAI client with Pixtral endpoint
+        base_endpoint = os.getenv('PIXTRAL_ENDPOINT')
+        api_key = os.getenv('OPENAI_API_KEY')
         
-        if not endpoint or not api_key:
-            raise ValueError("Missing PIXTRAL_ENDPOINT or KOYEB_API_KEY environment variables")
+        if not base_endpoint or not api_key:
+            raise ValueError("Missing PIXTRAL_ENDPOINT or OPENAI_API_KEY environment variables")
         
-        headers = {
-            "Authorization": f"Bearer {api_key}",
-            "Content-Type": "application/json"
-        }
+        client = AsyncOpenAI(
+            api_key=api_key,
+            base_url=f"{base_endpoint.rstrip('/')}/v1"
+        )
         
-        payload = {
-            "image": image_base64,
-            "prompt": """Analyze this restaurant menu image and extract all text content. 
-            
+        # Create chat completion with vision
+        response = await asyncio.wait_for(
+            client.chat.completions.create(
+                model="mistralai/Pixtral-12B-2409",
+                messages=[
+                    {
+                        "role": "user",
+                        "content": [
+                            {
+                                "type": "text",
+                                "text": """Analyze this restaurant menu image and extract all text content. 
+
 Please provide:
 1. All dish names exactly as written
 2. Complete descriptions for each dish
@@ -37,24 +44,31 @@ Please provide:
 4. Category headers (appetizers, mains, desserts, etc.)
 
 Maintain the original structure and formatting. Output the text in a clear, organized format that preserves the menu's hierarchy."""
-        }
+                            },
+                            {
+                                "type": "image_url",
+                                "image_url": {
+                                    "url": f"data:image/jpeg;base64,{image_base64}"
+                                }
+                            }
+                        ]
+                    }
+                ],
+                max_tokens=2000,
+                temperature=0.1
+            ),
+            timeout=15.0  # 15 second timeout
+        )
         
-        # Make async request with timeout
-        timeout = aiohttp.ClientTimeout(total=5)  # 5 second timeout for OCR
+        return response.choices[0].message.content
         
-        async with aiohttp.ClientSession(timeout=timeout) as session:
-            async with session.post(endpoint, json=payload, headers=headers) as response:
-                if response.status == 200:
-                    result = await response.json()
-                    return result.get('text', '')
-                else:
-                    error_text = await response.text()
-                    raise Exception(f"Pixtral OCR API failed with status {response.status}: {error_text}")
-                    
     except asyncio.TimeoutError:
-        raise Exception("OCR processing timed out")
+        # Fallback to demo text if Pixtral times out
+        print("Pixtral OCR timed out, using fallback text")
+        return fallback_text_extraction(image_file)
     except Exception as e:
-        raise Exception(f"OCR processing failed: {str(e)}")
+        print(f"Pixtral OCR failed: {str(e)}, using fallback text")
+        return fallback_text_extraction(image_file)
 
 def fallback_text_extraction(image_file):
     """Fallback OCR using local processing if available"""
