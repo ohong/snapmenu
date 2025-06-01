@@ -14,13 +14,9 @@ services:
         value: "${{ secrets.NEON_DATABASE_URL }}"
       - key: KOYEB_API_KEY
         value: "${{ secrets.KOYEB_API_KEY }}"
-      - key: MISTRAL_OCR_ENDPOINT
-        value: "${{ secrets.MISTRAL_OCR_ENDPOINT }}"
+      - key: PIXTRAL_ENDPOINT
+        value: "${{ secrets.PIXTRAL_ENDPOINT }}"
       - key: FLUX_ENDPOINT
         value: "${{ secrets.FLUX_ENDPOINT }}"
-      - key: TRANSLATION_ENDPOINT
-        value: "${{ secrets.TRANSLATION_ENDPOINT }}"
-      - key: TRANSLATION_API_KEY
-        value: "${{ secrets.TRANSLATION_API_KEY }}"
     build_command: pip install -r requirements.txt
     run_command: streamlit run app.py --server.port=8000 --server.address=0.0.0.0

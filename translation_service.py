@@ -16,7 +16,7 @@ LANGUAGE_CODES = {
 }
 
 async def translate_dishes(dishes, target_language):
-    """Translate dish names and descriptions to target language"""
+    """Translate dish names and descriptions using Mistral LLM"""
     if target_language == "en":
         # If target is English, just copy original to translated fields
         for dish in dishes:
@@ -24,53 +24,58 @@ async def translate_dishes(dishes, target_language):
             dish['description_translated'] = dish.get('description_original', '')
         return dishes
     
-    # Create translation tasks
-    translation_tasks = []
+    target_lang_name = LANGUAGE_CODES.get(target_language, "English")
     
-    for dish in dishes:
-        name_task = translate_text(
-            dish.get('name_original', ''), 
-            target_language
-        )
-        desc_task = translate_text(
-            dish.get('description_original', ''), 
-            target_language
-        )
-        translation_tasks.append((dish, name_task, desc_task))
-    
-    # Execute translations concurrently with timeout
+    # Batch translate all dishes at once for efficiency
     try:
-        for dish, name_task, desc_task in translation_tasks:
-            name_result, desc_result = await asyncio.gather(
-                name_task, desc_task, return_exceptions=True
-            )
-            
-            # Handle translation results
-            dish['name_translated'] = name_result if isinstance(name_result, str) else dish.get('name_original', '')
-            dish['description_translated'] = desc_result if isinstance(desc_result, str) else dish.get('description_original', '')
+        translation_result = await translate_menu_with_pixtral(dishes, target_lang_name)
+        
+        if translation_result:
+            # Parse the translation result and update dishes
+            return parse_translation_result(dishes, translation_result)
+        else:
+            # Fallback: use original text
+            for dish in dishes:
+                dish['name_translated'] = dish.get('name_original', '')
+                dish['description_translated'] = dish.get('description_original', '')
+            return dishes
             
     except Exception as e:
-        print(f"Translation batch failed: {str(e)}")
+        print(f"Translation failed: {str(e)}")
         # Fallback: use original text
         for dish in dishes:
             dish['name_translated'] = dish.get('name_original', '')
             dish['description_translated'] = dish.get('description_original', '')
-    
-    return dishes
+        return dishes
 
-async def translate_text(text, target_language):
-    """Translate single text using translation API"""
-    if not text or not text.strip():
-        return text
-    
+async def translate_menu_with_pixtral(dishes, target_language):
+    """Use Pixtral 12B to translate entire menu at once"""
     try:
-        # Use a translation API (could be Google Translate, DeepL, etc.)
-        endpoint = os.getenv('TRANSLATION_ENDPOINT')
-        api_key = os.getenv('TRANSLATION_API_KEY')
+        endpoint = os.getenv('PIXTRAL_ENDPOINT')
+        api_key = os.getenv('KOYEB_API_KEY')
         
         if not endpoint or not api_key:
-            # Fallback to simple mapping for demo
-            return await fallback_translation(text, target_language)
+            raise ValueError("Missing PIXTRAL_ENDPOINT or KOYEB_API_KEY")
+        
+        # Prepare menu text for translation
+        menu_items = []
+        for i, dish in enumerate(dishes):
+            name = dish.get('name_original', '')
+            desc = dish.get('description_original', '')
+            menu_items.append(f"{i+1}. {name} - {desc}")
+        
+        menu_text = "\n".join(menu_items)
+        
+        translation_prompt = f"""Translate the following restaurant menu items to {target_language}. 
+Maintain the same numbering and structure. For each item, translate both the dish name and description.
+Keep the format as: "Number. Dish Name - Description"
+
+Provide accurate, culturally appropriate translations that would appeal to native speakers.
+
+Menu items to translate:
+{menu_text}
+
+Translated menu:"""
         
         headers = {
             "Authorization": f"Bearer {api_key}",
@@ -78,53 +83,67 @@ async def translate_text(text, target_language):
         }
         
         payload = {
-            "text": text,
-            "target_language": target_language,
-            "source_language": "auto"
+            "prompt": translation_prompt,
+            "max_tokens": 2000,
+            "temperature": 0.3
         }
         
-        timeout = aiohttp.ClientTimeout(total=2)  # 2 seconds per translation
+        timeout = aiohttp.ClientTimeout(total=5)  # 5 seconds for batch translation
         
         async with aiohttp.ClientSession(timeout=timeout) as session:
             async with session.post(endpoint, json=payload, headers=headers) as response:
                 if response.status == 200:
                     result = await response.json()
-                    return result.get('translated_text', text)
+                    return result.get('text', '')
                 else:
-                    return text
+                    error_text = await response.text()
+                    print(f"Pixtral translation failed with status {response.status}: {error_text}")
+                    return None
                     
     except Exception as e:
-        print(f"Translation failed for '{text}': {str(e)}")
-        return text
+        print(f"Pixtral translation error: {str(e)}")
+        return None
 
-async def fallback_translation(text, target_language):
-    """Simple fallback translation for demo purposes"""
-    # This is a very basic fallback - in production you'd want proper translation
+def parse_translation_result(original_dishes, translation_text):
+    """Parse Pixtral translation result and update dishes"""
+    if not translation_text:
+        return original_dishes
     
-    translations = {
-        "zh": {
-            "Caesar Salad": "凯撒沙拉",
-            "Grilled Salmon": "烤三文鱼", 
-            "Pasta Carbonara": "奶油培根意面",
-            "Chocolate Cake": "巧克力蛋糕",
-            "Fresh romaine lettuce": "新鲜罗马生菜",
-            "Atlantic salmon": "大西洋三文鱼",
-            "Traditional Italian": "传统意大利",
-            "Rich chocolate": "浓郁巧克力"
-        },
-        "es": {
-            "Caesar Salad": "Ensalada César",
-            "Grilled Salmon": "Salmón a la Parrilla",
-            "Pasta Carbonara": "Pasta Carbonara", 
-            "Chocolate Cake": "Pastel de Chocolate",
-            "Fresh romaine lettuce": "Lechuga romana fresca",
-            "Atlantic salmon": "Salmón del Atlántico",
-            "Traditional Italian": "Italiano tradicional",
-            "Rich chocolate": "Chocolate rico"
-        }
-    }
+    translated_lines = [line.strip() for line in translation_text.split('\n') if line.strip()]
     
-    if target_language in translations:
-        return translations[target_language].get(text, text)
+    for i, dish in enumerate(original_dishes):
+        # Try to find corresponding translated line
+        translated_line = None
+        
+        # Look for line starting with the item number
+        for line in translated_lines:
+            if line.startswith(f"{i+1}."):
+                translated_line = line
+                break
+        
+        if translated_line:
+            # Parse the translated line
+            try:
+                # Remove number prefix
+                content = translated_line[translated_line.index('.') + 1:].strip()
+                
+                # Split on ' - ' to separate name and description
+                if ' - ' in content:
+                    name_part, desc_part = content.split(' - ', 1)
+                    dish['name_translated'] = name_part.strip()
+                    dish['description_translated'] = desc_part.strip()
+                else:
+                    dish['name_translated'] = content.strip()
+                    dish['description_translated'] = dish.get('description_original', '')
+                    
+            except Exception as e:
+                print(f"Failed to parse translation for dish {i+1}: {str(e)}")
+                dish['name_translated'] = dish.get('name_original', '')
+                dish['description_translated'] = dish.get('description_original', '')
+        else:
+            # No translation found, use original
+            dish['name_translated'] = dish.get('name_original', '')
+            dish['description_translated'] = dish.get('description_original', '')
     
-    return text
+    return original_dishes
+

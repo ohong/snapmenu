@@ -23,9 +23,12 @@ async def generate_dish_images(dishes, timeout=8, max_images=20, style_prompt=""
         
         async with semaphore:
             try:
-                # Construct prompt for image generation
+                # Construct prompt for image generation using enhanced description
                 dish_name = dish.get('name_translated') or dish.get('name_original', '')
-                description = dish.get('description_translated') or dish.get('description_original', '')
+                # Use enhanced description if available, otherwise fall back to regular description
+                description = (dish.get('enhanced_description') or 
+                             dish.get('description_translated') or 
+                             dish.get('description_original', ''))
                 
                 prompt = f"{style_prompt}. Dish: {dish_name}. {description}"
                 

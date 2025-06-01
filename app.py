@@ -7,6 +7,7 @@ from ocr_service import process_menu_ocr
 from image_generation import generate_dish_images
 from translation_service import translate_dishes
 from utils import parse_menu_structure, categorize_dishes
+from pixtral_service import select_omakase_dishes, enhance_dish_descriptions
 
 load_dotenv()
 
@@ -47,11 +48,15 @@ async def process_menu_pipeline(image_file, target_language):
             with st.spinner("Translating menu..."):
                 dishes = await translate_dishes(dishes, target_language)
         
-        # Phase 4: Image generation (remaining time)
+        # Phase 4: Enhance descriptions for better image generation (1 second)
+        with st.spinner("Enhancing dish descriptions..."):
+            dishes = await enhance_dish_descriptions(dishes)
+        
+        # Phase 5: Image generation (remaining time)
         with st.spinner("Generating dish images..."):
             dishes = await generate_dish_images(
                 dishes,
-                timeout=8,
+                timeout=6,  # Reduced to account for enhancement step
                 max_images=20,
                 style_prompt="professional food photography, restaurant dish, appetizing, consistent lighting"
             )
@@ -198,7 +203,64 @@ def main():
         
         # Omakase button (floating action)
         if st.button("🎲 Omakase! (Chef's Choice)", type="secondary"):
-            st.info("Omakase feature coming soon!")
+            with st.spinner("Chef is selecting the perfect combination..."):
+                loop = asyncio.new_event_loop()
+                asyncio.set_event_loop(loop)
+                
+                try:
+                    omakase_dishes = loop.run_until_complete(
+                        select_omakase_dishes(st.session_state.processed_dishes)
+                    )
+                    
+                    if omakase_dishes:
+                        st.success("🍽️ Chef's Omakase Selection")
+                        
+                        # Display selected dishes in a special layout
+                        for i, dish in enumerate(omakase_dishes):
+                            with st.container():
+                                col1, col2 = st.columns([1, 2])
+                                
+                                with col1:
+                                    if dish.get('generated_image_url'):
+                                        st.image(dish['generated_image_url'], use_column_width=True)
+                                    else:
+                                        st.markdown("📸 *Image not available*")
+                                
+                                with col2:
+                                    course_names = ["Appetizer", "Main Course", "Dessert"]
+                                    course_name = course_names[i] if i < len(course_names) else "Course"
+                                    
+                                    st.markdown(f"**{course_name}**")
+                                    st.markdown(f"### {dish.get('name_translated', dish.get('name_original', 'Unknown'))}")
+                                    
+                                    if dish.get('description_translated'):
+                                        st.markdown(dish['description_translated'])
+                                    
+                                    if dish.get('price'):
+                                        st.markdown(f"**{dish['price']}**")
+                                
+                                st.divider()
+                        
+                        # Calculate total price
+                        total_price = 0
+                        for dish in omakase_dishes:
+                            price_str = dish.get('price', '').replace('$', '').replace(',', '')
+                            try:
+                                price = float(price_str)
+                                total_price += price
+                            except (ValueError, AttributeError):
+                                pass
+                        
+                        if total_price > 0:
+                            st.markdown(f"### Total: ${total_price:.2f}")
+                    
+                    else:
+                        st.error("Unable to create Omakase selection")
+                        
+                except Exception as e:
+                    st.error(f"Omakase selection failed: {str(e)}")
+                finally:
+                    loop.close()
 
 if __name__ == "__main__":
     # Initialize database on startup
