@@ -4,7 +4,8 @@
       "Bash(pip install:*)",
       "Bash(python test_endpoints.py:*)",
       "Bash(grep:*)",
-      "Bash(python test_pixtral_health.py:*)"
+      "Bash(python test_pixtral_health.py:*)",
+      "WebFetch(domain:docs.anthropic.com)"
     ],
     "deny": []
   }
