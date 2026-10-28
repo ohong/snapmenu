@@ -2,6 +2,11 @@
 .env
 .env.local
 .env.*.local
+.venv/
+data/
+.pytest_cache/
+test-results/
+playwright-report/
 
 # Python
 __pycache__/

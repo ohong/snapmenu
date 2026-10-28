@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="Photograph a restaurant menu. Read it in your language and picture the dishes before you order.">
+  <title>SnapMenu</title>
+  <link rel="icon" type="image/svg+xml" href="/static/icon.svg">
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="/static/app.js" type="module"></script>
+</head>
+<body>
+  <svg class="svg-library" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs>
+    <symbol id="icon-camera" viewBox="0 0 24 24"><path d="M8 5 9.5 3h5L16 5h3a2 2 0 0 1 2 2v12H3V7a2 2 0 0 1 2-2z"/><circle cx="12" cy="12" r="4"/></symbol>
+    <symbol id="icon-upload" viewBox="0 0 24 24"><path d="M12 16V3m-5 5 5-5 5 5M4 15v5h16v-5"/></symbol>
+    <symbol id="icon-heart" viewBox="0 0 24 24"><path d="M20 5c-3-3-6-1-8 1-2-2-5-4-8-1-4 4 1 9 8 15 7-6 12-11 8-15Z"/></symbol>
+    <symbol id="icon-close" viewBox="0 0 24 24"><path d="m6 6 12 12M6 18 18 6"/></symbol>
+    <symbol id="icon-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></symbol>
+  </defs></svg>
+
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <a href="/" class="brand" aria-label="SnapMenu home">SnapMenu</a>
+    <button id="new-menu" class="text-button" hidden>New menu</button>
+  </header>
+
+  <main id="main" tabindex="-1">
+    <section id="home" class="home-layout" aria-labelledby="home-title">
+      <div class="intro">
+        <h1 id="home-title">Scan a menu</h1>
+        <p>Take a photo or upload a file to read the menu in your language.</p>
+      </div>
+      <div class="upload-panel">
+        <form id="scan-form">
+          <input id="camera-file" class="visually-hidden" type="file" accept="image/*" capture="environment" aria-label="Take a photo of the menu" tabindex="-1">
+          <input id="upload-file" class="visually-hidden" type="file" accept="image/jpeg,image/png,image/webp,image/heic,image/heif,image/avif,application/pdf,.heic,.heif" aria-label="Choose a menu file" tabindex="-1">
+          <div id="file-preview" class="file-preview" hidden>
+            <img id="preview-image" alt="Your selected menu" hidden>
+            <div><strong id="file-name"></strong><span id="file-size"></span></div>
+            <button id="remove-file" type="button" class="icon-button" aria-label="Remove selected file"><svg><use href="#icon-close"/></svg></button>
+          </div>
+          <div class="upload-actions">
+            <button id="take-photo" type="button" class="button primary"><svg><use href="#icon-camera"/></svg><span>Take a photo</span></button>
+            <button id="choose-file" type="button" class="button secondary"><svg><use href="#icon-upload"/></svg>Choose a file</button>
+          </div>
+          <p class="file-help">JPG, PNG, WebP, HEIC or PDF · Up to 10 MB</p>
+          <div class="language-field"><label for="language">Reading language</label><select id="language" name="language"><option value="en">English</option><option value="zh">中文</option><option value="es">Español</option><option value="hi">हिन्दी</option><option value="ar">العربية</option><option value="pt">Português</option><option value="ru">Русский</option><option value="ja">日本語</option><option value="de">Deutsch</option><option value="fr">Français</option></select></div>
+          <button id="scan-button" type="submit" class="button primary" hidden>Read my menu</button>
+          <p id="upload-error" class="notice error" role="alert" hidden></p>
+          <p id="service-notice" class="notice" hidden></p>
+        </form>
+        <div class="sample-action"><button id="try-sample" class="text-button">View sample menu</button></div>
+        <button id="resume-menu" class="resume text-button" hidden>Back to your last menu</button>
+      </div>
+    </section>
+
+    <section id="processing" class="processing" aria-labelledby="processing-title" hidden>
+      <h1 id="processing-title">Reading menu</h1>
+      <p id="progress-copy" role="status">Reading the dishes and translating your menu…</p>
+      <p class="muted">Larger menus can take a minute. Dish images are generated separately.</p>
+    </section>
+
+    <section id="menu-view" class="menu-view" aria-labelledby="menu-title" hidden>
+      <div id="demo-notice" class="demo-notice" hidden><span>EXAMPLE MENU</span><p>These dishes are sample content, not a scan of your menu.</p><button id="scan-own" class="text-button">Scan your menu</button></div>
+      <div class="menu-heading"><div><p id="menu-meta" class="eyebrow"></p><h1 id="menu-title"></h1><p id="menu-summary" class="muted"></p></div><button id="suggest" class="suggest-button">Help me choose</button></div>
+      <p id="menu-warnings" class="notice" role="status" hidden></p>
+      <div id="suggestion" class="suggestion" hidden><div><h2>Suggested meal</h2><p>One random dish from each available course.</p></div><div id="suggested-dishes"></div><button id="dismiss-suggestion" class="icon-button" aria-label="Close suggestion"><svg><use href="#icon-close"/></svg></button></div>
+      <div class="menu-tools"><label class="search-field"><svg><use href="#icon-search"/></svg><input id="search" type="search" placeholder="Find a dish or ingredient" aria-label="Search dishes" autocomplete="off"></label><button id="shortlist-toggle" class="shortlist-toggle" aria-pressed="false" aria-label="My picks"><svg><use href="#icon-heart"/></svg><span>My picks</span><b id="pick-count">0</b></button></div>
+      <nav id="categories" class="categories" aria-label="Menu categories"></nav>
+      <div id="dishes" class="dishes"></div>
+      <div id="empty-results" class="empty-results" role="status" hidden><h2>No dishes found</h2><p>Try another search or clear the filters.</p><button id="reset-filters" class="button secondary">Show all dishes</button></div>
+      <div class="menu-bottom"><p>Prices stay as printed. Ask the restaurant about ingredients and allergies.</p><button id="delete-menu" class="text-button" hidden>Delete this menu</button></div>
+    </section>
+  </main>
+
+  <footer class="site-footer"><button id="privacy-button" class="text-button">About your menu</button></footer>
+
+  <dialog id="dish-dialog" class="dish-dialog" aria-labelledby="dish-title"><div class="dialog-inner"><button id="close-dish" class="icon-button close-dialog" aria-label="Close dish details"><svg><use href="#icon-close"/></svg></button><div id="dish-picture" class="dish-picture"></div><div class="dish-detail"><p id="dish-category" class="eyebrow"></p><div class="detail-heading"><h2 id="dish-title" dir="auto"></h2><strong id="dish-price" dir="auto"></strong></div><p id="dish-description" dir="auto"></p><div id="original-text" class="original-text"><span class="eyebrow">Original menu</span><p id="original-name" dir="auto"></p><p id="original-description" dir="auto"></p></div><p id="image-error" class="notice" role="status" hidden></p><button id="generate-image" class="button secondary"><span>Generate image</span></button><p class="image-caption">AI pictures give an idea of the dish. The restaurant’s version may look different.</p><button id="detail-pick" class="button primary"><svg><use href="#icon-heart"/></svg><span>Add to my picks</span></button></div></div></dialog>
+  <dialog id="privacy-dialog" class="info-dialog" aria-labelledby="privacy-title"><h2 id="privacy-title">Menu privacy</h2><p>Your photo is sent to OpenAI to read and translate it. SnapMenu does not keep the original file.</p><p>Your translated menu and dish pictures are saved for seven days and are available only to this browser. You can delete your menu at any time.</p><p>Requesting a picture sends that dish’s name and description to OpenAI. Image requests run in the background and use OpenAI’s data retention settings. Pictures are AI interpretations, not restaurant photos.</p><p>Translations can make mistakes. Check prices, ingredients, and allergies with the restaurant.</p><button id="close-privacy" class="button primary">Got it</button></dialog>
+  <div id="toast" class="toast" role="status" hidden></div>
+  <noscript><p class="notice">Please enable JavaScript to photograph and explore a menu.</p></noscript>
+</body>
+</html>
