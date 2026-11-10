@@ -1,0 +1,38 @@
+{
+  "restaurant": "Scoma’s",
+  "address": "1965 Al Scoma Way, Pier 47, San Francisco, CA 94133",
+  "official_url": "https://scomas.com/food-menu/",
+  "menu_url": "https://scomas.com/wp-content/media/mainmenu9252022.pdf",
+  "retrieved_at": "2026-11-10T18:30:00Z",
+  "source_pages": [
+    1
+  ],
+  "text_only_verified": true,
+  "verification_method": "Visually inspected source PDF page 1. Text, logo and border only; no food photos.",
+  "sha256": {
+    "page-1.pdf": "545c0305fb4855443069287adffc5a572fb0a4f42eb7d5a48588c76fb89ed304"
+  },
+  "expected_dishes": [
+    {
+      "name": "Dungeness Crab Cocktail",
+      "price": "27"
+    },
+    {
+      "name": "Wild Gulf Shrimp Cocktail",
+      "price": "21"
+    },
+    {
+      "name": "Oysters alla Scoma",
+      "price": "25"
+    },
+    {
+      "name": "Calamari Fritti",
+      "price": "19"
+    },
+    {
+      "name": "Steamed Manila Clams",
+      "price": "19"
+    }
+  ],
+  "uncertainty": "Historical menu dated August 2022. Prices and availability may have changed."
+}

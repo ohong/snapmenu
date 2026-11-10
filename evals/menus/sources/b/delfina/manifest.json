@@ -1,0 +1,22 @@
+{
+  "restaurant": "Delfina",
+  "address": "3621 18th St, San Francisco, CA 94110",
+  "official_url": "https://www.delfinasf.com/",
+  "menu_url": "https://static1.squarespace.com/static/62ab2a06319a4a44fe52fc81/t/67cf6b09f36ee111b40f63ca/1741646602095/Delfina%2BDinner%2BMenu%2B03.10.25.pdf",
+  "retrieved_at": "2026-11-10T18:27:07.892257+00:00",
+  "source_pages": [
+    1
+  ],
+  "text_only_verified": true,
+  "verification_method": "Visual inspection of selected source page rendered from original PDF or original image; no dish photos.",
+  "sha256": {
+    "menu.pdf": "2e76507e2248e9859959868c8eaa9ae12a1549198b8f2346c6216967781f32af"
+  },
+  "expected_dishes": [
+    "Grilled Monterey Bay Calamari — 19",
+    "Spaghetti Pomodoro — 27",
+    "Paccheri Neri — 48",
+    "Margherita DOP — 23"
+  ],
+  "uncertainty": "Menu dated 03.10.25; historical, not established current."
+}

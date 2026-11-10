@@ -1,0 +1,33 @@
+{
+  "restaurant": "Yank Sing",
+  "address": "49 Stevenson Street, San Francisco, CA 94105",
+  "official_url": "https://yanksing.com/",
+  "menu_url": "https://yanksing.com/menu/",
+  "retrieved_at": "2026-11-10T18:32:00Z",
+  "source_pages": [
+    "HTML Menu > Dim Sum, centered on Pork Potsticker (6 pc)"
+  ],
+  "text_only_verified": true,
+  "verification_method": "Visually inspected unaltered Aside browser viewport screenshot of official HTML menu; no dish photographs.",
+  "sha256": {
+    "menu.png": "95542a3e066d1707b1ae3c37c3186ab5b01f7de6dee16751388283c238515b8b"
+  },
+  "expected_dishes": [
+    {
+      "name": "Steamed BBQ Pork Bun (2 pc)"
+    },
+    {
+      "name": "Stuffed Lotus Leaf (1 pc)"
+    },
+    {
+      "name": "Shrimp Dumpling (4 pc)"
+    },
+    {
+      "name": "Pork & Shrimp Siu Mye (4 pc)"
+    },
+    {
+      "name": "Chicken Mushroom Dumpling (2 pc)"
+    }
+  ],
+  "uncertainty": "Prices are not printed. Restaurant describes rotating varieties; availability may vary."
+}

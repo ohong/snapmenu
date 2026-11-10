@@ -1,0 +1,20 @@
+{
+  "restaurant": "Ideale Restaurant",
+  "address": "1309 Grant Ave, San Francisco, CA 94133",
+  "official_url": "https://ray-hyperboloid-z7w2.squarespace.com/menu",
+  "menu_url": "https://ray-hyperboloid-z7w2.squarespace.com/s/Ideale_Menu_15MARCH2026.pdf",
+  "retrieved_at": "2026-11-10T18:29:39.690365+00:00",
+  "source_pages": [
+    1
+  ],
+  "text_only_verified": true,
+  "verification_method": "Visually inspected rendered original PDF page; food appears as text and there are no dish photographs.",
+  "sha256": "afa6e6b05899db21348c097ac445f49b1e987e74ccd75aebf962d0f3579ba2a9",
+  "expected_dishes": [
+    "CALAMARI E RUGHETTA 22",
+    "INSALATA IDEALE 18",
+    "PIZZA MARGHERITA 21",
+    "PIZZA FUNGHI E SALSICCIA 24"
+  ],
+  "uncertainty": "Original PDF page 1 selected; page 2 omitted. Filename dates menu March 15, 2026."
+}

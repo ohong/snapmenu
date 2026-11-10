@@ -1,0 +1,20 @@
+{
+  "restaurant": "Bourbon Steak",
+  "address": null,
+  "official_url": "https://www.bourbonsteaksf.com/menus/",
+  "menu_url": "https://media-cdn.getbento.com/accounts/33a40dc82b7b7c3d6ebab73627374f42/media/uVfCT6ppTRKjGxtG1GJd_06192026%20BSSF%20Dinner%20Menu-2.pdf",
+  "retrieved_at": "2026-11-10T18:28:10.597563+00:00",
+  "source_pages": [
+    1,
+    2
+  ],
+  "text_only_verified": true,
+  "verification_method": "Rendered every PDF page with pdftoppm and visually inspected for food dishes and absence of dish photographs. Logos and illustrations may appear.",
+  "sha256": "b9be9f6c4a2087e04d98eda5fb893ac83b65877e13df33203af1b958a6781fbc",
+  "expected_dishes": [
+    "SHRIMP COCKTAIL — 32",
+    "ONION SOUP GRATIN — 18",
+    "MOREL AGNOLOTTI — 31"
+  ],
+  "uncertainty": "Menu is a retrieved snapshot; offerings and prices may have changed."
+}

@@ -1,0 +1,19 @@
+{
+  "restaurant": "NOVY",
+  "address": null,
+  "official_url": "https://www.novysf.com/",
+  "menu_url": "https://media-cdn.getbento.com/accounts/93b99639590f99a6cd2489e12ede0271/media/Qx5kQcQBRXuVjP0CaD2G_Novy%20Lunch%20and%20Dinner%21.pdf",
+  "retrieved_at": "2026-11-10T18:28:10.597563+00:00",
+  "source_pages": [
+    1
+  ],
+  "text_only_verified": true,
+  "verification_method": "Rendered every PDF page with pdftoppm and visually inspected for food dishes and absence of dish photographs. Logos and illustrations may appear.",
+  "sha256": "0e275d4aa3cbe5f1c730fc1b64cef21c9f16c0fdf8cd301edf7c244143ac1fc0",
+  "expected_dishes": [
+    "Grilled Halloumi Cheese — 16.5",
+    "Fried Calamari — 16",
+    "Lamb Bolognese — 23"
+  ],
+  "uncertainty": "Menu is a retrieved snapshot; offerings and prices may have changed."
+}

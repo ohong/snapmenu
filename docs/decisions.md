@@ -10,18 +10,18 @@ Two useful applications are photo quality checks and dish ranking. A determinist
 
 ## Recommended first feature: preference-based picks
 
-The current **Help me choose** button selects random dishes. A useful replacement would ask for a short preference such as “a light main with mushrooms” and rank only the actual menu dishes. This is an inference from SnapMenu's existing workflow, not evidence that users need the feature.
+The current screen has no suggestion feature. An optional future version could ask for a short preference such as “a light main with mushrooms” and rank only the actual menu dishes. This is an inference from SnapMenu's existing workflow, not evidence that users need the feature.
 
 Compare two approaches:
 
 - A Responses call can return selected dish IDs and a written explanation together. It is flexible, but requires validating generated objects and deciding how to ground explanations.
 - A Decisions request can score each supplied dish against a fixed rubric. The server ranks existing IDs and constructs the UI itself. This is more constrained, but it does not provide a natural-language explanation.
 
-Choose Decisions when constrained ranking is enough. Keep the free random selection available if the user skips preferences or the paid service fails. Label which method produced the result.
+Choose Decisions when constrained ranking is enough. Keep ordinary category browsing available if the user skips preferences or the paid service fails. Do not add this request to the default scan path.
 
 Suggested flow:
 
-1. Add an optional preference field to the existing suggestion control.
+1. Add an optional preference field without interrupting menu browsing.
 2. Send a private `POST /api/menus/{id}/suggestions` request with a bounded preference string.
 3. Load the owned menu server-side. Give Decisions the menu once as shared `input_json` evidence.
 4. Create one named score question per eligible dish. A menu has at most 100 dishes, below the documented 400-question limit.

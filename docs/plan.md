@@ -2,30 +2,21 @@
 
 ## Implemented locally
 
-- Replace competing Streamlit/Pixtral/FLUX paths with one Python API and mobile browser interface.
-- Read and translate with `gpt-6-luna`; generate dish images with `gpt-image-2.5-flare` through recoverable background Responses.
-- Preserve literal prices and original text; remove silent sample fallbacks.
-- Persist private menus, image tasks, and completed image files.
-- Add explicit error recovery, request budgets, and menu expiry.
-- Rewrite product, architecture, setup, and operating documentation.
-- Exercise browser journeys and failure states with test-only provider responses.
+- TypeScript Worker, D1 migration, private R2 storage, and scheduled expiry.
+- React/Base UI single-screen upload and paged visual menu.
+- Browser image normalization and lazy PDF rendering.
+- Muse/OpenAI provider flag with persisted provider-specific task ownership.
+- Visible-dish automatic generation, recovery, duplicate claims, and request caps.
+- 50 real SF source menus with provenance and a fixed 40/10 evaluation split.
 
-Exact verification results and remaining gaps are recorded in `verification.md` and the revival handoff `pls-fix.md`.
+## Required before claiming live readiness
 
-## Required before a public release
+1. Configure an active Meta key, or a working OpenAI key.
+2. Run a five-case live extraction check on each enabled provider.
+3. Review complete outputs and five diverse generated dish pictures against source descriptions.
+4. Measure upload, first text, first image, and complete visible-page latency on a phone network.
+5. Provision D1/R2, apply migrations, configure secrets, and deploy the Worker.
+6. Exercise deployed ownership, image recovery, deletion, and scheduled expiry.
+7. Test an actual iPhone and Android device, including camera selection, browser chrome, landscape, and long translated text.
 
-1. Replace the deactivated OpenAI account key with an active project key, and confirm model access and budgets.
-2. Complete the live provider checks in `verification.md` using the supplied sample menu photographs.
-3. Inspect extraction and translations against the photographs. Reject invented dishes, altered prices, or hidden omissions.
-4. Request one real dish image. Inspect quality, label, base64 output storage, reload, and task reuse.
-5. Deploy one instance with HTTPS, a persistent data volume, request limits, and provider budget caps.
-6. Test camera capture and file selection on physical iPhone Safari and Android Chrome.
-7. Repeat essential journeys against the hosted version, then verify backup and restore.
-
-## Later, only with evidence
-
-Restaurant sharing, accounts, cross-device history, public menus, and automatic image batches are not part of this release. Revisit them only when actual use justifies the added cost and complexity. Importing legacy Neon history is a separate authorized migration, not an automatic setup step.
-
-## Decisions API follow-up
-
-The [integration proposal](decisions.md) covers optional preference-based dish ranking and photo quality checks. Keep these out of the default paid flow until held-out examples show a useful improvement. The current course suggestion remains a free random selection.
+The repo is not a live deployment. Simulated provider checks do not establish model quality, speed, price, or account access. No Decisions API call is part of the current product.

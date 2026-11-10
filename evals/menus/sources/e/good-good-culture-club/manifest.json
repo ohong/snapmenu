@@ -1,0 +1,21 @@
+{
+  "restaurant": "Good Good Culture Club",
+  "address": "3560 18th St, San Francisco, CA 94110",
+  "official_url": "https://goodgoodcultureclub.com/pages/food",
+  "menu_url": "https://cdn.shopify.com/s/files/1/0612/3071/1008/files/SHOCHU_10-01-2026_GGMenu_FoodDrinks_AW_1_-01.svg?v=1790881009",
+  "retrieved_at": "2026-11-10T18:27:34.080391+00:00",
+  "source_pages": [
+    1
+  ],
+  "text_only_verified": true,
+  "verification_method": "Visually inspected rendered original page; food text and decorative graphics, no dish photographs.",
+  "sha256": "7d49e6354c69d8feade072ac7ba03ce65f08f1412e647868bd70b1303e5d9d8e",
+  "expected_dishes": [
+    "crying tiger shrimp — 21",
+    "laab tuna tataki — 21",
+    "GG fish cakes — 17",
+    "catfish mok pa — 23",
+    "skirt steak galbi — 35"
+  ],
+  "uncertainty": "Official page calls this a sample menu, subject to change."
+}

@@ -1,0 +1,24 @@
+{
+  "restaurant": "Seven Hills",
+  "address": "1896 Hyde Street, San Francisco, CA 94109",
+  "official_url": "https://www.sevenhillssf.com/",
+  "menu_url": "https://checkle.menu/sevenhills_sanfrancisco?embed=true&orderAheadActive=false&itemDivider=true&hideGradient=true&hideCheckleFooter=true",
+  "retrieved_at": "2026-11-10T18:31:33.198976+00:00",
+  "source_pages": [
+    "unpaginated HTML, captured menu region"
+  ],
+  "text_only_verified": true,
+  "verification_method": "Visual inspection of unaltered browser screenshot of menu region; no dish photos.",
+  "sha256": {
+    "page-1.png": "4137a984430251e58c9b7d623a73ec58f0571bbf45493bb3ad2532b68a90bd66",
+    "source.html": "fb0410256fd9fb24250654bef059922a4314d408ed67bc96c2da210bf356b55d",
+    "embedded.html": "49109609379deb13b80b6b95ced2c11ce5c66a3691334d6fc8a24c9efc336f6f"
+  },
+  "expected_dishes": [
+    "Maccheroncelli — 28",
+    "Fusilli — 29",
+    "Tortelli — 29",
+    "Agnolotti — 30"
+  ],
+  "uncertainty": "Embedded menu linked by official menu page https://www.sevenhillssf.com/menu. Browser screenshot captures upper menu."
+}

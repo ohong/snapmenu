@@ -1,0 +1,27 @@
+{
+  "restaurant": "The Rabbit Hole",
+  "address": "3472 Mission Street, San Francisco, CA 94110",
+  "official_url": "https://therabbithole-sf.com/",
+  "menu_url": "https://therabbithole-sf.com/Sample-Dinner-Menu.pdf",
+  "retrieved_at": "2026-11-10T18:34:23.028296+00:00",
+  "source_pages": [
+    {
+      "file": "menu-2.pdf",
+      "original_page": 2,
+      "url": "https://therabbithole-sf.com/Sample-Dinner-Menu.pdf"
+    }
+  ],
+  "text_only_verified": true,
+  "verification_method": "Rendered and visually inspected retained PDF page",
+  "sha256": {
+    "menu-2.pdf": "5f5701972332a949c45a5a4577c2e5afaa781d5b20173b45436ff4eacdab9814"
+  },
+  "expected_dishes": [
+    "Peanuts $5",
+    "Edamame $7",
+    "Cucumbers $9",
+    "Salmon Nori Taquitos $12",
+    "House Salad $11"
+  ],
+  "uncertainty": "Sample menu; only original page 2 retained."
+}

@@ -1,0 +1,20 @@
+{
+  "restaurant": "Casaro Osteria",
+  "address": null,
+  "official_url": "https://www.casaroosteria.com/",
+  "menu_url": "https://www.casaroosteria.com/Casaro_Menu_Final.pdf?v=2026-10-19",
+  "retrieved_at": "2026-11-10T18:28:40.121958+00:00",
+  "source_pages": [
+    2
+  ],
+  "text_only_verified": true,
+  "verification_method": "Visually inspected rendered PDF page: food text and decorative graphics, no dish photographs.",
+  "sha256": "358025fa5fe46135d1a586df7e85ba9cb05f977a07e75881fdecf19d753bdf1e",
+  "expected_dishes": [
+    "Arancini 16",
+    "Rigatoni alla Vodka 28",
+    "Polpo Grigliato 35",
+    "Margherita 21"
+  ],
+  "uncertainty": "Original PDF page 2 selected; page 1 is a cover. Official page says menus updated October 2026."
+}

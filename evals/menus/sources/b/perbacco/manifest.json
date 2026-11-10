@@ -1,0 +1,23 @@
+{
+  "restaurant": "Perbacco",
+  "address": "230 California St, San Francisco, CA 94111",
+  "official_url": "https://www.perbaccosf.com/",
+  "menu_url": "https://www.perbaccosf.com/menus/dinner/",
+  "retrieved_at": "2026-11-10T18:31:33.198297+00:00",
+  "source_pages": [
+    "unpaginated HTML, captured menu region"
+  ],
+  "text_only_verified": true,
+  "verification_method": "Visual inspection of unaltered browser screenshot of menu region; no dish photos.",
+  "sha256": {
+    "page-1.png": "7721030eace2990ee0a570b113ca362979b84befce4d15b4bad06e1b4c1c5027",
+    "source.html": "25b5e33f4eb3b3821aa1820a939a95de32a961a760a3c18089a14e1b616cff34"
+  },
+  "expected_dishes": [
+    "FRITTO MISTO — 20",
+    "VITELLO TONNATO — 19",
+    "CRUDO — 25",
+    "PIASTRA ROASTED OCTOPUS — 22"
+  ],
+  "uncertainty": "Browser screenshot of menu region; other regions of site contain food photos."
+}

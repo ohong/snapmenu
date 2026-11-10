@@ -1,0 +1,22 @@
+{
+  "restaurant": "Absinthe Brasserie & Bar",
+  "address": "388 Hayes Street, San Francisco, CA 94102",
+  "official_url": "https://www.absinthe.com/",
+  "menu_url": "https://static1.squarespace.com/static/624f382421799e11a4bac2d8/t/67041ad4f1434b786f4e9400/1728322260290/Absinthe%2BEvents%2BPacket%2BDINNER%2Bv6.pdf",
+  "retrieved_at": "2026-11-10T18:27:07.892728+00:00",
+  "source_pages": [
+    3
+  ],
+  "text_only_verified": true,
+  "verification_method": "Visual inspection of selected source page rendered from original PDF or original image; no dish photos.",
+  "sha256": {
+    "menu.pdf": "e6d8e9c51a3f6d8e0335cbb03825fee5c84f76ca973dcb80d37d9d38563df44e"
+  },
+  "expected_dishes": [
+    "Soupe À L’Oignon",
+    "Sweet Potato Agnolotti",
+    "Petrale Sole Meuniere",
+    "Pan Rosted Duck Breast"
+  ],
+  "uncertainty": "Private dining menu; 85 per person; dated 02/20 and not established current."
+}

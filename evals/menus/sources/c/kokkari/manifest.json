@@ -1,0 +1,38 @@
+{
+  "restaurant": "Kokkari Estiatorio",
+  "address": "200 Jackson Street, San Francisco, CA 94111",
+  "official_url": "https://kokkari.com/menus/",
+  "menu_url": "https://kokkari.com/menus/",
+  "retrieved_at": "2026-11-10T18:31:00Z",
+  "source_pages": [
+    "HTML Lunch > Starters, centered on Zucchini Cakes"
+  ],
+  "text_only_verified": true,
+  "verification_method": "Visually inspected unaltered Aside browser viewport screenshot of official HTML menu; no dish photographs.",
+  "sha256": {
+    "menu.png": "1c9cc91df435ff28f9666d2fb36609e8e6705ad60bb5dca03b85591bf137f547"
+  },
+  "expected_dishes": [
+    {
+      "name": "Feta & Olives",
+      "price": "14.50"
+    },
+    {
+      "name": "Watermelon & Feta",
+      "price": "14.75"
+    },
+    {
+      "name": "Beet Salad",
+      "price": "14.50"
+    },
+    {
+      "name": "Baked Feta",
+      "price": "16.75"
+    },
+    {
+      "name": "Zucchini Cakes",
+      "price": "14.75"
+    }
+  ],
+  "uncertainty": "Lunch menu prices and offerings may change."
+}

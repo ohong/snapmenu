@@ -1,0 +1,20 @@
+{
+  "restaurant": "Ernest",
+  "address": null,
+  "official_url": "https://www.ernestsf.com/menu",
+  "menu_url": "https://www.ernestsf.com/s/Ernest-Dinner-Cocktails-1162026.pdf",
+  "retrieved_at": "2026-11-10T18:27:34.079518+00:00",
+  "source_pages": [
+    1
+  ],
+  "text_only_verified": true,
+  "verification_method": "Visually inspected rendered original page; food text and decorative graphics, no dish photographs.",
+  "sha256": "e8a90c64f2d88e56af80585e633d71fe95e92b3c10fc95b145cd106eb0e4509b",
+  "expected_dishes": [
+    "Uni Toast — 27",
+    "Madai Sashimi — 25",
+    "Koshihikari Fried Rice — 23",
+    "Shio Koji Hanger Steak — 49"
+  ],
+  "uncertainty": "Original PDF includes a second drinks page; retained original page 1 only. Restaurant calls this a sample menu."
+}

@@ -1,0 +1,19 @@
+{
+  "restaurant": "3rd Cousin",
+  "address": null,
+  "official_url": "https://www.3rdcousinsf.com/menus/",
+  "menu_url": "https://media-cdn.getbento.com/accounts/59e89ad055ffa55f62739f4d7c5c17b2/media/mDopjwaTSjOVGc2TzYq2_Ala%20Carte%20Menu%2007.03.26.pdf",
+  "retrieved_at": "2026-11-10T18:28:10.597563+00:00",
+  "source_pages": [
+    1
+  ],
+  "text_only_verified": true,
+  "verification_method": "Rendered every PDF page with pdftoppm and visually inspected for food dishes and absence of dish photographs. Logos and illustrations may appear.",
+  "sha256": "27352597f898a212dc7024b2e59aa31a4ff4d5c36884c3ed318eb4c730eb91e1",
+  "expected_dishes": [
+    "sweet corn & kale fritters — 17",
+    "creamy sweet corn soup — 20",
+    "hand-rolled pici — 35"
+  ],
+  "uncertainty": "Menu is a retrieved snapshot; offerings and prices may have changed."
+}

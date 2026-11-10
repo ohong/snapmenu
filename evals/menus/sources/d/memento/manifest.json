@@ -1,0 +1,27 @@
+{
+  "restaurant": "Memento SF",
+  "address": "1305 Castro St, San Francisco, CA",
+  "official_url": "https://mementosf.com/pages/menu",
+  "menu_url": "https://mementosf.com/pages/menu",
+  "retrieved_at": "2026-11-10T18:34:23.027886+00:00",
+  "source_pages": [
+    {
+      "file": "menu.png",
+      "original_page": 1,
+      "url": "https://mementosf.com/pages/menu"
+    }
+  ],
+  "text_only_verified": true,
+  "verification_method": "Visually inspected saved screenshot",
+  "sha256": {
+    "menu.png": "e6785008ffb9ad2dfba9c27035857688c235a7d396fd167883ea1365d3025a34"
+  },
+  "expected_dishes": [
+    "Shishito Peppers $14",
+    "Cheese Bread Sliders $23",
+    "Short Rib Crispy Rice Cakes $16",
+    "Fried Cauliflower $14",
+    "Truffle Fries $14"
+  ],
+  "uncertainty": "Live menu may change."
+}

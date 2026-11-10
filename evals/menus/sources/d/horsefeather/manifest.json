@@ -1,0 +1,27 @@
+{
+  "restaurant": "Horsefeather",
+  "address": "528 Divisadero Street, San Francisco, CA 94117",
+  "official_url": "https://horsefeather.com/sf-menu-text",
+  "menu_url": "https://horsefeather.com/sf-menu-text",
+  "retrieved_at": "2026-11-10T18:34:23.028110+00:00",
+  "source_pages": [
+    {
+      "file": "menu.png",
+      "original_page": 1,
+      "url": "https://horsefeather.com/sf-menu-text"
+    }
+  ],
+  "text_only_verified": true,
+  "verification_method": "Visually inspected saved screenshot",
+  "sha256": {
+    "menu.png": "fb3dffa9a72f9b7590365e15fbcb70da379ddba5b029d4a0d938dfa542eb5331"
+  },
+  "expected_dishes": [
+    "UMAMI FRIES 11",
+    "KOREAN CRISPY WINGS 20",
+    "ROASTED CAULIFLOWER 15",
+    "DEVILED EGGS 13",
+    "LEMON GARLIC BROCCOLINI 15"
+  ],
+  "uncertainty": "Browser screenshot is a clipped menu region. The page warns that items change seasonally; its linked PDF returned 404."
+}

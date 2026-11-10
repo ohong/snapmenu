@@ -1,0 +1,26 @@
+{
+  "restaurant": "Kin Khao",
+  "address": "55 Cyril Magnin Street, San Francisco, CA 94102",
+  "official_url": "https://www.kinkhao.com/lets-eat",
+  "menu_url": "https://www.kinkhao.com/lets-eat",
+  "retrieved_at": "2026-11-10T18:28:36.447317+00:00",
+  "source_pages": [
+    {
+      "file": "menu.png",
+      "description": "Screenshot of the official web menu",
+      "url": "https://www.kinkhao.com/lets-eat"
+    }
+  ],
+  "text_only_verified": true,
+  "verification_method": "Visually inspected the saved browser screenshot; no food photographs in the captured region.",
+  "sha256": {
+    "menu.png": "c53e7bd15eabb3861a139c0f2588e86aa266da5bcaad65e34e676f375d6e51f4"
+  },
+  "expected_dishes": [
+    "Mushroom Hor Mok 20",
+    "Som Tum Papaya Salad 17",
+    "Khao Mun Gai 26",
+    "Sai Ua + Namprik Noom 26"
+  ],
+  "uncertainty": "Screenshot captures a portion of the live web menu; availability and prices can change."
+}

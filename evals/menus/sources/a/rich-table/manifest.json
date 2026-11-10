@@ -1,0 +1,19 @@
+{
+  "restaurant": "Rich Table",
+  "address": "199 Gough Street, San Francisco, CA 94102",
+  "official_url": "https://www.richtablesf.com/outdoor-dining/",
+  "menu_url": "https://images.getbento.com/accounts/19240e7d3dae472444ee79b70482115e/media/ThQvPs5SXKM6aGQMRrP6_Dinner%20Menu%2010.26.26%20.pdf",
+  "retrieved_at": "2026-11-10T18:28:10.597563+00:00",
+  "source_pages": [
+    1
+  ],
+  "text_only_verified": true,
+  "verification_method": "Rendered every PDF page with pdftoppm and visually inspected for food dishes and absence of dish photographs. Logos and illustrations may appear.",
+  "sha256": "9eef4b7e4c0a957d94f5e1be1daf15ea9e5b67ac81ecb720fc14b5e7fcc9eeb3",
+  "expected_dishes": [
+    "TORO TOAST, YUZU KOSHO, JAPANESE MILK BREAD — 25",
+    "CHICKEN LIVER MOUSSE, APPLE BUTTER UNCRUSTABLE, FALL HERBS — 20",
+    "TAJARIN, HOUSE CULTURED BUTTER, GRANA PADANO, HUITLACOCHE — 34"
+  ],
+  "uncertainty": "Menu is a retrieved snapshot; offerings and prices may have changed."
+}

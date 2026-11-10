@@ -47,3 +47,12 @@ logs/
 # Local development
 .DS_Store
 Thumbs.db
+
+# TypeScript runtime and Cloudflare local state
+node_modules/
+.wrangler/
+.dev.vars
+.dev.vars.*
+.env.*
+!.env.example
+!.dev.vars.example

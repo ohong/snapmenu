@@ -1,0 +1,19 @@
+{
+  "restaurant": "Foreign Cinema",
+  "address": "2534 Mission Street, San Francisco, CA 94110",
+  "official_url": "https://foreigncinema.com/menus/",
+  "menu_url": "https://foreigncinema.com/wp-content/uploads/Dinner-11.09.26-2.pdf",
+  "retrieved_at": "2026-11-10T18:28:10.597563+00:00",
+  "source_pages": [
+    1
+  ],
+  "text_only_verified": true,
+  "verification_method": "Rendered every PDF page with pdftoppm and visually inspected for food dishes and absence of dish photographs. Logos and illustrations may appear.",
+  "sha256": "b22e2323adc17010e7b9dc476d86004a564de94e00eb07288f679e5c204f5829",
+  "expected_dishes": [
+    "Mixed Mediterranean olives — 7.5",
+    "Pumpkin coconut curry velouté, crema, pepitas, cilantro — 12",
+    "Poppy seed fried chicken, Creole spices, creamy polenta, braised kale, pomegranates — 35"
+  ],
+  "uncertainty": "Menu is a retrieved snapshot; offerings and prices may have changed."
+}

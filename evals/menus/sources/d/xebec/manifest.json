@@ -1,0 +1,27 @@
+{
+  "restaurant": "Xebec",
+  "address": "131 Gough Street, San Francisco, CA 94102",
+  "official_url": "https://xebec-sf.com/",
+  "menu_url": "https://xebec-sf.com/menu.pdf",
+  "retrieved_at": "2026-11-10T18:34:23.028626+00:00",
+  "source_pages": [
+    {
+      "file": "menu-1.pdf",
+      "original_page": 1,
+      "url": "https://xebec-sf.com/menu.pdf"
+    }
+  ],
+  "text_only_verified": true,
+  "verification_method": "Rendered and visually inspected retained PDF page",
+  "sha256": {
+    "menu-1.pdf": "6b8b81df1379d394549c38a4053f7b03b009f235de46f0ebe310fb99b9dfdcde"
+  },
+  "expected_dishes": [
+    "Marinated Spanish & Greek Olives 7",
+    "Focaccia, Putanesca Sauce 8",
+    "Patatas Bravas 14",
+    "Oven Roasted Cauliflower 18",
+    "Fresh Uni Risotto Arancini 24"
+  ],
+  "uncertainty": "Only original page 1 retained; PDF may differ from current HTML menu."
+}

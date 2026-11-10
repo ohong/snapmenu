@@ -1,0 +1,27 @@
+{
+  "restaurant": "Frances",
+  "address": "3870 17th Street, San Francisco, CA",
+  "official_url": "https://www.frances-sf.com/dinner",
+  "menu_url": "https://www.frances-sf.com/dinner",
+  "retrieved_at": "2026-11-10T18:34:23.026970+00:00",
+  "source_pages": [
+    {
+      "file": "menu.png",
+      "original_page": 1,
+      "url": "https://www.frances-sf.com/dinner"
+    }
+  ],
+  "text_only_verified": true,
+  "verification_method": "Visually inspected saved screenshot",
+  "sha256": {
+    "menu.png": "3bd3e024484bb532975350244b5fa0c6fed14c7f7d76d2a4bbe11a17ac3a3c08"
+  },
+  "expected_dishes": [
+    "housemade SOURDOUGH 8",
+    "highwater OYSTERS 5",
+    "LOBSTER MUSHROOM 18",
+    "PANISSE FRITES 10",
+    "KURI SQUASH 14"
+  ],
+  "uncertainty": "Seasonal sample menu subject to change."
+}

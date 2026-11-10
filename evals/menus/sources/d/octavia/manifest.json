@@ -1,0 +1,27 @@
+{
+  "restaurant": "Octavia",
+  "address": "1701 Octavia Street, San Francisco, CA",
+  "official_url": "https://www.octavia-sf.com/menus/",
+  "menu_url": "https://www.octavia-sf.com/menus/",
+  "retrieved_at": "2026-11-10T18:34:23.027560+00:00",
+  "source_pages": [
+    {
+      "file": "menu.png",
+      "original_page": 1,
+      "url": "https://www.octavia-sf.com/menus/"
+    }
+  ],
+  "text_only_verified": true,
+  "verification_method": "Visually inspected saved screenshot",
+  "sha256": {
+    "menu.png": "cc36dd4089943eeb930221c3469e7916f7291aa5b25369cc8cfd3c46c75dd254"
+  },
+  "expected_dishes": [
+    "housemade SOURDOUGH 9",
+    "hog island OYSTER 6",
+    "lonely mountain CAULIFLOWER 14",
+    "sweet potato CROQUETTE 16",
+    "bluefin tuna CRUDO 24"
+  ],
+  "uncertainty": "Menu subject to change."
+}

@@ -1,0 +1,142 @@
+"""Normalize real source snapshots to phone-sized JPEG inputs. No AI calls."""
+
+import hashlib
+import io
+import json
+import re
+from pathlib import Path
+import pypdfium2 as pdfium
+from PIL import Image, ImageOps
+from playwright.sync_api import sync_playwright
+
+ROOT = Path(__file__).resolve().parent
+
+
+def normalize(image):
+    image = ImageOps.exif_transpose(image).convert("RGB")
+    image.thumbnail((1800, 1800))
+    output = io.BytesIO()
+    image.save(output, "JPEG", quality=85)
+    return output.getvalue()
+
+
+def main():
+    cases = []
+    restaurants = set()
+    with sync_playwright() as pw:
+        browser = pw.chromium.launch()
+        page = browser.new_page()
+        for manifest in sorted((ROOT / "sources").glob("*/*/manifest.json")):
+            meta = json.loads(manifest.read_text())
+            case_id = manifest.parent.name
+            assert meta["restaurant"].casefold() not in restaurants, meta["restaurant"]
+            restaurants.add(meta["restaurant"].casefold())
+            assert meta["text_only_verified"] and len(meta["expected_dishes"]) >= 3
+            files = sorted(
+                p
+                for p in manifest.parent.iterdir()
+                if p.suffix in [".pdf", ".png", ".jpg", ".svg"]
+            )
+            hashes = meta["sha256"]
+            if isinstance(hashes, str):
+                assert (
+                    len(files) == 1
+                    and hashlib.sha256(files[0].read_bytes()).hexdigest() == hashes
+                )
+            else:
+                for name, digest in hashes.items():
+                    assert (
+                        hashlib.sha256(
+                            (manifest.parent / name).read_bytes()
+                        ).hexdigest()
+                        == digest
+                    ), (case_id, name)
+            inputs = []
+            for source in files:
+                images = []
+                if source.suffix == ".pdf":
+                    with pdfium.PdfDocument(source) as doc:
+                        assert len(doc) <= 3, source
+                        for index in range(len(doc)):
+                            p = doc[index]
+                            w, h = p.get_size()
+                            bitmap = p.render(scale=min(2, 1800 / max(w, h)))
+                            images.append(bitmap.to_pil().copy())
+                            bitmap.close()
+                            p.close()
+                elif source.suffix == ".svg":
+                    page.goto(source.resolve().as_uri())
+                    dims = page.locator("svg").evaluate(
+                        "(e)=>{const v=e.viewBox.baseVal;return {width:v.width||e.width.baseVal.value,height:v.height||e.height.baseVal.value}}"
+                    )
+                    scale = min(1, 1800 / max(dims.values()))
+                    page.set_viewport_size(
+                        {
+                            "width": max(1, round(dims["width"] * scale)),
+                            "height": max(1, round(dims["height"] * scale)),
+                        }
+                    )
+                    page.locator("svg").evaluate(
+                        '(e)=>{e.style.width="100vw";e.style.height="100vh";e.style.margin="0";}'
+                    )
+                    images = [Image.open(io.BytesIO(page.screenshot()))]
+                else:
+                    images = [Image.open(source)]
+                for image in images:
+                    target = ROOT / "inputs" / case_id / f"page-{len(inputs) + 1}.jpg"
+                    target.parent.mkdir(parents=True, exist_ok=True)
+                    data = normalize(image)
+                    target.write_bytes(data)
+                    inputs.append(
+                        {
+                            "file": str(target.relative_to(ROOT)),
+                            "sha256": hashlib.sha256(data).hexdigest(),
+                            "bytes": len(data),
+                        }
+                    )
+            anchors = []
+            for entry in meta["expected_dishes"]:
+                if isinstance(entry, dict):
+                    anchors.append(
+                        {"name": entry["name"], "price": str(entry.get("price", ""))}
+                    )
+                elif " — " in entry:
+                    name, price = entry.rsplit(" — ", 1)
+                    anchors.append({"name": name, "price": price})
+                else:
+                    match = re.fullmatch(
+                        r"(.*?)[, |]*\s+(\$?\d+(?:\.\d+)?(?:\s+FOR\s+\d+)?)", entry
+                    )
+                    anchors.append(
+                        {
+                            "name": match.group(1).rstrip(" ,|") if match else entry,
+                            "price": match.group(2) if match else "",
+                        }
+                    )
+            cases.append(
+                {
+                    "id": case_id,
+                    "restaurant": meta["restaurant"],
+                    "manifest": str(manifest.relative_to(ROOT)),
+                    "inputs": inputs,
+                    "anchors": anchors,
+                    "uncertainty": meta["uncertainty"],
+                }
+            )
+        browser.close()
+    assert len(cases) == 50, len(cases)
+    # Fixed split prevents changes in source ordering from moving the holdout boundary.
+    ranked = sorted(cases, key=lambda c: hashlib.sha256(c["id"].encode()).hexdigest())
+    holdout = {c["id"] for c in ranked[:10]}
+    for case in cases:
+        case["split"] = "holdout" if case["id"] in holdout else "development"
+    (ROOT / "cases.json").write_text(
+        json.dumps(cases, ensure_ascii=False, indent=2) + "\n"
+    )
+    print(
+        f"Validated {len(cases)} distinct restaurants, {sum(len(c['inputs']) for c in cases)} JPEG pages, 40 development / 10 holdout."
+    )
+
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,19 @@
+{
+  "restaurant": "Nopa",
+  "address": "560 Divisadero Street, San Francisco, CA 94117",
+  "official_url": "https://www.nopasf.com/menus",
+  "menu_url": "https://www.nopasf.com/s/dinner.pdf",
+  "retrieved_at": "2026-11-10T18:28:10.597563+00:00",
+  "source_pages": [
+    1
+  ],
+  "text_only_verified": true,
+  "verification_method": "Rendered every PDF page with pdftoppm and visually inspected for food dishes and absence of dish photographs. Logos and illustrations may appear.",
+  "sha256": "6be8632bbbda2218368fc6e0617818f6eded2d0c5ccc5643cfc5b87090827ec2",
+  "expected_dishes": [
+    "CAULIFLOWER SOUP — 14",
+    "EGGPLANT PARMESAN — 29",
+    "YAYA’S FRIED CHICKEN — 33"
+  ],
+  "uncertainty": "Menu is a retrieved snapshot; offerings and prices may have changed."
+}

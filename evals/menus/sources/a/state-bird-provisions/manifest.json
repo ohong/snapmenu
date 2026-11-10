@@ -1,0 +1,19 @@
+{
+  "restaurant": "State Bird Provisions",
+  "address": null,
+  "official_url": "https://www.statebirdsf.com/",
+  "menu_url": "https://www.statebirdsf.com/s/3225-SBP-Kitchen-Menu.pdf",
+  "retrieved_at": "2026-11-10T18:28:10.597563+00:00",
+  "source_pages": [
+    1
+  ],
+  "text_only_verified": true,
+  "verification_method": "Rendered every PDF page with pdftoppm and visually inspected for food dishes and absence of dish photographs. Logos and illustrations may appear.",
+  "sha256": "fa0ac4b977883f839d49229643df86272be1f299ea8c0db1c67ff39536e18f1f",
+  "expected_dishes": [
+    "steamed egg tofu pickled honshimeji & garlic-chile oil — 9",
+    "garlic bread burrata & 7 pepper spice — 13",
+    "CA state bird with provisions — 24"
+  ],
+  "uncertainty": "Menu is a retrieved snapshot; offerings and prices may have changed. Dated URL indicates an older menu; current availability is unverified."
+}

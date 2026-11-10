@@ -1,0 +1,22 @@
+{
+  "restaurant": "BIX",
+  "address": "56 Gold Street, San Francisco, CA",
+  "official_url": "https://bixrestaurant.com/",
+  "menu_url": "https://bixrestaurant.com/wp-content/uploads/2019/05/Small-Party-Info-and-Sample-Menus-2025.pdf",
+  "retrieved_at": "2026-11-10T18:27:30.325071+00:00",
+  "source_pages": [
+    3
+  ],
+  "text_only_verified": true,
+  "verification_method": "Visual inspection of rendered page 3; logo and text, no dish photos.",
+  "sha256": {
+    "menu.pdf": "d6f12b62accd3b413a1a7eda98fdedc51b47e2f1228acfd7ace24a0d02adb15a"
+  },
+  "expected_dishes": [
+    "BIX Truffled Deviled Eggs",
+    "Potato Pillows with Caviar",
+    "Chicken Hash à la BIX",
+    "Beef Short Rib"
+  ],
+  "uncertainty": "Sample $95 group dinner menu dated 2025; not established current."
+}

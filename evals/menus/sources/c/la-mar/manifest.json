@@ -1,0 +1,38 @@
+{
+  "restaurant": "La Mar San Francisco",
+  "address": "Pier 1 1/2 The Embarcadero N, San Francisco, CA 94111",
+  "official_url": "https://lamarcebicheria.com/san-francisco/",
+  "menu_url": "https://lamarcebicheria.com/san-francisco/menu/",
+  "retrieved_at": "2026-11-10T18:31:30Z",
+  "source_pages": [
+    "HTML Dinner Menu > Cebiches, centered on Victoriano"
+  ],
+  "text_only_verified": true,
+  "verification_method": "Visually inspected unaltered Aside browser viewport screenshot of official HTML menu; no dish photographs.",
+  "sha256": {
+    "menu.png": "abf917cff8d34671d3adb006e383b89046eb8310e3fbe5f34a1f758909a1348a"
+  },
+  "expected_dishes": [
+    {
+      "name": "Clásico",
+      "price": "$32.00"
+    },
+    {
+      "name": "Limeño",
+      "price": "$31.00"
+    },
+    {
+      "name": "Victoriano",
+      "price": "$32.00"
+    },
+    {
+      "name": "Nikkei",
+      "price": "$33.00"
+    },
+    {
+      "name": "Quemado",
+      "price": "$30.00"
+    }
+  ],
+  "uncertainty": "Menu items and prices can change."
+}

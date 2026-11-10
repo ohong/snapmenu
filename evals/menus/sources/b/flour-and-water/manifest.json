@@ -1,0 +1,23 @@
+{
+  "restaurant": "Flour + Water",
+  "address": "2401 Harrison St, San Francisco, CA 94110",
+  "official_url": "https://www.flourandwater.com/",
+  "menu_url": "https://www.flourandwater.com/testkitchen/wp-content/uploads/2026/11/FW_Menus_Website_Dinner_11.09.26.pdf",
+  "retrieved_at": "2026-11-10T18:31:33.200244+00:00",
+  "source_pages": [
+    1
+  ],
+  "text_only_verified": true,
+  "verification_method": "Visual inspection of rendered source PDF page; no dish photos.",
+  "sha256": {
+    "menu.pdf": "105e09d39c66acf435df6481d4474ea74fd05c4222dc149eeaef81492f08506f",
+    "source.html": "e70206e82150e559e7d257930d52f30ead168477a684231873b688433aecdd52"
+  },
+  "expected_dishes": [
+    "TODAY’S RICOTTA — 18",
+    "EGGPLANT ARANCINI — 19",
+    "MARGHERITA — 24",
+    "DUCK TRIANGOLI — 33"
+  ],
+  "uncertainty": "Menu linked from official menus page; filename indicates November 9, 2026."
+}

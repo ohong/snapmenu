@@ -1,0 +1,19 @@
+{
+  "restaurant": "Dalida",
+  "address": "101 Montgomery St., The Presidio of San Francisco, San Francisco, CA 94129",
+  "official_url": "https://www.dalidasf.com/menus/",
+  "menu_url": "https://media-cdn.getbento.com/accounts/1959ac8819ed4c6dee691307a1622066/media/MTu0uKthQiSmbArt0sqS_Dalida%20Dinner%20Menu9.23%20FALL.pdf",
+  "retrieved_at": "2026-11-10T18:28:10.597563+00:00",
+  "source_pages": [
+    1
+  ],
+  "text_only_verified": true,
+  "verification_method": "Rendered every PDF page with pdftoppm and visually inspected for food dishes and absence of dish photographs. Logos and illustrations may appear.",
+  "sha256": "a043d557ac156a0ddeb8418214d7904e4f710a186f722b7da91eccc2120c8acd",
+  "expected_dishes": [
+    "Breaking Bread — 18",
+    "Anatolian Eriste — 26",
+    "Aleppo Half-Chicken — 41"
+  ],
+  "uncertainty": "Menu is a retrieved snapshot; offerings and prices may have changed."
+}

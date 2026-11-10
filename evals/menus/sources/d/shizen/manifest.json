@@ -1,0 +1,27 @@
+{
+  "restaurant": "Shizen Vegan Sushi Bar & Izakaya",
+  "address": "370 14th Street, San Francisco, CA 94103",
+  "official_url": "https://www.shizensf.com/menu?menu=our-menu",
+  "menu_url": "https://www.shizensf.com/menu?menu=our-menu",
+  "retrieved_at": "2026-11-10T18:27:56.570702+00:00",
+  "source_pages": [
+    {
+      "file": "menu.png",
+      "description": "Screenshot of the official web menu",
+      "url": "https://www.shizensf.com/menu?menu=our-menu"
+    }
+  ],
+  "text_only_verified": true,
+  "verification_method": "Visually inspected the saved browser screenshot; no food photographs in the captured region.",
+  "sha256": {
+    "menu.png": "5ea35ec109300f0a056e632d78183991d828488dc04199815a668958e3f39385"
+  },
+  "expected_dishes": [
+    "miso soup $5",
+    "nameko mushroom miso soup $7",
+    "edamame $7",
+    "garlic edamame $9",
+    "gyoza $13"
+  ],
+  "uncertainty": "Screenshot captures starters and salads; page hero contains a food photo outside the captured region."
+}

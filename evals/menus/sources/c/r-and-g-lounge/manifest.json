@@ -1,0 +1,38 @@
+{
+  "restaurant": "R&G Lounge",
+  "address": "631 Kearny St, San Francisco, CA 94108",
+  "official_url": "https://www.rnglounge.com/",
+  "menu_url": "https://cdn.prod.website-files.com/6269735e32ff3b31a0dde994/6a9208e0f4f9c07e7ec72d32_R%26G%20Lounge%20Lunch%20Menu%202026-08-25%20FINAL.pdf",
+  "retrieved_at": "2026-11-10T18:27:20Z",
+  "source_pages": [
+    1
+  ],
+  "text_only_verified": true,
+  "verification_method": "Visually inspected rendered source PDF page 1; text, logo and chili icon, with no food photographs.",
+  "sha256": {
+    "page-1.pdf": "f58602c1f7baf59f0c03b5e91a823b794bf3732a1c484b24fa5de16b6036c2ad"
+  },
+  "expected_dishes": [
+    {
+      "name": "CHICKEN & CORN SOUP",
+      "price": "5"
+    },
+    {
+      "name": "HOT & SOUR SOUP",
+      "price": "5"
+    },
+    {
+      "name": "R&G SPECIAL BEEF OVER RICE",
+      "price": "18"
+    },
+    {
+      "name": "DICED HONEY GARLIC CHICKEN OVER RICE",
+      "price": "15"
+    },
+    {
+      "name": "BBQ PORK & WONTON NOODLE SOUP",
+      "price": "19"
+    }
+  ],
+  "uncertainty": "Lunch menu; availability and prices may change."
+}

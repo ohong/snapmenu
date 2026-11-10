@@ -1,0 +1,20 @@
+{
+  "restaurant": "Roka Akor",
+  "address": null,
+  "official_url": "https://rokaakor.com/",
+  "menu_url": "https://rokaakor.com/wp-content/uploads/2024/10/Roka-SF-Dinner-Menu-Edited-October-21st-2024.pdf",
+  "retrieved_at": "2026-11-10T18:28:10.597563+00:00",
+  "source_pages": [
+    1,
+    2
+  ],
+  "text_only_verified": true,
+  "verification_method": "Rendered every PDF page with pdftoppm and visually inspected for food dishes and absence of dish photographs. Logos and illustrations may appear.",
+  "sha256": "9311ac6e8e3ab5005965430e5a378206498d5e61e3bcfbd1ebe9151035b5430e",
+  "expected_dishes": [
+    "Yellowtail Sashimi with Green Chili, Shallots and Poached Garlic Ponzu — 26",
+    "Eggplant Tempura with Japanese Curry Spice and Mushroom Tentsuyu — 14",
+    "Japanese Style Fried Chicken with Smoked Chili Aioli — 17"
+  ],
+  "uncertainty": "Menu is a retrieved snapshot; offerings and prices may have changed. URL indicates an October 2024 menu; current availability is unverified."
+}

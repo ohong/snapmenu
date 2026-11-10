@@ -1,0 +1,20 @@
+{
+  "restaurant": "Bar Gemini",
+  "address": "2845 18th Street, San Francisco, CA 94110",
+  "official_url": "https://www.bargeminisf.com/",
+  "menu_url": "https://www.bargeminisf.com/menu.pdf",
+  "retrieved_at": "2026-11-10T18:29:39.690149+00:00",
+  "source_pages": [
+    1
+  ],
+  "text_only_verified": true,
+  "verification_method": "Visually inspected rendered original PDF page; food appears as text and there are no dish photographs.",
+  "sha256": "bb577eb07c165b663fb6be6f7388eca0509e27f1a590102da1924f1832004b56",
+  "expected_dishes": [
+    "CACIO E PEPE DEVILED EGGS 11 FOR 2",
+    "SMOKED SALMON DIP 19",
+    "SHRIMP COCKTAIL (4) 21",
+    "THE GEMINI DOG 20"
+  ],
+  "uncertainty": "Original PDF page 1 selected; original page 2 omitted. Menu by Ernest for Bar Gemini; currentness uncertain."
+}

@@ -1,0 +1,33 @@
+{
+  "restaurant": "Boulevard",
+  "address": "1 Mission Street, San Francisco, CA 94105",
+  "official_url": "https://www.boulevardrestaurant.com/",
+  "menu_url": "https://www.boulevardrestaurant.com/menu/dinner/",
+  "retrieved_at": "2026-11-10T18:30:30Z",
+  "source_pages": [
+    "HTML Dining Room > Starters, centered on FIGS, MOKA BLUE CHEESE & RED ENDIVE"
+  ],
+  "text_only_verified": true,
+  "verification_method": "Visually inspected an unaltered Aside browser viewport screenshot of the official HTML menu; no food photos.",
+  "sha256": {
+    "menu.png": "ce532079d0e2227aae761cda483b6d5fe67c602e3ca36dfda2f5818c4b994f5a"
+  },
+  "expected_dishes": [
+    {
+      "name": "BLUEFIN TUNA"
+    },
+    {
+      "name": "HIRAMASA CRUDO"
+    },
+    {
+      "name": "STEAK TARTARE"
+    },
+    {
+      "name": "FIGS, MOKA BLUE CHEESE & RED ENDIVE"
+    },
+    {
+      "name": "HEIRLOOM TOMATOES & BURRATA SALAD"
+    }
+  ],
+  "uncertainty": "Menu selections lack individual prices; page states three selections starting at $128 per person, outside the captured viewport. Menu may change."
+}

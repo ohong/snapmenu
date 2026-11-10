@@ -1,0 +1,38 @@
+{
+  "restaurant": "Mister Jiu’s",
+  "address": "28 Waverly Place, San Francisco, CA 94108",
+  "official_url": "https://www.misterjius.com/menu",
+  "menu_url": "https://static1.squarespace.com/static/685c1dbbcccc767e394a79b0/t/69d05e7beb663151cf0f3e9c/1775263355184/Mister%2BJiu%27s%2BA%2BLa%2BCarte%2BMenu.pdf",
+  "retrieved_at": "2026-11-10T18:26:42Z",
+  "source_pages": [
+    2
+  ],
+  "text_only_verified": true,
+  "verification_method": "Visually inspected rendered PDF source page 2; it contains food text, typography and decorative border, with no food photographs.",
+  "sha256": {
+    "page-2.pdf": "0f4d7107edbbac399946da5424381d1539c07aa18b66af243a501466446f7982"
+  },
+  "expected_dishes": [
+    {
+      "name": "Salt & Vinegar Shrimp Chips",
+      "price": "16"
+    },
+    {
+      "name": "Chilled Beef Tendon",
+      "price": "20"
+    },
+    {
+      "name": "Scallion Milk Bread",
+      "price": "16"
+    },
+    {
+      "name": "Pan Fried Turnip Cake",
+      "price": "16"
+    },
+    {
+      "name": "Silken Mapo Tofu",
+      "price": "32"
+    }
+  ],
+  "uncertainty": "Menu PDF dated April 2026; current prices and availability may differ."
+}

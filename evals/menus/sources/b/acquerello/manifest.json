@@ -1,0 +1,23 @@
+{
+  "restaurant": "Acquerello",
+  "address": "1722 Sacramento Street, San Francisco, CA 94109",
+  "official_url": "https://www.acquerellosf.com/",
+  "menu_url": "https://www.acquerellosf.com/menus",
+  "retrieved_at": "2026-11-10T18:31:33.196925+00:00",
+  "source_pages": [
+    "unpaginated HTML, captured menu region"
+  ],
+  "text_only_verified": true,
+  "verification_method": "Visual inspection of unaltered browser screenshot of menu region; no dish photos.",
+  "sha256": {
+    "page-1.png": "5ccc86ca4f79573b45d5a85ab3a912b8639ff19998660e8b3f673a211b70eb8f",
+    "source.html": "c4bb4ca755cdd747cc944aef8143f64e7b3ded3d94d928c3cc635551c0f32bfe"
+  },
+  "expected_dishes": [
+    "Crudo of Spanish mackerel, Concord grape, lovage",
+    "Hokkaido scallop, Chanterelle, corn, truffle",
+    "Wolfe Ranch quail, sunchoke, Shinko pear, onion confit, Moscato",
+    "Duck piramidi, radicchio Treviso, Honeynut squash, brown butter, aged Sherry"
+  ],
+  "uncertainty": "Restaurant labels this a sample seasonal tasting menu; individual prices are not printed in capture."
+}

@@ -1,0 +1,20 @@
+{
+  "restaurant": "Aziza",
+  "address": "5800 Geary Boulevard, San Francisco, CA 94121",
+  "official_url": "https://www.azizasf.com/dinner",
+  "menu_url": "https://static1.squarespace.com/static/6983c4e9211dcf5cebf4a2a2/t/698f5cef39484e54be4c3555/1771003119252/aziza%2Bdinner%2Bmenu%2B02.13.pdf",
+  "retrieved_at": "2026-11-10T18:27:34.078852+00:00",
+  "source_pages": [
+    1
+  ],
+  "text_only_verified": true,
+  "verification_method": "Visually inspected rendered original page; food text and decorative graphics, no dish photographs.",
+  "sha256": "ee0c04ba3d9d7e41c25775cfbac090a6073f58936b642616db2f646e7537914f",
+  "expected_dishes": [
+    "king salad | romaine lettuce | oregano goddess | crispy alliums | aged cheese — 19",
+    "grilled octopus | m’hamsa | merguez vinaigrette | preserved apricot — 32",
+    "basteeya — 36",
+    "braised lamb shank | cracked wheat | moyer prune | sweet potato | herb jam — 55"
+  ],
+  "uncertainty": "PDF dated February 13; menu may have changed."
+}

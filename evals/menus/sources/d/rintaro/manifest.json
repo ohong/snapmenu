@@ -1,0 +1,27 @@
+{
+  "restaurant": "Rintaro",
+  "address": "82 14th Street, San Francisco, CA",
+  "official_url": "https://izakayarintaro.com/",
+  "menu_url": "https://izakayarintaro.com/",
+  "retrieved_at": "2026-11-10T18:27:56.572964+00:00",
+  "source_pages": [
+    {
+      "file": "menu.png",
+      "description": "Screenshot of the official web menu",
+      "url": "https://izakayarintaro.com/"
+    }
+  ],
+  "text_only_verified": true,
+  "verification_method": "Visually inspected the saved browser screenshot; no food photographs in the captured region.",
+  "sha256": {
+    "menu.png": "571adef8c9e1e1910cd801fca643ec7850858f14568d23d19d0d124962761d18"
+  },
+  "expected_dishes": [
+    "Ika no Nuta, $17",
+    "Shungiku Kamo Sarada, $24",
+    "Gindara no Sunomono, $25",
+    "Eringi, $12",
+    "Negima, $15"
+  ],
+  "uncertainty": "Restaurant labels this a sample seasonal menu, subject to change. Screenshot captures a portion of the page."
+}

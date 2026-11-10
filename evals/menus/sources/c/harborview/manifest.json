@@ -1,0 +1,38 @@
+{
+  "restaurant": "Harborview Restaurant & Bar",
+  "address": "Four Embarcadero, San Francisco, CA 94111",
+  "official_url": "https://www.harborviewsf.com/",
+  "menu_url": "https://media-cdn.getbento.com/accounts/a9a05a32a9abad0e6803b9fbbb9dcf4e/media/nBdnD1bRMOiqYws1PmbO_Master%20Main%20Menu%20for%20PDF%20%28v.10.31.20%29.pdf",
+  "retrieved_at": "2026-11-10T18:27:00Z",
+  "source_pages": [
+    1
+  ],
+  "text_only_verified": true,
+  "verification_method": "Visually inspected rendered source PDF page 1; food text, restaurant and social logos, and QR code only; no dish photographs.",
+  "sha256": {
+    "page-1.pdf": "fd729a321b1d08e60b96717bcfb317c9d7e42ece00f22f1189212f6a135d3691"
+  },
+  "expected_dishes": [
+    {
+      "name": "VEGETABLE EGG ROLLS",
+      "price": "$6"
+    },
+    {
+      "name": "BAKED BBQ PORK BUNS",
+      "price": "$8"
+    },
+    {
+      "name": "STEAMED KUROBUTA PORK SOUP DUMPLINGS",
+      "price": "$9"
+    },
+    {
+      "name": "SEA SALT TOFU FRIES",
+      "price": "$10"
+    },
+    {
+      "name": "HARBORVIEW BEEF",
+      "price": "$20"
+    }
+  ],
+  "uncertainty": "Historical menu dated October 2020; prices, hours, and availability may have changed. Restaurant-branded PDF is hosted on BentoBox CDN; current menu page may differ."
+}

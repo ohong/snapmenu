@@ -1,0 +1,20 @@
+{
+  "restaurant": "Hazie's",
+  "address": "501 Hayes St, San Francisco, CA 94102",
+  "official_url": "https://www.haziessf.com/",
+  "menu_url": "https://media-cdn.getbento.com/accounts/d714359c9cd83da46ed7ec8a27409814/media/RR3viuKCQDqHymo4atY7_NEW%20Hazies%20Dinner%20Menu%206.26.25.pdf",
+  "retrieved_at": "2026-11-10T18:28:40.122396+00:00",
+  "source_pages": [
+    1
+  ],
+  "text_only_verified": true,
+  "verification_method": "Visually inspected rendered PDF page: food text and decorative graphics, no dish photographs.",
+  "sha256": "4640ace4767269f4338cb522fa6b75bef96d67b383669b00773d6abc2f8ca46d",
+  "expected_dishes": [
+    "OAXACAN CHEESE FUNDIDO 18",
+    "SICHUAN PORK DUMPLINGS 16",
+    "DUCK CARBONARA 34",
+    "HAZIE'S BURGER 24"
+  ],
+  "uncertainty": "PDF filename dates it June 2025; linked official HTML menu has different prices and dishes."
+}

@@ -1,0 +1,23 @@
+{
+  "restaurant": "A16 San Francisco",
+  "address": "2355 Chestnut Street, San Francisco, CA 94123",
+  "official_url": "https://www.a16pizza.com/",
+  "menu_url": "https://www.a16pizza.com/san-francisco/menu",
+  "retrieved_at": "2026-11-10T18:31:33.195349+00:00",
+  "source_pages": [
+    "unpaginated HTML, captured menu region"
+  ],
+  "text_only_verified": true,
+  "verification_method": "Visual inspection of unaltered browser screenshot of menu region; no dish photos.",
+  "sha256": {
+    "page-1.png": "9d5e5687566d81121adf62ddc5e45447c9e1ff8c4d0f098a85278c3bf096d1ea",
+    "source.html": "27574bd16378fb0869d9aaff6059e9fb5bcb7859c581aeae119817baa3e9ca47"
+  },
+  "expected_dishes": [
+    "Artigiana Burrata — 21 | 27",
+    "Radicchio Salad — 21",
+    "Roasted Beet Salad — 19",
+    "Braised Meatballs — 16 | 24"
+  ],
+  "uncertainty": "Browser screenshot of menu region; pricing variants as printed."
+}

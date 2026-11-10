@@ -1,0 +1,36 @@
+{
+  "restaurant": "Mars Bar & Restaurant",
+  "address": "798 Brannan Street, San Francisco, CA 94103",
+  "official_url": "https://www.marsbarsf.com/",
+  "menu_url": "https://www.marsbarsf.com/wp-content/uploads/2024/03/mars_menu_3-24.pdf",
+  "retrieved_at": "2026-11-10T18:49:38.702963+00:00",
+  "source_pages": [
+    1
+  ],
+  "text_only_verified": true,
+  "verification_method": "Visually inspected original PDF page 1; menu text, logo and decorative background, no photographs.",
+  "sha256": "2e50181bab393991854022ecf8c75d068a428d7f2e514397b10252427a2bcb78",
+  "expected_dishes": [
+    {
+      "name": "CHEESE PIZZA",
+      "price": "20"
+    },
+    {
+      "name": "PEPPERONI PIZZA",
+      "price": "24"
+    },
+    {
+      "name": "CHICKEN SKEWERS (3)",
+      "price": "15"
+    },
+    {
+      "name": "NACHOS",
+      "price": "17"
+    },
+    {
+      "name": "CHEESEBURGER SLIDERS (3)",
+      "price": "18"
+    }
+  ],
+  "uncertainty": "Original PDF page 1 selected; page 2 omitted. Filename suggests March 2024; prices and availability may have changed."
+}

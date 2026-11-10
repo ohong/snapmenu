@@ -1,82 +1,34 @@
 # Verification
 
-## Exact source state
+## Final local run
 
-Baseline: `5e6edea`. The October 27 OpenAI migration and the preceding mobile rebuild are included in the requested commit/push. See Git history for the commit identity. Runtime and test source identity:
-
-```text
-SHA-256: 9bd4e26675f5a9a07fccf49e458af693482f29423108af565d2100ba375fc114
-```
-
-The digest includes 17 sorted files: root Python modules, all static assets, test Python files, both requirements files, Dockerfile, and pytest.ini. It hashes each relative path, a null byte, file bytes, and a null byte. Documentation and generated evidence are excluded.
+November 10, 2026: `npm run check` passed. The production Vite build and Cloudflare deployment dry run passed. The local D1 migration applied successfully. The combined real-browser/API suite passed **72 checks in 53.39 seconds**:
 
 ```sh
-python - <<'PY'
-import hashlib
-from pathlib import Path
-paths = sorted([*Path('.').glob('*.py'), *Path('static').glob('*'), *Path('tests').glob('*.py'), Path('requirements.txt'), Path('requirements-dev.txt'), Path('Dockerfile'), Path('pytest.ini')], key=str)
-h = hashlib.sha256()
-for path in paths:
-    h.update(str(path).encode() + b'\0' + path.read_bytes() + b'\0')
-print(h.hexdigest())
-PY
+npm run test:prepare
+.venv/bin/pytest --browser chromium --browser webkit --tb=short --junitxml=test-results/junit.xml
 ```
 
-## Automated acceptance
+Both `AI_PROVIDER=muse` and `AI_PROVIDER=openai` run in Cloudflare's real local Worker runtime with D1 and R2. The external paid provider HTTP boundary alone is simulated by the test harness. It checks fixed provider origins, model IDs, schema requests, extraction storage settings, background image requests, Muse tool settings, and OpenAI image-tool settings. Production has no fixture routes or simulation flag.
 
-The tests start a real Uvicorn server, drive real Chromium and WebKit browsers, decode actual files, and persist data in temporary SQLite storage. Only external provider HTTP responses use a test-only `httpx.MockTransport`. Production has no fixture flag, fixture endpoint, or hidden sample fallback. Test fixture keys are inert strings.
+The browser suite verifies automatic reading after file selection, language changes, category selection, pagination, image appearance, reload reuse, original text, no-scroll layouts at 320×568, 390×844, 768×1024, and 844×390, real PDF rendering, invalid uploads, model refusals, incomplete JSON, escaped model markup, missing dishes, and provider failures, and explicit retries of the same photo after a failed scan. API checks verify ownership, duplicate concurrent image claims, private R2 image delivery, deletion, uncertain submissions, corrupt image output, known failures, one explicit image retry, and request guards.
 
-```sh
-python -m venv .venv
-source .venv/bin/activate
-pip install -r requirements-dev.txt
-python -m playwright install chromium webkit
-pytest --browser chromium --browser webkit --tb=short --junitxml=test-results/junit.xml
-```
+Screenshots under `docs/screenshots/` show the current UI. The green picture blocks are test-only image bytes, not live model output. They demonstrate layout and delivery, not image quality. No physical iPhone or Android device was tested.
 
-October 27 result: the focused Chromium run passed **16 checks in 104.12 seconds**. The combined Chromium/WebKit run passed **31 checks in 222.48 seconds**. Earlier mobile revisions passed 27 checks; the OpenAI migration adds refusal and malformed generated-image cases. Screenshots show the real utilitarian interface with simulated provider responses. The generated JUnit report is `test-results/junit.xml` (ignored by Git).
+A separate Chromium smoke check ran against actual `wrangler dev` static asset delivery, including its CSP. Base UI category selection and the dish dialog worked without page errors. `/api/health` and `/api/config` returned 200. Manually triggering the local scheduled handler returned 200 on an empty local store. Expiry with populated remote data, backup restoration, and hosted R2 delivery remain unverified.
 
-| Acceptance condition | Evidence and scope |
-| --- | --- |
-| Mobile controls and no horizontal overflow | Sample journeys at 320, 390, 768, and 1280px in Chromium and WebKit. Includes camera capture hint, dialog, saved pick, and privacy notice. |
-| Extraction reaches the interface | Actual sample JPEG passes upload decoding and reaches a simulated OpenAI Responses boundary. Spanish dish text, original names, printed price variants, and ten dishes render in the real UI. This does not verify OCR or translation quality. |
-| Search, filtering, detail, and choices | Searches original text within a translated menu, filters four entrées, checks empty results, saves a pick, reloads, and opens course suggestions. The sample cannot replace the real saved menu. |
-| Image lifecycle and no duplicate submission | Simulated OpenAI background response runs through pending, reload, base64 output decoding, private WebP delivery, and server restart. One generation submission remains one. Known failure permits retry; ambiguous timeout cannot submit a replacement. |
-| Session isolation and deletion | Another browser receives 404 for private menu and image. Cross-origin deletion receives 403. Deleting through the UI makes the menu inaccessible after refresh. |
-| Failure and recovery | Service failure, empty extraction, missing required fields, and truncated model output, and model refusal remain errors. Invalid generated-image bytes also produce a retryable image failure. Retry retains the original file. Invalid image bytes are rejected. Model-supplied HTML is rendered literally. |
-| Bounds | Two-page PDF renders both pages; oversize request, unsupported language, and per-browser scan limit are rejected through public HTTP endpoints. |
+## Real-menu corpus
 
-These expectations include a human transcription of `tests/example_menus/simple menu.jpg`. The fixture cannot establish provider behavior. Its generated picture is a flat color test image, not evidence of food-image quality.
+Offline preparation validated 50 distinct restaurants, source hashes, and normalized files: **58 JPEG pages, 211 dish anchors, 184 price anchors**, with 40 development cases and 10 fixed holdout cases. Source collectors visually inspected menu pages or captured regions for dish photos. The corpus contains original restaurant files and genuine browser screenshots; it is not synthetic test content. Some menus are historical or samples. See `evals/menus/README.md`.
 
-## Other checks actually run
+The extraction runner was checked against the local unconfigured Muse runtime. It stopped after the first HTTP 503 with zero completed cases and no model request. The optional image-review helper also completed a real local Worker/D1/R2 HTTP flow using simulated image output. These checks validate runner plumbing and failure handling only. No accuracy or latency result exists for live Muse or OpenAI inference.
 
-- During the earlier rebuild, a new Python 3.12 environment installed all 22 pinned production packages and imported the app. The OpenAI migration adds no packages.
-- During the earlier rebuild, the clean environment started the HTTP server and served the homepage, config, and health endpoints. A real JPEG upload without keys returned 503 and left the latest menu empty. It never substituted sample data.
-- During the earlier rebuild, actual JPEG, PNG, WebP, HEIC, and AVIF codec round trips succeeded. A four-page PDF was rejected.
-- Python compilation, `node --check static/app.js`, unique HTML IDs, and `git diff --check` passed.
-- General inspected the desktop app and mobile screenshots, then manually exercised sample-menu search in the app browser. Search visibly reduced the menu to the matching dish.
-- Container build and execution were not repeated for this migration; they remain unverified. The earlier run found the Docker daemon unavailable.
+## Credential and deployment limits
 
-Screenshots `screenshots/mobile-start.png` and `screenshots/mobile-menu.png` come from the explicitly simulated browser run. They show the real interface at 390px. They do not show live provider results.
+No Meta `MODEL_API_KEY` is configured locally. A read-only metadata request with the existing OpenAI key returned HTTP 401 `account_deactivated` on November 10. No paid extraction or image generation was run. No remote D1/R2 resource was created, no remote migration ran, and no Cloudflare release was deployed. The checked-in D1 ID remains a placeholder.
 
-## Required live provider acceptance
+The initial browser JavaScript bundle is about 120 kB gzip. PDF.js and its worker load only for PDF input. This is a build artifact size, not a measured mobile startup time. Provider quality, model access, real-device upload time, first-text latency, first-image latency, browser HEIC compatibility, provider retention, and production capacity require live checks.
 
-Oscar authorized reuse of the existing `OPENAI_API_KEY`. Direct GET requests to the `gpt-6-luna` and `gpt-image-2.5-flare` model metadata endpoints both returned HTTP 401 with `account_deactivated`. An active project key is required. No paid generation, successful extraction, image quality assessment, Decisions evaluation, staging check, or deployment occurred. Supply the replacement through the server environment, not browser code or chat.
+## Reproduce the source identity
 
-1. Start the normal app with valid keys and confirmed spending authority.
-2. Upload `tests/example_menus/simple menu.jpg`. Compare every dish and printed price with the image. Expect the salad, four entrées, two desserts, and three beverage entries. The salad's printed price variant must survive without invented decimal conversion.
-3. Repeat using Spanish, then a non-English menu with English as target. This checks the old English-target translation failure. Independently read and compare the source photograph.
-4. Use the Italian and Hideki sample photographs as additional cases. Check small text, categories, prices, omissions, and unreadable sections. Record actual failures rather than silently correcting the result for the demo.
-5. Request one GPT Image 2.5 Flare picture. Check successful task creation, completed base64 output decoding, a useful food depiction, and the visible AI label. Refresh during generation; confirm that no second paid submission occurs.
-6. Confirm private access from another browser and delete the test menu. Check local picture removal and pending-task cancellation behavior.
-7. Record elapsed time, request counts, provider-reported usage/cost, and usefulness for each live case. No latency or quality target is established by the simulated suite.
-8. Deploy one HTTPS instance with persistent storage, then repeat camera/file input and essential journeys on physical iPhone Safari and Android Chrome. Verify a complete backup and restore on safe data.
-
-## Release status
-
-Implemented and locally exercised, with real provider acceptance blocked by the deactivated OpenAI account. Not deployed. Physical phone camera, live model quality, provider account access, hosted reliability, Docker, and backup/restore remain explicit gaps. No independent agent review was performed because Oscar requests work in this chat without delegation.
-
-
-## OpenAI contract coverage
-
-The simulated boundary checks the Luna model, low reasoning effort, high-detail JPEG page inputs, strict Responses `text.format`, and `store=false` for menu extraction. It checks the Flare tool model, medium 1024 × 1024 WebP settings, forced image tool, one tool call, background mode, explicit response storage, and the hashed session safety identifier. The same fake transport handles response retrieval, cancellation, and deletion; no alternate production endpoint or fixture flag is added.
+Run `node scripts/source-digest.mjs`. It hashes sorted paths, a NUL separator, file bytes, and a trailing NUL. It includes runtime code, dependencies, QA, migrations, and corpus artifacts. It excludes documentation, screenshots, secrets, and generated builds. Final SHA-256: `faf541c4575285034ea1fa9da1899d15dad643622be7999c84a8a64faa772144` across 201 files.

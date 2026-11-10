@@ -1,0 +1,23 @@
+{
+  "restaurant": "La Ciccia",
+  "address": "291 30th St, San Francisco, CA 94131",
+  "official_url": "https://laciccia.com/",
+  "menu_url": "https://laciccia.com/food-menu",
+  "retrieved_at": "2026-11-10T18:31:33.197727+00:00",
+  "source_pages": [
+    "unpaginated HTML, captured menu region"
+  ],
+  "text_only_verified": true,
+  "verification_method": "Visual inspection of unaltered browser screenshot of menu region; no dish photos.",
+  "sha256": {
+    "page-1.png": "487033412d6f59cbda743483d0a08bf1b7c21323c5eb2d91dbf0d49e296c5f45",
+    "source.html": "ac030b974aaf893082ac3b58ae80600a1dd705f9fe024d2630f28abcccae8cb9"
+  },
+  "expected_dishes": [
+    "Pisci de Mari Arrustiu — AQ",
+    "Gamberoisi Arrustiusu — $39.00",
+    "Pezza De Angioni a Sa Saba — $44.00",
+    "Gambas Arrustiusa En Tomattiga — $36.00"
+  ],
+  "uncertainty": "Browser element screenshot of main courses; other regions of site contain food photos."
+}

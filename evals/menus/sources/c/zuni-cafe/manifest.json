@@ -1,0 +1,33 @@
+{
+  "restaurant": "Zuni Café",
+  "address": "1658 Market Street, San Francisco, CA 94102",
+  "official_url": "https://zunicafe.com/menus/",
+  "menu_url": "https://zunicafe.com/menus/",
+  "retrieved_at": "2026-11-10T18:31:00Z",
+  "source_pages": [
+    "HTML Sample Brunch Menu, centered on Zuni Caesar salad"
+  ],
+  "text_only_verified": true,
+  "verification_method": "Visually inspected unaltered Aside browser viewport screenshot of official HTML menu; no dish photographs.",
+  "sha256": {
+    "menu.png": "2464e495980ca6e64cd3da999b37291b084d006f0ba502fb135a652b16795738"
+  },
+  "expected_dishes": [
+    {
+      "name": "Marinated olives"
+    },
+    {
+      "name": "Acme levain bread with butter"
+    },
+    {
+      "name": "Shoestring potatoes"
+    },
+    {
+      "name": "Hazelnut-chocolate scone with berry preserves and whipped butter"
+    },
+    {
+      "name": "Zuni Caesar salad"
+    }
+  ],
+  "uncertainty": "Sample menu; individual prices are not printed and offerings may change."
+}

@@ -1,0 +1,26 @@
+{
+  "restaurant": "Nari",
+  "address": "1625 Post Street, San Francisco, CA 94115",
+  "official_url": "https://www.narisf.com/food-menu",
+  "menu_url": "https://www.narisf.com/food-menu",
+  "retrieved_at": "2026-11-10T18:28:36.446219+00:00",
+  "source_pages": [
+    {
+      "file": "menu.png",
+      "description": "Screenshot of the official web menu",
+      "url": "https://www.narisf.com/food-menu"
+    }
+  ],
+  "text_only_verified": true,
+  "verification_method": "Visually inspected the saved browser screenshot; no food photographs in the captured region.",
+  "sha256": {
+    "menu.png": "6843be36bdcc84e47bbdae5d28e6b5a3b4dfbc8dc5b293a20e6dc972688151c4"
+  },
+  "expected_dishes": [
+    "caviar 100",
+    "gaeng gradang tod 15",
+    "yum tawai 22",
+    "som tum 22"
+  ],
+  "uncertainty": "Screenshot captures a portion of the live web menu; availability and prices can change."
+}

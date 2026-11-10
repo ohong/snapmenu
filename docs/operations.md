@@ -1,65 +1,37 @@
-# Operations and release
+# Operations
 
 ## Local setup
 
-Use Python 3.12+, install `requirements.txt`, and configure `.env` from `.env.example`. Do not overwrite an existing `.env`. The current app reads `OPENAI_API_KEY`, `OPENAI_MENU_MODEL`, `OPENAI_IMAGE_MODEL`, and documented application settings. Fireworks and Runway keys are no longer used.
+`npm ci`, copy `.dev.vars.example` to ignored `.dev.vars`, add a provider key, then run `npm run build`, `npm run db:local`, and `npm run dev:worker`. The Worker serves the built frontend at port 8787. `npm run dev` provides frontend hot reload with an API proxy.
 
-Start one process:
+Runtime configuration is in `wrangler.jsonc`. Use `AI_PROVIDER=muse` or `openai`. Muse reads `MODEL_API_KEY`; OpenAI reads `OPENAI_API_KEY`. Optional `MUSE_MENU_MODEL`, `MUSE_IMAGE_MODEL`, `OPENAI_MENU_MODEL`, and `OPENAI_IMAGE_MODEL` override defaults. Never use Vite-prefixed secret variables.
 
-```sh
-python -m uvicorn app:app --host 0.0.0.0 --port 8000
-```
+## Provision and release
 
-`/api/health` checks the database. `/api/config` reports whether keys are present, not whether they are valid. The labeled sample menu works without providers. Missing credentials never manufacture an extracted result.
+The checked-in database ID is a placeholder, not a provisioned resource. Create D1 `snapmenu` and R2 `snapmenu-images` in the intended account, replace the D1 ID, apply migrations remotely, add provider secrets through `wrangler secret put`, and deploy with `npm run deploy`. Verify the account with `wrangler whoami` first. The existing local OAuth session points to the Side Projects account; recheck before provisioning.
 
-## Hosted release
+Keep R2 private. Do not expose a bucket public URL. Serve pictures only through the authenticated Worker route. The cron runs hourly at minute 17. Keep both provider secrets available if there are pending tasks from both providers.
 
-This repository includes a Dockerfile. The image has not been built here because the local Docker daemon is not running. To build on a Docker-enabled host:
+Before public launch, set account/provider spending limits, run the five-case live evaluation, check a real phone, test deletion, confirm scheduled expiry, and verify deployed bindings. Local workerd tests and a deployment dry run do not prove these conditions.
 
-```sh
-docker build -t snapmenu .
-docker volume create snapmenu-data
-docker run --rm -p 8000:8000 --env-file .env -e DATA_DIR=/data -e SECURE_COOKIES=true -v snapmenu-data:/data snapmenu
-```
+## Budgets and failures
 
-Terminate HTTPS at the hosting platform. Verify that the container user can write `/data`. Set `SECURE_COOKIES=true` for HTTPS. Set it to false only for local HTTP testing. The Dockerfile defaults to secure cookies; an explicit environment setting overrides it.
+Defaults: 100 scans/day, 100 pictures/day, 10 scans/hour/browser, 20 pictures/hour/browser. Failed submissions count. Limits are rolling windows in D1. `HOURLY_SCAN_LIMIT` and `HOURLY_IMAGE_LIMIT` can override the per-browser defaults. For a deliberate 50-menu local evaluation, set the local scan cap to 60; do not copy that override into production. Set a daily limit to zero to stop new paid requests without breaking saved-menu reading. D1 transaction batches make claim and usage updates atomic.
 
-Run one worker and one replica. Keep `DATA_DIR` on a persistent volume. Ephemeral serverless filesystems and multiple independent containers cannot preserve the current session and task guarantees. No mandatory Koyeb, Neon, or Vercel account is needed.
+An interrupted image submission becomes uncertain and never automatically retries. Known failed images allow one explicit retry. A stale starting request becomes uncertain after two minutes when checked. Background tasks retain their provider even if the configured default changes.
 
-Configure an ingress request-body limit of 11 MB and a request timeout above 105 seconds. The app checks declared request size, reads at most 10 MB of the uploaded file, and bounds decoded image size. The hosting body limit also prevents oversized chunked uploads from filling temporary disk during multipart parsing.
-
-Before public use, validate live provider access, set provider account spend limits, and apply host-level rate limiting. App defaults allow at most 100 scan attempts and 100 image submissions per rolling day across all browsers. Per-browser hourly caps are ten scans and twenty image attempts. Failed attempts consume budget. Set either daily cap to zero to stop new requests of that kind without losing saved menus. The account budget is the final external spending control.
-
-## Data and retention
-
-`DATA_DIR/snapmenu.sqlite3` contains private menus, hashed browser-session identifiers, provider task IDs, and request counts. `DATA_DIR/images/` contains completed WebP pictures. Neither directory belongs in Git or a container image.
-
-Original menu images and PDFs are discarded after processing. Menu extraction uses `store=false`. Background image generation uses explicit `store=true` to retain its response ID for interruption recovery. Completed and cancelled image responses are deleted on a best-effort basis. Provider-side retention remains subject to the OpenAI account settings and terms, including when no browser returns to poll a completed image. Local expiry does not guarantee provider-side deletion. Menus become inaccessible at seven days; cleanup runs hourly, on startup, and on new scans. Physical removal may occur up to one hour after expiry. Clearing a browser cookie prevents access; it does not immediately delete server data.
-
-The delete button removes the selected menu and pictures and requests cancellation of known pending tasks. Other menus previously scanned by that browser retain their original expiry. Cancellation is best effort and does not refund charges. Deleting an uncertain task cannot identify or cancel a provider request whose task ID was never received.
+A `503` can mean missing credentials, provider authorization, quota, or provider availability. Logs record safe status information, never provider keys or complete menu payloads. Check `/api/health` for D1 availability; it does not test R2 or model credentials. Provider failures need a live credentialed check.
 
 ## Backup and recovery
 
-For a consistent complete backup, stop the app, then copy the entire `DATA_DIR` to a protected backup location. Backups contain private menu text. Apply a retention policy that matches the product's deletion promise, and remove backups containing deleted menus where required.
+Export D1 before schema changes with `wrangler d1 export snapmenu --remote --output <backup.sql>`. Protect backups as private menu data. Back up R2 objects with their original `menu-id/dish-id.webp` keys if persistence beyond the short retention window matters. Restore D1 and R2 together into a separate environment, then exercise ownership and image retrieval before promotion. Restore has not been verified in this rebuild.
 
-To restore, stop the app, restore the complete directory, preserve its write permissions, and restart the same app version. Existing browser cookies continue to work. Expired records are removed on startup. A `starting` task becomes `uncertain`; the app never automatically resubmits it. An OpenAI `pending` task retains its response ID and resumes checking when its menu is open in a browser. Old pending Runway tasks are marked unavailable, never polled against OpenAI or automatically resubmitted. Completed local WebP files remain readable.
+The old ignored `data/` directory and `.env` are untouched. This release does not import old SQLite data, cookies, or generated files into D1/R2. Keep the old checkout from Git history if existing local sessions must remain available. Do not overwrite or remove legacy data as part of deploying this version. Older Neon infrastructure remains outside the deployment and needs a separate review before deletion.
 
-Before any future schema change, back up the current data directory. This release creates separate local tables and does not touch the legacy Neon database. Do not deprovision Neon or reset unknown data as part of this deployment.
+## Rollback
 
-The starting source commit is `5e6edea`. The clean source archive at `/Users/ohong/.codex/backups/snapmenu-2026-10-16/source.tar` excludes credentials and the pre-existing local settings edit. It is a developer recovery reference, not a data backup or a reason to restore retired provider paths in production.
+Keep the previous Worker version and D1 export before deployment. Roll back the Worker only when its schema remains compatible. The initial Cloudflare schema is additive and separate from the old SQLite database. A Worker rollback does not roll back provider charges or generated objects. Do not replay uncertain submissions during recovery.
 
-## Diagnostics
+## Credentials now
 
-- **App does not start:** confirm Python version, pinned dependencies, and write access to `DATA_DIR`.
-- **Reading is not connected:** add an active `OPENAI_API_KEY` to the server environment and restart.
-- **Pictures are not connected:** verify the same OpenAI key has GPT Image access and restart after changing settings.
-- **Provider rejected a request:** inspect server log provider/reason fields; verify key, account balance, model access, quotas, and supported schema. Do not paste keys or image access URLs into logs or issues.
-- **HTTP 401 `account_deactivated`:** the configured key was rejected during October 27 verification. Replace it with a key from an active OpenAI account/project; do not share the key in chat.
-- **No readable dishes:** try a well-lit close photo of one page. A blank result stays an error.
-- **Picture is pending:** keep the menu open to resume polling. The task is retained; do not create replacements manually without checking provider state.
-- **Picture request is uncertain:** an interrupted submission may have incurred cost. Inspect the OpenAI project request history before any manual repair. The UI intentionally does not resubmit it.
-- **Picture cannot be saved:** check response format, disk space, and directory write permissions. The app accepts bounded base64 bytes from OpenAI and does not fetch generated URLs.
-- **Service limit reached:** inspect request counts and provider budgets before raising caps. A cookie reset cannot bypass the global caps.
-- **Menu disappeared:** check cookie lifetime, original browser session, seven-day expiry, volume persistence, and HTTPS cookie settings.
-
-Provider errors shown to users are sanitized. Uploaded content, credentials, task IDs, and temporary image URLs should not be logged. Avoid debug-level HTTP client logging in production.
+No Meta key is present locally. The existing OpenAI key returned HTTP 401 `account_deactivated` on November 10, 2026. These checks made no paid generation requests. Runtime tests use inert fixture credentials and intercept only external AI HTTP. Never put real keys into the test fixture.

@@ -1,0 +1,38 @@
+{
+  "restaurant": "House of Nanking",
+  "address": "919 Kearny St, San Francisco, CA 94133",
+  "official_url": "https://www.houseofnankingsf.com/menu/",
+  "menu_url": "https://media-cdn.getbento.com/accounts/eecc446dc5ab4d2b8eaef51b57551588/media/yM5UIO1STAe3GHovlZWw_House%20of%20Nanking%20Menu%202025.pdf",
+  "retrieved_at": "2026-11-10T18:27:50Z",
+  "source_pages": [
+    1
+  ],
+  "text_only_verified": true,
+  "verification_method": "Visually inspected rendered source PDF page 1; text and restaurant logo, with no dish photographs.",
+  "sha256": {
+    "page-1.pdf": "bceb37c282c697733b006ef7f108efe08febc04a31dc1708877a654818d72589"
+  },
+  "expected_dishes": [
+    {
+      "name": "FRIED PORK POTSTICKERS (6 PCS)",
+      "price": "14.95"
+    },
+    {
+      "name": "CRISPY BEEF POTSTICKERS (6 PCS)",
+      "price": "14.95"
+    },
+    {
+      "name": "CRISPY EGG PILLOWS (2 PCS)",
+      "price": "8.95"
+    },
+    {
+      "name": "CRISPY SHRIMP PACKETS (4 PCS)",
+      "price": "11.95"
+    },
+    {
+      "name": "FRIED ONIONCAKES (4 PCS)",
+      "price": "11.95"
+    }
+  ],
+  "uncertainty": "Menu dated May 2025; current prices and availability may differ."
+}

@@ -1,65 +1,47 @@
 # Architecture
 
-## Current implementation
+React, TypeScript, and Base UI form a static single-page frontend. Vite creates hashed assets. A TypeScript Cloudflare Worker handles same-origin API routes. D1 stores menus, image task state, and request usage. A private R2 bucket stores WebP image bytes. No frontend or backend framework adapter is required.
 
-SnapMenu uses FastAPI, static HTML/CSS/JavaScript, SQLite, and direct HTTP calls to OpenAI. It needs one Python runtime, one worker, one replica, and persistent local storage. The interface uses system fonts and plain menu rows.
+## Why this stack
 
-Menu reading uses `gpt-6-luna` through `POST /v1/responses`. It combines photo reading, translation, and structured extraction in one call. The request uses high-detail image inputs, low reasoning effort, strict JSON schema output, `store=false`, and a hashed browser-session safety identifier. Pydantic validates the result again. Refusals, incomplete output, invalid objects, and empty menus remain explicit errors.
+Two approaches were considered. Keeping FastAPI preserves proven local codecs and SQLite behavior, but requires a server with a persistent disk. A TypeScript Worker removes that server and matches the requested Cloudflare target, but requires new storage contracts and browser-side PDF/image preparation. The user chose Worker/D1/R2. Next.js could host a similar app, but its server rendering and routing add little to this one-screen upload tool. A static React app plus Worker keeps the deployment smaller and direct.
 
-Dish visualization uses `gpt-image-2.5-flare` through a forced image-generation tool in a Luna background Response. It requests one image, 1024 × 1024, medium quality, WebP output. No client can choose arbitrary provider URLs or send free-form paid prompts.
+## Request path
 
-## Image API versus background Responses
+The browser decodes a selected photo, respects orientation, resizes it, and encodes JPEG at quality 0.85. Browser PDF.js renders up to three pages; its code and worker load on demand. The Worker limits JSON body bytes, checks JPEG markers/dimensions, validates language, and hashes provider/model/language/pages for deduplication. This is structural input checking, not an independent server-side image decode. Providers must still reject corrupt image content.
 
-The direct Image API is the simpler choice for a single foreground image. It avoids mainline-model orchestration costs. However, it does not expose a resumable task ID; a dropped response or server restart can leave an uncertain paid generation.
+Extraction sends image content to the selected provider's fixed `/v1/responses` endpoint with strict JSON schema output, low reasoning effort, and `store=false`. A shared Zod schema validates output at runtime and supplies frontend types. Refusals, incomplete output, schema errors, and empty dishes fail visibly.
 
-Background Responses adds mainline-model usage and provider-side response storage. It returns an ID that the app can persist before polling. Choose it to preserve SnapMenu's existing reload/restart recovery and avoid automatic duplicate paid requests. OpenAI supports Luna's image-generation tool and background response retrieval; live account compatibility remains unverified because the configured account is deactivated.
+Muse defaults: `muse-ember-1.0` and `muse-image-1.0`. OpenAI defaults: `gpt-6-luna` and `gpt-image-2.5-flare`. Each provider uses its own secret and fixed origin. Arbitrary URLs and credentials never reach browser code.
 
-A future change to direct Image API calls must explicitly solve task recovery rather than quietly removing it.
+## Background image recovery
 
-## Boundaries
+Each image claim is persisted before submitting a paid request. D1 transaction batches claim the task and record quota usage together. A unique menu/dish key prevents duplicate requests across tabs. Provider name and response ID stay together. Switching the provider flag changes only new tasks.
 
-- `app.py`: private browser session, routes, same-origin writes, bounded concurrency, and image lifecycle.
-- `config.py`: one `OPENAI_API_KEY`, menu/image model defaults, data path, budgets, and HTTPS cookie settings.
-- `providers.py`: OpenAI request contracts, extraction validation, background response retrieval/cancellation/deletion, and sanitized errors.
-- `media.py`: file decoding, PDF rendering, photo normalization, and bounded base64 image decoding. Images are written atomically to WebP; no generated URLs are fetched.
-- `models.py`: validated menu and dish schema plus supported reading languages.
-- `storage.py`: private menus, image task state, rolling usage limits, and seven-day expiry.
-- `static/`: mobile browser interface. Extracted text is inserted using DOM text nodes.
+Muse Image is the Responses model itself. Its image tool uses low reasoning strength, square aspect ratio, WebP, and disabled search/shell tools. OpenAI uses Luna with a forced Flare image tool, medium quality, square output, and WebP. Both use `background=true` and `store=true`.
 
-## Image lifecycle
+Synchronous Images endpoints were considered. They remove background state handling, but interrupted requests can leave no retrievable result handle. Responses preserves recovery by ID. No automatic retry follows an ambiguous paid timeout.
 
-A unique `(menu_id, dish_id)` row moves through `starting -> pending -> ready / failed`, or `starting -> uncertain` if task creation cannot be confirmed. The row is claimed before the paid request. A known failure permits one explicit retry; an ambiguous submission cannot automatically create a replacement.
+The browser starts at most three visible dish tasks and checks pending tasks every 1.5 seconds while the tab is visible. Completed tasks are stored as WebP bytes in R2, then marked ready in D1. The Worker checks base64 length and RIFF/WEBP signatures; it never fetches model-generated URLs. It requests response deletion after persistence. Invalid output fails; storage failure remains pending for recovery. A 45-second D1 lease prevents overlapping provider polls. Deletion races cancel newly accepted tasks or remove orphan picture bytes.
 
-Pending tasks retain their `resp_` ID through reloads and restarts. A browser checks pending jobs every 5.5 seconds; the server shares a five-second minimum poll interval across tabs. At completion it decodes image bytes, writes a private WebP, marks the image ready, and requests deletion of the OpenAI response. Failed terminal responses are also deleted. Menu deletion requests cancellation and deletion of known pending OpenAI responses.
+There is no global limit on accepted pending generation tasks. There is a short-lived cap of twelve submissions in flight, plus daily/hourly request budgets. An abandoned browser cannot occupy a shared pending-generation queue. The provider still controls its own capacity and rate limits.
 
-Response cleanup is best effort. `store=true` is required for the chosen long-lived recovery behavior; provider-side retention applies if local cleanup cannot run or fails. Closing the browser pauses polling and cleanup. Local menu expiry does not guarantee provider deletion. OpenAI account retention settings are separate from SnapMenu's seven-day local lifetime.
+## Privacy and retention
 
-## Existing-data compatibility
+A random cookie is HTTP-only, SameSite=Lax, Secure on HTTPS, and scoped to `/`. D1 stores only its SHA-256 hash. Every menu and picture request checks ownership. Cross-origin mutations fail. Private data responses are not publicly cached; pictures can cache privately for an hour. Static hashed assets cache for a year. CSP limits scripts and connections to the same origin; inline styles support Base UI positioning.
 
-The SQLite schema and private picture routes remain compatible with the earlier app. Existing completed WebP files remain readable. On startup, old pending non-OpenAI task IDs become `uncertain` with a visible message; they are neither polled against OpenAI nor resubmitted. The legacy Neon database is not read, reset, or migrated.
+Menus expire after seven days. The hourly scheduled handler removes expired R2 objects, attempts pending-response cancellation/deletion, and deletes expired D1 rows. Provider deletion is best effort. Returning to a menu polls its pending tasks; closing the browser delays retrieval until return or expiry cleanup. Menu deletion does not revoke already cached bytes from a user's own device. Provider retention policies still apply.
 
-## API
+The original Python data store is not migrated automatically. Existing files and credentials remain untouched. No legacy provider task is silently reissued.
 
-| Method and path | Purpose |
-| --- | --- |
-| `GET /api/config` | Session cookie, languages, and key-presence flags; not an account validity check. |
-| `GET /api/health` | Process and SQLite readiness. |
-| `POST /api/menus?language=en` | Validate a multipart upload, normalize it, extract with Luna, and persist the menu. |
-| `GET /api/menus/latest` | Latest private unexpired menu, or null. |
-| `GET /api/menus/{id}` | One private menu. |
-| `DELETE /api/menus/{id}` | Cancel pending image work and remove local menu/picture data. |
-| `POST /api/menus/{id}/dishes/{dish}/image` | Start or reuse one image task. |
-| `GET /api/menus/{id}/dishes/{dish}/image` | Recover and check its state. |
-| `GET /api/menus/{id}/dishes/{dish}/picture` | Private local WebP. |
+## Performance boundaries
 
-Requests use at most three extraction slots and three recent pending image tasks. SQLite stores global rolling-day limits and browser-hour limits. These are request caps, not dollar budgets. Use provider account spend controls for financial limits.
+- Local JPEG resizing reduces bytes before the network upload.
+- PDF parsing stays out of the initial JavaScript chunk.
+- Text display does not wait for pictures.
+- Visible dish pictures generate concurrently, without rendering all 100 dishes.
+- Persisted tasks and pictures avoid repeated model work.
+- No polling occurs while the page is hidden.
+- Extraction returns `Server-Timing` for preparation and model/persistence work.
 
-## Official contracts checked October 27, 2026
-
-- [GPT-6 Luna: image input, Structured Outputs, reasoning effort, and tools](https://developers.openai.com/api/docs/models/gpt-6-luna)
-- [GPT Image 2.5 Flare: model ID and role](https://developers.openai.com/api/docs/models/gpt-image-2.5-flare)
-- [Structured Outputs with Responses](https://developers.openai.com/api/docs/guides/structured-outputs)
-- [Image tool options and forced tool choice](https://developers.openai.com/api/docs/guides/tools-image-generation)
-- [Background response retrieval and cancellation](https://developers.openai.com/api/docs/guides/background)
-
-Both model metadata requests returned `401 account_deactivated` with the existing key. Documented support does not establish this account's access, output quality, latency, or cost.
+The `model` timing currently includes output validation and final D1 persistence. It is not pure provider compute time. Background pictures add up to a polling interval before display. Browser decoding, upload bandwidth, network distance, storage, and cold starts remain real costs. Production latency has not been measured; no claim that provider latency is the sole remaining delay is made.

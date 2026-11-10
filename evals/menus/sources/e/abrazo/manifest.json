@@ -1,0 +1,20 @@
+{
+  "restaurant": "Abrazo",
+  "address": "2000 Hyde Street, San Francisco, CA 94109",
+  "official_url": "https://www.abrazosf.com/menu/dinner/",
+  "menu_url": "https://media-cdn.getbento.com/accounts/99cb723a2c1081505f29cd4ab6536a2a/media/pjZzKrTFQLSbhkRVgKcH_Main%20Menu.pdf",
+  "retrieved_at": "2026-11-10T18:28:40.121232+00:00",
+  "source_pages": [
+    1
+  ],
+  "text_only_verified": true,
+  "verification_method": "Visually inspected rendered PDF page: food text and decorative graphics, no dish photographs.",
+  "sha256": "0b5ad008d1a980ce425dbe0f8dd5838ec4c3abe92557738b9e39abf69305eace",
+  "expected_dishes": [
+    "Charred Octopus $21",
+    "Bacalhau $18",
+    "Patatas Bravas $14",
+    "Seafood Paella $49"
+  ],
+  "uncertainty": "PDF differs in details from the current HTML menu."
+}

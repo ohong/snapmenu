@@ -1,0 +1,22 @@
+{
+  "restaurant": "Sotto Mare",
+  "address": "552 Green St., San Francisco, CA",
+  "official_url": "https://www.sottomaresf.com/",
+  "menu_url": "https://static.wixstatic.com/media/b7e3a6_87815d25bbe240f3a02a118133423b2b~mv2.png",
+  "retrieved_at": "2026-11-10T18:27:07.893001+00:00",
+  "source_pages": [
+    1
+  ],
+  "text_only_verified": true,
+  "verification_method": "Visual inspection of selected source page rendered from original PDF or original image; no dish photos.",
+  "sha256": {
+    "page-1.png": "8bf000beb2686ea97683cc349065de7cd3d4fa380ebbc30c5e1d3c08f1124963"
+  },
+  "expected_dishes": [
+    "Crab Cocktail — 27.00",
+    "Octopus Salad — 19.00",
+    "Lobster Ravioli — 32.00",
+    "Grilled Salmon — 33.00"
+  ],
+  "uncertainty": "Menu date not printed; seafood illustrations appear behind text, no dish photos."
+}

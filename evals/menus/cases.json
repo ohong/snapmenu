@@ -1,0 +1,1686 @@
+[
+  {
+    "id": "3rd-cousin",
+    "restaurant": "3rd Cousin",
+    "manifest": "sources/a/3rd-cousin/manifest.json",
+    "inputs": [
+      {
+        "file": "inputs/3rd-cousin/page-1.jpg",
+        "sha256": "70537d61b2f09da2d206ce10e85f60b5ff63f14df2d212f401488e1f1eefd97a",
+        "bytes": 196285
+      }
+    ],
+    "anchors": [
+      {
+        "name": "sweet corn & kale fritters",
+        "price": "17"
+      },
+      {
+        "name": "creamy sweet corn soup",
+        "price": "20"
+      },
+      {
+        "name": "hand-rolled pici",
+        "price": "35"
+      }
+    ],
+    "uncertainty": "Menu is a retrieved snapshot; offerings and prices may have changed.",
+    "split": "development"
+  },
+  {
+    "id": "bourbon-steak",
+    "restaurant": "Bourbon Steak",
+    "manifest": "sources/a/bourbon-steak/manifest.json",
+    "inputs": [
+      {
+        "file": "inputs/bourbon-steak/page-1.jpg",
+        "sha256": "e2cc1c310111b42f47bd1e4ac8d6a0b603322d82fe43fc1f71bb4f9e4f983851",
+        "bytes": 217551
+      },
+      {
+        "file": "inputs/bourbon-steak/page-2.jpg",
+        "sha256": "bc2a06a224c84cc9881a0453471139534a0c6035158c6c74150c6bbb8036f5d4",
+        "bytes": 229188
+      }
+    ],
+    "anchors": [
+      {
+        "name": "SHRIMP COCKTAIL",
+        "price": "32"
+      },
+      {
+        "name": "ONION SOUP GRATIN",
+        "price": "18"
+      },
+      {
+        "name": "MOREL AGNOLOTTI",
+        "price": "31"
+      }
+    ],
+    "uncertainty": "Menu is a retrieved snapshot; offerings and prices may have changed.",
+    "split": "development"
+  },
+  {
+    "id": "dalida",
+    "restaurant": "Dalida",
+    "manifest": "sources/a/dalida/manifest.json",
+    "inputs": [
+      {
+        "file": "inputs/dalida/page-1.jpg",
+        "sha256": "b59156d960cc1302d2732fa800e6c7cfcf98219adc3917818a947335ca066bf1",
+        "bytes": 291736
+      }
+    ],
+    "anchors": [
+      {
+        "name": "Breaking Bread",
+        "price": "18"
+      },
+      {
+        "name": "Anatolian Eriste",
+        "price": "26"
+      },
+      {
+        "name": "Aleppo Half-Chicken",
+        "price": "41"
+      }
+    ],
+    "uncertainty": "Menu is a retrieved snapshot; offerings and prices may have changed.",
+    "split": "holdout"
+  },
+  {
+    "id": "foreign-cinema",
+    "restaurant": "Foreign Cinema",
+    "manifest": "sources/a/foreign-cinema/manifest.json",
+    "inputs": [
+      {
+        "file": "inputs/foreign-cinema/page-1.jpg",
+        "sha256": "d3596e17180d1b4e50a7059efe0c89e6b1f6aaf4c791c61cdceccbc84001f696",
+        "bytes": 276754
+      }
+    ],
+    "anchors": [
+      {
+        "name": "Mixed Mediterranean olives",
+        "price": "7.5"
+      },
+      {
+        "name": "Pumpkin coconut curry velouté, crema, pepitas, cilantro",
+        "price": "12"
+      },
+      {
+        "name": "Poppy seed fried chicken, Creole spices, creamy polenta, braised kale, pomegranates",
+        "price": "35"
+      }
+    ],
+    "uncertainty": "Menu is a retrieved snapshot; offerings and prices may have changed.",
+    "split": "development"
+  },
+  {
+    "id": "nopa",
+    "restaurant": "Nopa",
+    "manifest": "sources/a/nopa/manifest.json",
+    "inputs": [
+      {
+        "file": "inputs/nopa/page-1.jpg",
+        "sha256": "8984e08e6ae1da1e3c4c055721b33a8953288bb17af836cb4063d69d83ba1957",
+        "bytes": 230053
+      }
+    ],
+    "anchors": [
+      {
+        "name": "CAULIFLOWER SOUP",
+        "price": "14"
+      },
+      {
+        "name": "EGGPLANT PARMESAN",
+        "price": "29"
+      },
+      {
+        "name": "YAYA’S FRIED CHICKEN",
+        "price": "33"
+      }
+    ],
+    "uncertainty": "Menu is a retrieved snapshot; offerings and prices may have changed.",
+    "split": "development"
+  },
+  {
+    "id": "novy",
+    "restaurant": "NOVY",
+    "manifest": "sources/a/novy/manifest.json",
+    "inputs": [
+      {
+        "file": "inputs/novy/page-1.jpg",
+        "sha256": "f0c3ac7aa5d1c96af22a22d9885771cd0e312a3bda1a50160d28175bdf9c21b0",
+        "bytes": 280188
+      }
+    ],
+    "anchors": [
+      {
+        "name": "Grilled Halloumi Cheese",
+        "price": "16.5"
+      },
+      {
+        "name": "Fried Calamari",
+        "price": "16"
+      },
+      {
+        "name": "Lamb Bolognese",
+        "price": "23"
+      }
+    ],
+    "uncertainty": "Menu is a retrieved snapshot; offerings and prices may have changed.",
+    "split": "development"
+  },
+  {
+    "id": "rich-table",
+    "restaurant": "Rich Table",
+    "manifest": "sources/a/rich-table/manifest.json",
+    "inputs": [
+      {
+        "file": "inputs/rich-table/page-1.jpg",
+        "sha256": "958a6a2913ab79bf5246fd727f1539b3d1da622502be7d3f8cf42b502daa2008",
+        "bytes": 258107
+      }
+    ],
+    "anchors": [
+      {
+        "name": "TORO TOAST, YUZU KOSHO, JAPANESE MILK BREAD",
+        "price": "25"
+      },
+      {
+        "name": "CHICKEN LIVER MOUSSE, APPLE BUTTER UNCRUSTABLE, FALL HERBS",
+        "price": "20"
+      },
+      {
+        "name": "TAJARIN, HOUSE CULTURED BUTTER, GRANA PADANO, HUITLACOCHE",
+        "price": "34"
+      }
+    ],
+    "uncertainty": "Menu is a retrieved snapshot; offerings and prices may have changed.",
+    "split": "development"
+  },
+  {
+    "id": "roka-akor",
+    "restaurant": "Roka Akor",
+    "manifest": "sources/a/roka-akor/manifest.json",
+    "inputs": [
+      {
+        "file": "inputs/roka-akor/page-1.jpg",
+        "sha256": "00abe9213f726f0ff8bed92f301b5531506746e53a0c224b30d2ac9859767eab",
+        "bytes": 256589
+      },
+      {
+        "file": "inputs/roka-akor/page-2.jpg",
+        "sha256": "9e777fee75a8acf69ff7cf00e465ba5de20cdfba69a1728b6e6460414b802557",
+        "bytes": 258843
+      }
+    ],
+    "anchors": [
+      {
+        "name": "Yellowtail Sashimi with Green Chili, Shallots and Poached Garlic Ponzu",
+        "price": "26"
+      },
+      {
+        "name": "Eggplant Tempura with Japanese Curry Spice and Mushroom Tentsuyu",
+        "price": "14"
+      },
+      {
+        "name": "Japanese Style Fried Chicken with Smoked Chili Aioli",
+        "price": "17"
+      }
+    ],
+    "uncertainty": "Menu is a retrieved snapshot; offerings and prices may have changed. URL indicates an October 2024 menu; current availability is unverified.",
+    "split": "development"
+  },
+  {
+    "id": "state-bird-provisions",
+    "restaurant": "State Bird Provisions",
+    "manifest": "sources/a/state-bird-provisions/manifest.json",
+    "inputs": [
+      {
+        "file": "inputs/state-bird-provisions/page-1.jpg",
+        "sha256": "386348b1b3409577fb77e40078230464758fe4b6a6274e01ae74e7b2d7bed9e2",
+        "bytes": 185174
+      }
+    ],
+    "anchors": [
+      {
+        "name": "steamed egg tofu pickled honshimeji & garlic-chile oil",
+        "price": "9"
+      },
+      {
+        "name": "garlic bread burrata & 7 pepper spice",
+        "price": "13"
+      },
+      {
+        "name": "CA state bird with provisions",
+        "price": "24"
+      }
+    ],
+    "uncertainty": "Menu is a retrieved snapshot; offerings and prices may have changed. Dated URL indicates an older menu; current availability is unverified.",
+    "split": "development"
+  },
+  {
+    "id": "the-progress",
+    "restaurant": "The Progress",
+    "manifest": "sources/a/the-progress/manifest.json",
+    "inputs": [
+      {
+        "file": "inputs/the-progress/page-1.jpg",
+        "sha256": "936d773e62745b882407653d649d8e530c6e6871dfbd87e0c877f7d4f4ca2124",
+        "bytes": 335095
+      },
+      {
+        "file": "inputs/the-progress/page-2.jpg",
+        "sha256": "802732e5b292f4037d1163a66246a4532276ff0383384733d61f098c70bb25c6",
+        "bytes": 401904
+      }
+    ],
+    "anchors": [
+      {
+        "name": "radicchio & persimmon",
+        "price": "19"
+      },
+      {
+        "name": "japanese sweet potato gyoza",
+        "price": "26"
+      },
+      {
+        "name": "seared rare local albacore",
+        "price": "24"
+      }
+    ],
+    "uncertainty": "Menu is a retrieved snapshot; offerings and prices may have changed.",
+    "split": "development"
+  },
+  {
+    "id": "a16",
+    "restaurant": "A16 San Francisco",
+    "manifest": "sources/b/a16/manifest.json",
+    "inputs": [
+      {
+        "file": "inputs/a16/page-1.jpg",
+        "sha256": "75e434bc9043b4cc6a9170489682ae06f86b8430ae765cc1f2472c2d1278f1dd",
+        "bytes": 78718
+      }
+    ],
+    "anchors": [
+      {
+        "name": "Artigiana Burrata",
+        "price": "21 | 27"
+      },
+      {
+        "name": "Radicchio Salad",
+        "price": "21"
+      },
+      {
+        "name": "Roasted Beet Salad",
+        "price": "19"
+      },
+      {
+        "name": "Braised Meatballs",
+        "price": "16 | 24"
+      }
+    ],
+    "uncertainty": "Browser screenshot of menu region; pricing variants as printed.",
+    "split": "development"
+  },
+  {
+    "id": "absinthe",
+    "restaurant": "Absinthe Brasserie & Bar",
+    "manifest": "sources/b/absinthe/manifest.json",
+    "inputs": [
+      {
+        "file": "inputs/absinthe/page-1.jpg",
+        "sha256": "8e1d602356cefa43aafff9b8341aa487d12150a4fc32b09c1e76e3e54e3896d4",
+        "bytes": 62785
+      },
+      {
+        "file": "inputs/absinthe/page-2.jpg",
+        "sha256": "de23e5a506a6f3aad1a835dc0c3e0379f6cdf248e5f7ad1134631d3233061fb0",
+        "bytes": 201646
+      },
+      {
+        "file": "inputs/absinthe/page-3.jpg",
+        "sha256": "533408942f750bce9ffd77ae8fa942073b07d0ae8a2ae0d34dc0d697994a9a96",
+        "bytes": 155608
+      }
+    ],
+    "anchors": [
+      {
+        "name": "Soupe À L’Oignon",
+        "price": ""
+      },
+      {
+        "name": "Sweet Potato Agnolotti",
+        "price": ""
+      },
+      {
+        "name": "Petrale Sole Meuniere",
+        "price": ""
+      },
+      {
+        "name": "Pan Rosted Duck Breast",
+        "price": ""
+      }
+    ],
+    "uncertainty": "Private dining menu; 85 per person; dated 02/20 and not established current.",
+    "split": "development"
+  },
+  {
+    "id": "acquerello",
+    "restaurant": "Acquerello",
+    "manifest": "sources/b/acquerello/manifest.json",
+    "inputs": [
+      {
+        "file": "inputs/acquerello/page-1.jpg",
+        "sha256": "a629784635323417d72e5b439af05a75e101aca6f8c06784414193ac7b9134a7",
+        "bytes": 88659
+      }
+    ],
+    "anchors": [
+      {
+        "name": "Crudo of Spanish mackerel, Concord grape, lovage",
+        "price": ""
+      },
+      {
+        "name": "Hokkaido scallop, Chanterelle, corn, truffle",
+        "price": ""
+      },
+      {
+        "name": "Wolfe Ranch quail, sunchoke, Shinko pear, onion confit, Moscato",
+        "price": ""
+      },
+      {
+        "name": "Duck piramidi, radicchio Treviso, Honeynut squash, brown butter, aged Sherry",
+        "price": ""
+      }
+    ],
+    "uncertainty": "Restaurant labels this a sample seasonal tasting menu; individual prices are not printed in capture.",
+    "split": "development"
+  },
+  {
+    "id": "bix",
+    "restaurant": "BIX",
+    "manifest": "sources/b/bix/manifest.json",
+    "inputs": [
+      {
+        "file": "inputs/bix/page-1.jpg",
+        "sha256": "426c3482405267f2fd4bf1de376c2dd311c01b7ee934e0237ea7898bfefc6d61",
+        "bytes": 210183
+      },
+      {
+        "file": "inputs/bix/page-2.jpg",
+        "sha256": "05c3a8c5c064608613f188d640577aa80b2fb829ef2ac575a8bd509ec73fd9ce",
+        "bytes": 89155
+      },
+      {
+        "file": "inputs/bix/page-3.jpg",
+        "sha256": "b5c0dc4d6e20066bdad961df572a54091f4e31a16c38eb5d464bc494a9adb99d",
+        "bytes": 95827
+      }
+    ],
+    "anchors": [
+      {
+        "name": "BIX Truffled Deviled Eggs",
+        "price": ""
+      },
+      {
+        "name": "Potato Pillows with Caviar",
+        "price": ""
+      },
+      {
+        "name": "Chicken Hash à la BIX",
+        "price": ""
+      },
+      {
+        "name": "Beef Short Rib",
+        "price": ""
+      }
+    ],
+    "uncertainty": "Sample $95 group dinner menu dated 2025; not established current.",
+    "split": "development"
+  },
+  {
+    "id": "delfina",
+    "restaurant": "Delfina",
+    "manifest": "sources/b/delfina/manifest.json",
+    "inputs": [
+      {
+        "file": "inputs/delfina/page-1.jpg",
+        "sha256": "d62eaa9f40d7413c603c5e4d3b6bac55a4fdc3a5468b31159260f3c80a9cbae7",
+        "bytes": 244530
+      },
+      {
+        "file": "inputs/delfina/page-2.jpg",
+        "sha256": "870a401dc8fc8b1a0a63cfb5402a23877a84d56998584b390dacb6f5556cc795",
+        "bytes": 248199
+      }
+    ],
+    "anchors": [
+      {
+        "name": "Grilled Monterey Bay Calamari",
+        "price": "19"
+      },
+      {
+        "name": "Spaghetti Pomodoro",
+        "price": "27"
+      },
+      {
+        "name": "Paccheri Neri",
+        "price": "48"
+      },
+      {
+        "name": "Margherita DOP",
+        "price": "23"
+      }
+    ],
+    "uncertainty": "Menu dated 03.10.25; historical, not established current.",
+    "split": "development"
+  },
+  {
+    "id": "flour-and-water",
+    "restaurant": "Flour + Water",
+    "manifest": "sources/b/flour-and-water/manifest.json",
+    "inputs": [
+      {
+        "file": "inputs/flour-and-water/page-1.jpg",
+        "sha256": "6630f702e4b8ff2cc04c9253db0edaaceaec7ff3120a5641bfce1a8f51ee7215",
+        "bytes": 112433
+      }
+    ],
+    "anchors": [
+      {
+        "name": "TODAY’S RICOTTA",
+        "price": "18"
+      },
+      {
+        "name": "EGGPLANT ARANCINI",
+        "price": "19"
+      },
+      {
+        "name": "MARGHERITA",
+        "price": "24"
+      },
+      {
+        "name": "DUCK TRIANGOLI",
+        "price": "33"
+      }
+    ],
+    "uncertainty": "Menu linked from official menus page; filename indicates November 9, 2026.",
+    "split": "development"
+  },
+  {
+    "id": "la-ciccia",
+    "restaurant": "La Ciccia",
+    "manifest": "sources/b/la-ciccia/manifest.json",
+    "inputs": [
+      {
+        "file": "inputs/la-ciccia/page-1.jpg",
+        "sha256": "def0e07d012679e36a150caea868f3b5660abbe6044cdea31f1af3ea1fac4658",
+        "bytes": 35546
+      }
+    ],
+    "anchors": [
+      {
+        "name": "Pisci de Mari Arrustiu",
+        "price": "AQ"
+      },
+      {
+        "name": "Gamberoisi Arrustiusu",
+        "price": "$39.00"
+      },
+      {
+        "name": "Pezza De Angioni a Sa Saba",
+        "price": "$44.00"
+      },
+      {
+        "name": "Gambas Arrustiusa En Tomattiga",
+        "price": "$36.00"
+      }
+    ],
+    "uncertainty": "Browser element screenshot of main courses; other regions of site contain food photos.",
+    "split": "development"
+  },
+  {
+    "id": "perbacco",
+    "restaurant": "Perbacco",
+    "manifest": "sources/b/perbacco/manifest.json",
+    "inputs": [
+      {
+        "file": "inputs/perbacco/page-1.jpg",
+        "sha256": "af4a14ff47db051a9755cb6ff6dc01f9d927de2d37c27069138939e4e6618e27",
+        "bytes": 137141
+      }
+    ],
+    "anchors": [
+      {
+        "name": "FRITTO MISTO",
+        "price": "20"
+      },
+      {
+        "name": "VITELLO TONNATO",
+        "price": "19"
+      },
+      {
+        "name": "CRUDO",
+        "price": "25"
+      },
+      {
+        "name": "PIASTRA ROASTED OCTOPUS",
+        "price": "22"
+      }
+    ],
+    "uncertainty": "Browser screenshot of menu region; other regions of site contain food photos.",
+    "split": "development"
+  },
+  {
+    "id": "seven-hills",
+    "restaurant": "Seven Hills",
+    "manifest": "sources/b/seven-hills/manifest.json",
+    "inputs": [
+      {
+        "file": "inputs/seven-hills/page-1.jpg",
+        "sha256": "3fbe5957d00c4fba61d5fd8a28c21552b99b3668f662add6c0a2fd332bae942f",
+        "bytes": 203685
+      }
+    ],
+    "anchors": [
+      {
+        "name": "Maccheroncelli",
+        "price": "28"
+      },
+      {
+        "name": "Fusilli",
+        "price": "29"
+      },
+      {
+        "name": "Tortelli",
+        "price": "29"
+      },
+      {
+        "name": "Agnolotti",
+        "price": "30"
+      }
+    ],
+    "uncertainty": "Embedded menu linked by official menu page https://www.sevenhillssf.com/menu. Browser screenshot captures upper menu.",
+    "split": "development"
+  },
+  {
+    "id": "sotto-mare",
+    "restaurant": "Sotto Mare",
+    "manifest": "sources/b/sotto-mare/manifest.json",
+    "inputs": [
+      {
+        "file": "inputs/sotto-mare/page-1.jpg",
+        "sha256": "4d96395fd80d063268c3cb537bb744190295e82bf2f56427c22fe51a0d4ebfb6",
+        "bytes": 546930
+      }
+    ],
+    "anchors": [
+      {
+        "name": "Crab Cocktail",
+        "price": "27.00"
+      },
+      {
+        "name": "Octopus Salad",
+        "price": "19.00"
+      },
+      {
+        "name": "Lobster Ravioli",
+        "price": "32.00"
+      },
+      {
+        "name": "Grilled Salmon",
+        "price": "33.00"
+      }
+    ],
+    "uncertainty": "Menu date not printed; seafood illustrations appear behind text, no dish photos.",
+    "split": "development"
+  },
+  {
+    "id": "boulevard",
+    "restaurant": "Boulevard",
+    "manifest": "sources/c/boulevard/manifest.json",
+    "inputs": [
+      {
+        "file": "inputs/boulevard/page-1.jpg",
+        "sha256": "88de18f4242535feb4f4d3c60dea92de1532b151061bf53ac917ca953ab7231c",
+        "bytes": 137726
+      }
+    ],
+    "anchors": [
+      {
+        "name": "BLUEFIN TUNA",
+        "price": ""
+      },
+      {
+        "name": "HIRAMASA CRUDO",
+        "price": ""
+      },
+      {
+        "name": "STEAK TARTARE",
+        "price": ""
+      },
+      {
+        "name": "FIGS, MOKA BLUE CHEESE & RED ENDIVE",
+        "price": ""
+      },
+      {
+        "name": "HEIRLOOM TOMATOES & BURRATA SALAD",
+        "price": ""
+      }
+    ],
+    "uncertainty": "Menu selections lack individual prices; page states three selections starting at $128 per person, outside the captured viewport. Menu may change.",
+    "split": "development"
+  },
+  {
+    "id": "harborview",
+    "restaurant": "Harborview Restaurant & Bar",
+    "manifest": "sources/c/harborview/manifest.json",
+    "inputs": [
+      {
+        "file": "inputs/harborview/page-1.jpg",
+        "sha256": "7d58a144dd7d3e53ece259fb0bc2d2a674f767e66d78fff3036af8da7bbc5339",
+        "bytes": 390391
+      }
+    ],
+    "anchors": [
+      {
+        "name": "VEGETABLE EGG ROLLS",
+        "price": "$6"
+      },
+      {
+        "name": "BAKED BBQ PORK BUNS",
+        "price": "$8"
+      },
+      {
+        "name": "STEAMED KUROBUTA PORK SOUP DUMPLINGS",
+        "price": "$9"
+      },
+      {
+        "name": "SEA SALT TOFU FRIES",
+        "price": "$10"
+      },
+      {
+        "name": "HARBORVIEW BEEF",
+        "price": "$20"
+      }
+    ],
+    "uncertainty": "Historical menu dated October 2020; prices, hours, and availability may have changed. Restaurant-branded PDF is hosted on BentoBox CDN; current menu page may differ.",
+    "split": "holdout"
+  },
+  {
+    "id": "house-of-nanking",
+    "restaurant": "House of Nanking",
+    "manifest": "sources/c/house-of-nanking/manifest.json",
+    "inputs": [
+      {
+        "file": "inputs/house-of-nanking/page-1.jpg",
+        "sha256": "82c4d9069fed6dec02a51f8e76672857309281bdcb7aacb40fed11a39dbc66de",
+        "bytes": 290371
+      }
+    ],
+    "anchors": [
+      {
+        "name": "FRIED PORK POTSTICKERS (6 PCS)",
+        "price": "14.95"
+      },
+      {
+        "name": "CRISPY BEEF POTSTICKERS (6 PCS)",
+        "price": "14.95"
+      },
+      {
+        "name": "CRISPY EGG PILLOWS (2 PCS)",
+        "price": "8.95"
+      },
+      {
+        "name": "CRISPY SHRIMP PACKETS (4 PCS)",
+        "price": "11.95"
+      },
+      {
+        "name": "FRIED ONIONCAKES (4 PCS)",
+        "price": "11.95"
+      }
+    ],
+    "uncertainty": "Menu dated May 2025; current prices and availability may differ.",
+    "split": "holdout"
+  },
+  {
+    "id": "kokkari",
+    "restaurant": "Kokkari Estiatorio",
+    "manifest": "sources/c/kokkari/manifest.json",
+    "inputs": [
+      {
+        "file": "inputs/kokkari/page-1.jpg",
+        "sha256": "5db4f110302f98f3b68dd17feeb1db44f94c3876a1d8c8f116b4a388c9077e97",
+        "bytes": 188663
+      }
+    ],
+    "anchors": [
+      {
+        "name": "Feta & Olives",
+        "price": "14.50"
+      },
+      {
+        "name": "Watermelon & Feta",
+        "price": "14.75"
+      },
+      {
+        "name": "Beet Salad",
+        "price": "14.50"
+      },
+      {
+        "name": "Baked Feta",
+        "price": "16.75"
+      },
+      {
+        "name": "Zucchini Cakes",
+        "price": "14.75"
+      }
+    ],
+    "uncertainty": "Lunch menu prices and offerings may change.",
+    "split": "holdout"
+  },
+  {
+    "id": "la-mar",
+    "restaurant": "La Mar San Francisco",
+    "manifest": "sources/c/la-mar/manifest.json",
+    "inputs": [
+      {
+        "file": "inputs/la-mar/page-1.jpg",
+        "sha256": "091ce353d13fe62d80f50fa116a9b08cbc6941c1ff4ab73d2e9659d084ec3a41",
+        "bytes": 155412
+      }
+    ],
+    "anchors": [
+      {
+        "name": "Clásico",
+        "price": "$32.00"
+      },
+      {
+        "name": "Limeño",
+        "price": "$31.00"
+      },
+      {
+        "name": "Victoriano",
+        "price": "$32.00"
+      },
+      {
+        "name": "Nikkei",
+        "price": "$33.00"
+      },
+      {
+        "name": "Quemado",
+        "price": "$30.00"
+      }
+    ],
+    "uncertainty": "Menu items and prices can change.",
+    "split": "development"
+  },
+  {
+    "id": "mister-jius",
+    "restaurant": "Mister Jiu’s",
+    "manifest": "sources/c/mister-jius/manifest.json",
+    "inputs": [
+      {
+        "file": "inputs/mister-jius/page-1.jpg",
+        "sha256": "08f9221c36fd7bfb75f717a8d767d5eaf610f96891cafd488fb91e60d6747414",
+        "bytes": 110660
+      }
+    ],
+    "anchors": [
+      {
+        "name": "Salt & Vinegar Shrimp Chips",
+        "price": "16"
+      },
+      {
+        "name": "Chilled Beef Tendon",
+        "price": "20"
+      },
+      {
+        "name": "Scallion Milk Bread",
+        "price": "16"
+      },
+      {
+        "name": "Pan Fried Turnip Cake",
+        "price": "16"
+      },
+      {
+        "name": "Silken Mapo Tofu",
+        "price": "32"
+      }
+    ],
+    "uncertainty": "Menu PDF dated April 2026; current prices and availability may differ.",
+    "split": "development"
+  },
+  {
+    "id": "r-and-g-lounge",
+    "restaurant": "R&G Lounge",
+    "manifest": "sources/c/r-and-g-lounge/manifest.json",
+    "inputs": [
+      {
+        "file": "inputs/r-and-g-lounge/page-1.jpg",
+        "sha256": "a0d3b3af82358b9da36e84c652eb2286765e03bdd2943c9b69b96c0f413d293c",
+        "bytes": 221414
+      }
+    ],
+    "anchors": [
+      {
+        "name": "CHICKEN & CORN SOUP",
+        "price": "5"
+      },
+      {
+        "name": "HOT & SOUR SOUP",
+        "price": "5"
+      },
+      {
+        "name": "R&G SPECIAL BEEF OVER RICE",
+        "price": "18"
+      },
+      {
+        "name": "DICED HONEY GARLIC CHICKEN OVER RICE",
+        "price": "15"
+      },
+      {
+        "name": "BBQ PORK & WONTON NOODLE SOUP",
+        "price": "19"
+      }
+    ],
+    "uncertainty": "Lunch menu; availability and prices may change.",
+    "split": "development"
+  },
+  {
+    "id": "scomas",
+    "restaurant": "Scoma’s",
+    "manifest": "sources/c/scomas/manifest.json",
+    "inputs": [
+      {
+        "file": "inputs/scomas/page-1.jpg",
+        "sha256": "7e33e9693d0268e4cb1d19664a3ce73f77901485462afafabae7e422e7b39b44",
+        "bytes": 378788
+      }
+    ],
+    "anchors": [
+      {
+        "name": "Dungeness Crab Cocktail",
+        "price": "27"
+      },
+      {
+        "name": "Wild Gulf Shrimp Cocktail",
+        "price": "21"
+      },
+      {
+        "name": "Oysters alla Scoma",
+        "price": "25"
+      },
+      {
+        "name": "Calamari Fritti",
+        "price": "19"
+      },
+      {
+        "name": "Steamed Manila Clams",
+        "price": "19"
+      }
+    ],
+    "uncertainty": "Historical menu dated August 2022. Prices and availability may have changed.",
+    "split": "development"
+  },
+  {
+    "id": "yank-sing",
+    "restaurant": "Yank Sing",
+    "manifest": "sources/c/yank-sing/manifest.json",
+    "inputs": [
+      {
+        "file": "inputs/yank-sing/page-1.jpg",
+        "sha256": "3d5a14aba381d00e666697758c748c0952933b5c3bd033d0260237ed99d82a69",
+        "bytes": 128875
+      }
+    ],
+    "anchors": [
+      {
+        "name": "Steamed BBQ Pork Bun (2 pc)",
+        "price": ""
+      },
+      {
+        "name": "Stuffed Lotus Leaf (1 pc)",
+        "price": ""
+      },
+      {
+        "name": "Shrimp Dumpling (4 pc)",
+        "price": ""
+      },
+      {
+        "name": "Pork & Shrimp Siu Mye (4 pc)",
+        "price": ""
+      },
+      {
+        "name": "Chicken Mushroom Dumpling (2 pc)",
+        "price": ""
+      }
+    ],
+    "uncertainty": "Prices are not printed. Restaurant describes rotating varieties; availability may vary.",
+    "split": "development"
+  },
+  {
+    "id": "zuni-cafe",
+    "restaurant": "Zuni Café",
+    "manifest": "sources/c/zuni-cafe/manifest.json",
+    "inputs": [
+      {
+        "file": "inputs/zuni-cafe/page-1.jpg",
+        "sha256": "9fd3b41a28bb4fdcff12d4d149e8d3a00dfa49990e694c1f76c10aad14468a43",
+        "bytes": 130909
+      }
+    ],
+    "anchors": [
+      {
+        "name": "Marinated olives",
+        "price": ""
+      },
+      {
+        "name": "Acme levain bread with butter",
+        "price": ""
+      },
+      {
+        "name": "Shoestring potatoes",
+        "price": ""
+      },
+      {
+        "name": "Hazelnut-chocolate scone with berry preserves and whipped butter",
+        "price": ""
+      },
+      {
+        "name": "Zuni Caesar salad",
+        "price": ""
+      }
+    ],
+    "uncertainty": "Sample menu; individual prices are not printed and offerings may change.",
+    "split": "holdout"
+  },
+  {
+    "id": "frances",
+    "restaurant": "Frances",
+    "manifest": "sources/d/frances/manifest.json",
+    "inputs": [
+      {
+        "file": "inputs/frances/page-1.jpg",
+        "sha256": "6b85082505f8e3ce5889e12d23742b11a2a0003465eea439be5283470e1887c9",
+        "bytes": 141321
+      }
+    ],
+    "anchors": [
+      {
+        "name": "housemade SOURDOUGH",
+        "price": "8"
+      },
+      {
+        "name": "highwater OYSTERS",
+        "price": "5"
+      },
+      {
+        "name": "LOBSTER MUSHROOM",
+        "price": "18"
+      },
+      {
+        "name": "PANISSE FRITES",
+        "price": "10"
+      },
+      {
+        "name": "KURI SQUASH",
+        "price": "14"
+      }
+    ],
+    "uncertainty": "Seasonal sample menu subject to change.",
+    "split": "development"
+  },
+  {
+    "id": "horsefeather",
+    "restaurant": "Horsefeather",
+    "manifest": "sources/d/horsefeather/manifest.json",
+    "inputs": [
+      {
+        "file": "inputs/horsefeather/page-1.jpg",
+        "sha256": "fae43e633d625ffd5999276fcc6d8ab92b7f9ede068406aef74616b54348e17d",
+        "bytes": 97863
+      }
+    ],
+    "anchors": [
+      {
+        "name": "UMAMI FRIES",
+        "price": "11"
+      },
+      {
+        "name": "KOREAN CRISPY WINGS",
+        "price": "20"
+      },
+      {
+        "name": "ROASTED CAULIFLOWER",
+        "price": "15"
+      },
+      {
+        "name": "DEVILED EGGS",
+        "price": "13"
+      },
+      {
+        "name": "LEMON GARLIC BROCCOLINI",
+        "price": "15"
+      }
+    ],
+    "uncertainty": "Browser screenshot is a clipped menu region. The page warns that items change seasonally; its linked PDF returned 404.",
+    "split": "development"
+  },
+  {
+    "id": "kin-khao",
+    "restaurant": "Kin Khao",
+    "manifest": "sources/d/kin-khao/manifest.json",
+    "inputs": [
+      {
+        "file": "inputs/kin-khao/page-1.jpg",
+        "sha256": "147f130d63de684115772d092ad161d97ca644a4ce27f867a8337fce1aebffc3",
+        "bytes": 71339
+      }
+    ],
+    "anchors": [
+      {
+        "name": "Mushroom Hor Mok",
+        "price": "20"
+      },
+      {
+        "name": "Som Tum Papaya Salad",
+        "price": "17"
+      },
+      {
+        "name": "Khao Mun Gai",
+        "price": "26"
+      },
+      {
+        "name": "Sai Ua + Namprik Noom",
+        "price": "26"
+      }
+    ],
+    "uncertainty": "Screenshot captures a portion of the live web menu; availability and prices can change.",
+    "split": "holdout"
+  },
+  {
+    "id": "memento",
+    "restaurant": "Memento SF",
+    "manifest": "sources/d/memento/manifest.json",
+    "inputs": [
+      {
+        "file": "inputs/memento/page-1.jpg",
+        "sha256": "58b6f13bbbd89d997ca95968f0bf76fc95e6803e0279477f6e529251c9e24297",
+        "bytes": 108029
+      }
+    ],
+    "anchors": [
+      {
+        "name": "Shishito Peppers",
+        "price": "$14"
+      },
+      {
+        "name": "Cheese Bread Sliders",
+        "price": "$23"
+      },
+      {
+        "name": "Short Rib Crispy Rice Cakes",
+        "price": "$16"
+      },
+      {
+        "name": "Fried Cauliflower",
+        "price": "$14"
+      },
+      {
+        "name": "Truffle Fries",
+        "price": "$14"
+      }
+    ],
+    "uncertainty": "Live menu may change.",
+    "split": "development"
+  },
+  {
+    "id": "nari",
+    "restaurant": "Nari",
+    "manifest": "sources/d/nari/manifest.json",
+    "inputs": [
+      {
+        "file": "inputs/nari/page-1.jpg",
+        "sha256": "9fb7239aab91d55bb51102329d265851424403de105b6932db5a418c2a5d4a3c",
+        "bytes": 48639
+      }
+    ],
+    "anchors": [
+      {
+        "name": "caviar",
+        "price": "100"
+      },
+      {
+        "name": "gaeng gradang tod",
+        "price": "15"
+      },
+      {
+        "name": "yum tawai",
+        "price": "22"
+      },
+      {
+        "name": "som tum",
+        "price": "22"
+      }
+    ],
+    "uncertainty": "Screenshot captures a portion of the live web menu; availability and prices can change.",
+    "split": "holdout"
+  },
+  {
+    "id": "octavia",
+    "restaurant": "Octavia",
+    "manifest": "sources/d/octavia/manifest.json",
+    "inputs": [
+      {
+        "file": "inputs/octavia/page-1.jpg",
+        "sha256": "90a9b1ba6cb34fdf34b2e7e8d9a776bb7206de8b9f2432439996f375a88d4b53",
+        "bytes": 154525
+      }
+    ],
+    "anchors": [
+      {
+        "name": "housemade SOURDOUGH",
+        "price": "9"
+      },
+      {
+        "name": "hog island OYSTER",
+        "price": "6"
+      },
+      {
+        "name": "lonely mountain CAULIFLOWER",
+        "price": "14"
+      },
+      {
+        "name": "sweet potato CROQUETTE",
+        "price": "16"
+      },
+      {
+        "name": "bluefin tuna CRUDO",
+        "price": "24"
+      }
+    ],
+    "uncertainty": "Menu subject to change.",
+    "split": "development"
+  },
+  {
+    "id": "rabbit-hole",
+    "restaurant": "The Rabbit Hole",
+    "manifest": "sources/d/rabbit-hole/manifest.json",
+    "inputs": [
+      {
+        "file": "inputs/rabbit-hole/page-1.jpg",
+        "sha256": "a47210c04c4fc3fafbce2b58d08715050dc3dccf7672f9f459fb75513d228ed5",
+        "bytes": 311432
+      }
+    ],
+    "anchors": [
+      {
+        "name": "Peanuts",
+        "price": "$5"
+      },
+      {
+        "name": "Edamame",
+        "price": "$7"
+      },
+      {
+        "name": "Cucumbers",
+        "price": "$9"
+      },
+      {
+        "name": "Salmon Nori Taquitos",
+        "price": "$12"
+      },
+      {
+        "name": "House Salad",
+        "price": "$11"
+      }
+    ],
+    "uncertainty": "Sample menu; only original page 2 retained.",
+    "split": "development"
+  },
+  {
+    "id": "rintaro",
+    "restaurant": "Rintaro",
+    "manifest": "sources/d/rintaro/manifest.json",
+    "inputs": [
+      {
+        "file": "inputs/rintaro/page-1.jpg",
+        "sha256": "145e90eddd978cda8c05d264517813a852821a23a16afb838a484766b4b63e5a",
+        "bytes": 138972
+      }
+    ],
+    "anchors": [
+      {
+        "name": "Ika no Nuta",
+        "price": "$17"
+      },
+      {
+        "name": "Shungiku Kamo Sarada",
+        "price": "$24"
+      },
+      {
+        "name": "Gindara no Sunomono",
+        "price": "$25"
+      },
+      {
+        "name": "Eringi",
+        "price": "$12"
+      },
+      {
+        "name": "Negima",
+        "price": "$15"
+      }
+    ],
+    "uncertainty": "Restaurant labels this a sample seasonal menu, subject to change. Screenshot captures a portion of the page.",
+    "split": "development"
+  },
+  {
+    "id": "shizen",
+    "restaurant": "Shizen Vegan Sushi Bar & Izakaya",
+    "manifest": "sources/d/shizen/manifest.json",
+    "inputs": [
+      {
+        "file": "inputs/shizen/page-1.jpg",
+        "sha256": "22ad5767a6432da2ccd53b3a4314fbfe7e1c7f32b1100eaab154aaf9c873b800",
+        "bytes": 44569
+      }
+    ],
+    "anchors": [
+      {
+        "name": "miso soup",
+        "price": "$5"
+      },
+      {
+        "name": "nameko mushroom miso soup",
+        "price": "$7"
+      },
+      {
+        "name": "edamame",
+        "price": "$7"
+      },
+      {
+        "name": "garlic edamame",
+        "price": "$9"
+      },
+      {
+        "name": "gyoza",
+        "price": "$13"
+      }
+    ],
+    "uncertainty": "Screenshot captures starters and salads; page hero contains a food photo outside the captured region.",
+    "split": "holdout"
+  },
+  {
+    "id": "xebec",
+    "restaurant": "Xebec",
+    "manifest": "sources/d/xebec/manifest.json",
+    "inputs": [
+      {
+        "file": "inputs/xebec/page-1.jpg",
+        "sha256": "b068b63331d6f793f39527f9b218bdbfbb8e2ce42df4db654a63bf7a424e5f9f",
+        "bytes": 229534
+      }
+    ],
+    "anchors": [
+      {
+        "name": "Marinated Spanish & Greek Olives",
+        "price": "7"
+      },
+      {
+        "name": "Focaccia, Putanesca Sauce",
+        "price": "8"
+      },
+      {
+        "name": "Patatas Bravas",
+        "price": "14"
+      },
+      {
+        "name": "Oven Roasted Cauliflower",
+        "price": "18"
+      },
+      {
+        "name": "Fresh Uni Risotto Arancini",
+        "price": "24"
+      }
+    ],
+    "uncertainty": "Only original page 1 retained; PDF may differ from current HTML menu.",
+    "split": "development"
+  },
+  {
+    "id": "abrazo",
+    "restaurant": "Abrazo",
+    "manifest": "sources/e/abrazo/manifest.json",
+    "inputs": [
+      {
+        "file": "inputs/abrazo/page-1.jpg",
+        "sha256": "7d120438af61e2462e013a63cf8f729e07c49541757570af58891e6cb8d5e27b",
+        "bytes": 293036
+      }
+    ],
+    "anchors": [
+      {
+        "name": "Charred Octopus",
+        "price": "$21"
+      },
+      {
+        "name": "Bacalhau",
+        "price": "$18"
+      },
+      {
+        "name": "Patatas Bravas",
+        "price": "$14"
+      },
+      {
+        "name": "Seafood Paella",
+        "price": "$49"
+      }
+    ],
+    "uncertainty": "PDF differs in details from the current HTML menu.",
+    "split": "development"
+  },
+  {
+    "id": "aziza",
+    "restaurant": "Aziza",
+    "manifest": "sources/e/aziza/manifest.json",
+    "inputs": [
+      {
+        "file": "inputs/aziza/page-1.jpg",
+        "sha256": "e24109f75b32cc8f1337d9348655c87d8b167686e7a5389e8ee2dea4a6d697aa",
+        "bytes": 261162
+      }
+    ],
+    "anchors": [
+      {
+        "name": "king salad | romaine lettuce | oregano goddess | crispy alliums | aged cheese",
+        "price": "19"
+      },
+      {
+        "name": "grilled octopus | m’hamsa | merguez vinaigrette | preserved apricot",
+        "price": "32"
+      },
+      {
+        "name": "basteeya",
+        "price": "36"
+      },
+      {
+        "name": "braised lamb shank | cracked wheat | moyer prune | sweet potato | herb jam",
+        "price": "55"
+      }
+    ],
+    "uncertainty": "PDF dated February 13; menu may have changed.",
+    "split": "development"
+  },
+  {
+    "id": "bar-gemini",
+    "restaurant": "Bar Gemini",
+    "manifest": "sources/e/bar-gemini/manifest.json",
+    "inputs": [
+      {
+        "file": "inputs/bar-gemini/page-1.jpg",
+        "sha256": "eaaf584b201391e48b73d932ec27a8cd2f0df7d095bc4f233a701fe18680716e",
+        "bytes": 223681
+      }
+    ],
+    "anchors": [
+      {
+        "name": "CACIO E PEPE DEVILED EGGS",
+        "price": "11 FOR 2"
+      },
+      {
+        "name": "SMOKED SALMON DIP",
+        "price": "19"
+      },
+      {
+        "name": "SHRIMP COCKTAIL (4)",
+        "price": "21"
+      },
+      {
+        "name": "THE GEMINI DOG",
+        "price": "20"
+      }
+    ],
+    "uncertainty": "Original PDF page 1 selected; original page 2 omitted. Menu by Ernest for Bar Gemini; currentness uncertain.",
+    "split": "development"
+  },
+  {
+    "id": "casaro-osteria",
+    "restaurant": "Casaro Osteria",
+    "manifest": "sources/e/casaro-osteria/manifest.json",
+    "inputs": [
+      {
+        "file": "inputs/casaro-osteria/page-1.jpg",
+        "sha256": "6f6086f89729f80826f586e9f8bf04b2e5b5023e661dc7a7ed5c1c8ebae34c7f",
+        "bytes": 540687
+      }
+    ],
+    "anchors": [
+      {
+        "name": "Arancini",
+        "price": "16"
+      },
+      {
+        "name": "Rigatoni alla Vodka",
+        "price": "28"
+      },
+      {
+        "name": "Polpo Grigliato",
+        "price": "35"
+      },
+      {
+        "name": "Margherita",
+        "price": "21"
+      }
+    ],
+    "uncertainty": "Original PDF page 2 selected; page 1 is a cover. Official page says menus updated October 2026.",
+    "split": "holdout"
+  },
+  {
+    "id": "ernest",
+    "restaurant": "Ernest",
+    "manifest": "sources/e/ernest/manifest.json",
+    "inputs": [
+      {
+        "file": "inputs/ernest/page-1.jpg",
+        "sha256": "7e9c97b5d54f6acdae52ae31cc3dc5e124fac75c1b84dae49cd818f25d8c2fa3",
+        "bytes": 205172
+      }
+    ],
+    "anchors": [
+      {
+        "name": "Uni Toast",
+        "price": "27"
+      },
+      {
+        "name": "Madai Sashimi",
+        "price": "25"
+      },
+      {
+        "name": "Koshihikari Fried Rice",
+        "price": "23"
+      },
+      {
+        "name": "Shio Koji Hanger Steak",
+        "price": "49"
+      }
+    ],
+    "uncertainty": "Original PDF includes a second drinks page; retained original page 1 only. Restaurant calls this a sample menu.",
+    "split": "development"
+  },
+  {
+    "id": "good-good-culture-club",
+    "restaurant": "Good Good Culture Club",
+    "manifest": "sources/e/good-good-culture-club/manifest.json",
+    "inputs": [
+      {
+        "file": "inputs/good-good-culture-club/page-1.jpg",
+        "sha256": "383155516a52ec399f5f87f00d6a1c02bfaaf458b710e7f12524161199add083",
+        "bytes": 89325
+      }
+    ],
+    "anchors": [
+      {
+        "name": "crying tiger shrimp",
+        "price": "21"
+      },
+      {
+        "name": "laab tuna tataki",
+        "price": "21"
+      },
+      {
+        "name": "GG fish cakes",
+        "price": "17"
+      },
+      {
+        "name": "catfish mok pa",
+        "price": "23"
+      },
+      {
+        "name": "skirt steak galbi",
+        "price": "35"
+      }
+    ],
+    "uncertainty": "Official page calls this a sample menu, subject to change.",
+    "split": "holdout"
+  },
+  {
+    "id": "hazies",
+    "restaurant": "Hazie's",
+    "manifest": "sources/e/hazies/manifest.json",
+    "inputs": [
+      {
+        "file": "inputs/hazies/page-1.jpg",
+        "sha256": "4e327fc7f3be50c7879ec6fe5ea90f747605386d647d240e6ee3b420507f17f3",
+        "bytes": 369415
+      }
+    ],
+    "anchors": [
+      {
+        "name": "OAXACAN CHEESE FUNDIDO",
+        "price": "18"
+      },
+      {
+        "name": "SICHUAN PORK DUMPLINGS",
+        "price": "16"
+      },
+      {
+        "name": "DUCK CARBONARA",
+        "price": "34"
+      },
+      {
+        "name": "HAZIE'S BURGER",
+        "price": "24"
+      }
+    ],
+    "uncertainty": "PDF filename dates it June 2025; linked official HTML menu has different prices and dishes.",
+    "split": "development"
+  },
+  {
+    "id": "ideale",
+    "restaurant": "Ideale Restaurant",
+    "manifest": "sources/e/ideale/manifest.json",
+    "inputs": [
+      {
+        "file": "inputs/ideale/page-1.jpg",
+        "sha256": "6e5c332ccf6c9f4ce42e6eddf3aaeaaae23c340391765603232079cf9339ccd7",
+        "bytes": 243759
+      }
+    ],
+    "anchors": [
+      {
+        "name": "CALAMARI E RUGHETTA",
+        "price": "22"
+      },
+      {
+        "name": "INSALATA IDEALE",
+        "price": "18"
+      },
+      {
+        "name": "PIZZA MARGHERITA",
+        "price": "21"
+      },
+      {
+        "name": "PIZZA FUNGHI E SALSICCIA",
+        "price": "24"
+      }
+    ],
+    "uncertainty": "Original PDF page 1 selected; page 2 omitted. Filename dates menu March 15, 2026.",
+    "split": "development"
+  },
+  {
+    "id": "liholiho-yacht-club",
+    "restaurant": "Liholiho Yacht Club",
+    "manifest": "sources/e/liholiho-yacht-club/manifest.json",
+    "inputs": [
+      {
+        "file": "inputs/liholiho-yacht-club/page-1.jpg",
+        "sha256": "07d092c48dabfc033c607cf1a8a20227d47031fdfc9d6a7b1bf3c9e9a0724fa8",
+        "bytes": 87979
+      }
+    ],
+    "anchors": [
+      {
+        "name": "TUNA POKE",
+        "price": "15 / ea"
+      },
+      {
+        "name": "HALIBUT SASHIMI",
+        "price": "26"
+      },
+      {
+        "name": "FRIED RICE",
+        "price": "19"
+      },
+      {
+        "name": "LOCAL BLACK COD",
+        "price": "42"
+      },
+      {
+        "name": "BAKED HAWAII",
+        "price": "15"
+      }
+    ],
+    "uncertainty": "Official page calls this a sample menu, subject to change.",
+    "split": "development"
+  },
+  {
+    "id": "mars-bar",
+    "restaurant": "Mars Bar & Restaurant",
+    "manifest": "sources/e/mars-bar/manifest.json",
+    "inputs": [
+      {
+        "file": "inputs/mars-bar/page-1.jpg",
+        "sha256": "b88fef1fe39ca753dad8699d2e41cc1d587b9b9d379c76ffc570abd680eed70a",
+        "bytes": 415068
+      }
+    ],
+    "anchors": [
+      {
+        "name": "CHEESE PIZZA",
+        "price": "20"
+      },
+      {
+        "name": "PEPPERONI PIZZA",
+        "price": "24"
+      },
+      {
+        "name": "CHICKEN SKEWERS (3)",
+        "price": "15"
+      },
+      {
+        "name": "NACHOS",
+        "price": "17"
+      },
+      {
+        "name": "CHEESEBURGER SLIDERS (3)",
+        "price": "18"
+      }
+    ],
+    "uncertainty": "Original PDF page 1 selected; page 2 omitted. Filename suggests March 2024; prices and availability may have changed.",
+    "split": "development"
+  }
+]

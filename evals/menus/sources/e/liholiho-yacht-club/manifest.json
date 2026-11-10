@@ -1,0 +1,21 @@
+{
+  "restaurant": "Liholiho Yacht Club",
+  "address": "871 Sutter St, San Francisco, CA 94109",
+  "official_url": "https://lycsf.com/pages/menu",
+  "menu_url": "https://cdn.shopify.com/s/files/1/0405/6160/6816/files/foodmenu_100226-01.svg?v=1791310218",
+  "retrieved_at": "2026-11-10T18:27:34.079706+00:00",
+  "source_pages": [
+    1
+  ],
+  "text_only_verified": true,
+  "verification_method": "Visually inspected rendered original page; food text and decorative graphics, no dish photographs.",
+  "sha256": "850703b4a9138d099c938a3d4bea6b52b514562bd1ee707baa99bc7b2c02184c",
+  "expected_dishes": [
+    "TUNA POKE — 15 / ea",
+    "HALIBUT SASHIMI — 26",
+    "FRIED RICE — 19",
+    "LOCAL BLACK COD — 42",
+    "BAKED HAWAII — 15"
+  ],
+  "uncertainty": "Official page calls this a sample menu, subject to change."
+}
