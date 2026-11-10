@@ -25,10 +25,10 @@ The extraction runner was checked against the local unconfigured Muse runtime. I
 
 ## Credential and deployment limits
 
-No Meta `MODEL_API_KEY` is configured locally. A read-only metadata request with the existing OpenAI key returned HTTP 401 `account_deactivated` on November 10. No paid extraction or image generation was run. No remote D1/R2 resource was created, no remote migration ran, and no Cloudflare release was deployed. The checked-in D1 ID remains a placeholder.
+No Meta `MODEL_API_KEY` is configured locally. A read-only metadata request with the existing OpenAI key returned HTTP 401 `account_deactivated` on November 10. No paid extraction or image generation was run. D1 snapmenu was created in the Side Projects account on November 10, and the remote initial migration passed (8 commands). R2 bucket creation failed because R2 is not enabled (Cloudflare code 10042). No Cloudflare release was deployed. The checked-in D1 ID now references the provisioned database. Runtime code is unchanged from the 72-check run; release configuration and local-secret documentation were updated afterward.
 
 The initial browser JavaScript bundle is about 120 kB gzip. PDF.js and its worker load only for PDF input. This is a build artifact size, not a measured mobile startup time. Provider quality, model access, real-device upload time, first-text latency, first-image latency, browser HEIC compatibility, provider retention, and production capacity require live checks.
 
 ## Reproduce the source identity
 
-Run `node scripts/source-digest.mjs`. It hashes sorted paths, a NUL separator, file bytes, and a trailing NUL. It includes runtime code, dependencies, QA, migrations, and corpus artifacts. It excludes documentation, screenshots, secrets, and generated builds. Final SHA-256: `cc9ca1f6276421e722fc6b0c6f6972b030a525cc953b91395f5e4de97f410a49` across 196 files.
+Run `node scripts/source-digest.mjs`. It hashes sorted paths, a NUL separator, file bytes, and a trailing NUL. It includes runtime code, dependencies, QA, migrations, and corpus artifacts. It excludes documentation, screenshots, secrets, and generated builds. Final SHA-256: `90f7efc75b34b46257f29c142e2832924a97b9fd110abb04650285d1bea07f49` across 196 files.

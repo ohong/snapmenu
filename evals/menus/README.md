@@ -16,13 +16,13 @@ Checks 50 unique restaurants, source hashes, input preparation, and minimum anch
 
 ## Run a small paid extraction evaluation
 
-Start the real Worker with a valid provider key in `.dev.vars`. Then:
+Start the real Worker with a valid provider key in `.env.local`. Then:
 
 ```sh
 .venv/bin/python evals/menus/run.py --url http://127.0.0.1:8787 --limit 5 --allow-paid
 ```
 
-For the entire dataset, use `--split all --limit 50`. First set `HOURLY_SCAN_LIMIT=60` in your local `.dev.vars`; the default ten-scan browser cap otherwise stops the run. Keep the normal production cap unchanged. The default five-case run limits cost. This runner requests extraction only. It does not generate dish pictures unless `--images` is supplied. It stops on rate limits or unavailable credentials and saves results after every case.
+For the entire dataset, use `--split all --limit 50`. First set `HOURLY_SCAN_LIMIT=60` in your local `.env.local`; the default ten-scan browser cap otherwise stops the run. Keep the normal production cap unchanged. The default five-case run limits cost. This runner requests extraction only. It does not generate dish pictures unless `--images` is supplied. It stops on rate limits or unavailable credentials and saves results after every case.
 
 The report records HTTP outcome, partial dish-name recall, exact printed-price checks where labels separate prices, upload size, server timing, and elapsed time. The normalizer separates printed price suffixes from dish names. Review anchors against the original page before treating a miss as a model failure. Compare providers with fresh local data and identical inputs. Cached results lack `Server-Timing`; exclude them from latency comparisons.
 

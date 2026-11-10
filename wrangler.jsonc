@@ -1,6 +1,7 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "snapmenu",
+  "account_id": "acc011aa86ca151f8a63c5047ae1ebf9",
   "main": "src/worker.ts",
   "compatibility_date": "2026-11-10",
   "assets": {
@@ -18,7 +19,7 @@
     {
       "binding": "DB",
       "database_name": "snapmenu",
-      "database_id": "00000000-0000-0000-0000-000000000000",
+      "database_id": "4db9f5b6-f399-4bfa-b8f8-a07d41ed7e85",
       "migrations_dir": "migrations",
     },
   ],

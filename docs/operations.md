@@ -2,13 +2,15 @@
 
 ## Local setup
 
-`npm ci`, copy `.dev.vars.example` to ignored `.dev.vars`, add a provider key, then run `npm run build`, `npm run db:local`, and `npm run dev:worker`. The Worker serves the built frontend at port 8787. `npm run dev` provides frontend hot reload with an API proxy.
+`npm ci`, copy `.env.local.example` to ignored `.env.local`, add a provider key, then run `npm run build`, `npm run db:local`, and `npm run dev:worker`. The Worker serves the built frontend at port 8787. `npm run dev` provides frontend hot reload with an API proxy.
 
 Runtime configuration is in `wrangler.jsonc`. Use `AI_PROVIDER=muse` or `openai`. Muse reads `MODEL_API_KEY`; OpenAI reads `OPENAI_API_KEY`. Optional `MUSE_MENU_MODEL`, `MUSE_IMAGE_MODEL`, `OPENAI_MENU_MODEL`, and `OPENAI_IMAGE_MODEL` override defaults. Never use Vite-prefixed secret variables.
 
+Local `.env.local` is supported by Wrangler. If `.dev.vars` exists, Wrangler ignores all `.env` files; use one convention. Local files never configure production secrets. For production, use `npx wrangler secret put MODEL_API_KEY --name snapmenu` or Cloudflare Dashboard → Workers & Pages → snapmenu → Settings → Variables and Secrets → Add → Secret.
+
 ## Provision and release
 
-The checked-in database ID is a placeholder, not a provisioned resource. Create D1 `snapmenu` and R2 `snapmenu-images` in the intended account, replace the D1 ID, apply migrations remotely, add provider secrets through `wrangler secret put`, and deploy with `npm run deploy`. Verify the account with `wrangler whoami` first. The existing local OAuth session points to the Side Projects account; recheck before provisioning.
+D1 `snapmenu` is provisioned in the Side Projects account. Its ID is recorded in `wrangler.jsonc`. R2 activation is pending: Cloudflare returned code 10042. After activation, create private R2 `snapmenu-images`, add provider secrets through `wrangler secret put`, and deploy with `npm run deploy`. Verify the account with `wrangler whoami` first. The existing local OAuth session points to the Side Projects account; recheck before provisioning.
 
 Keep R2 private. Do not expose a bucket public URL. Serve pictures only through the authenticated Worker route. The cron runs hourly at minute 17. Keep both provider secrets available if there are pending tasks from both providers.
 

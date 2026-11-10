@@ -34,13 +34,13 @@ Use Node 22.19 or later. Node 26.5 was used for the recorded verification.
 
 ```sh
 npm ci
-cp .dev.vars.example .dev.vars
+cp .env.local.example .env.local
 npm run build
 npm run db:local
 npm run dev:worker
 ```
 
-Put your provider key in ignored `.dev.vars`. Never put keys in `VITE_*` variables. Open [localhost:8787](http://127.0.0.1:8787). The sample menu works without credentials and makes no AI requests.
+Put your provider key in ignored `.env.local`. Never put keys in `VITE_*` variables. Open [localhost:8787](http://127.0.0.1:8787). The sample menu works without credentials and makes no AI requests.
 
 For frontend hot reload, run `npm run dev` in another terminal. Vite forwards `/api` to the local Worker. Test the production build through Wrangler before release.
 
@@ -48,12 +48,10 @@ Phone photos resize to a maximum of 1800 pixels before upload. JPG, PNG, WebP, a
 
 ## Cloudflare release
 
-The Worker, D1 migration, R2 binding, static assets, and hourly expiry job are configured in `wrangler.jsonc`. The D1 ID is a placeholder until provisioning. No live Cloudflare deployment has been performed for this rebuild.
+The Worker, D1 migration, R2 binding, static assets, and hourly expiry job are configured in `wrangler.jsonc`. The D1 database is provisioned in the Side Projects account. R2 activation is pending. No live Cloudflare deployment has been performed for this rebuild.
 
 ```sh
-npx wrangler d1 create snapmenu
 npx wrangler r2 bucket create snapmenu-images
-# Put the returned D1 database ID in wrangler.jsonc.
 npx wrangler d1 migrations apply snapmenu --remote
 npx wrangler secret put MODEL_API_KEY
 npm run deploy

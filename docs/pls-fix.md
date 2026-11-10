@@ -16,10 +16,10 @@ Five Terra collectors produced 50 distinct SF restaurant source snapshots. Origi
 
 ## Evidence and limits
 
-See `docs/verification.md` for final checks against the current source digest. Provider-boundary simulation drives real workerd, D1, R2, Chromium, and WebKit. No live Muse extraction or image generation ran: a Meta key is absent. The existing OpenAI key still returns `401 account_deactivated`. Local Cloudflare migration and deployment dry run passed. No remote resources were provisioned and no new deployment was published.
+See `docs/verification.md` for final checks against the current source digest. Provider-boundary simulation drives real workerd, D1, R2, Chromium, and WebKit. No live Muse extraction or image generation ran: a Meta key is absent. The existing OpenAI key still returns `401 account_deactivated`. Local Cloudflare migration and deployment dry run passed. D1 snapmenu was provisioned in the Side Projects account and its initial migration passed. R2 activation is blocked by Cloudflare code 10042. No new deployment was published.
 
 No independent code-review agent was used; the user authorized the agent team for menu collection. Runtime integration and review stayed in the main chat.
 
 ## Next action
 
-Add a working provider key securely, run the small live evaluation, and complete the release checks in `docs/plan.md`. The Cloudflare D1 ID remains a placeholder. The previous Python runtime and its data remain recoverable from Git history and the untouched ignored local data directory. The original October 16 archive also remains at `/Users/ohong/.codex/backups/snapmenu-2026-10-16/source.tar` if present; its continued existence was not checked in this rebuild.
+Add a working provider key securely, run the small live evaluation, and complete the release checks in `docs/plan.md`. The Cloudflare D1 ID is configured. Enable R2 in the account, then create the private image bucket and deploy. The previous Python runtime and its data remain recoverable from Git history and the untouched ignored local data directory. The original October 16 archive also remains at `/Users/ohong/.codex/backups/snapmenu-2026-10-16/source.tar` if present; its continued existence was not checked in this rebuild.

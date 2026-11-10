@@ -15,7 +15,7 @@
 2. Run a five-case live extraction check on each enabled provider.
 3. Review complete outputs and five diverse generated dish pictures against source descriptions.
 4. Measure upload, first text, first image, and complete visible-page latency on a phone network.
-5. Provision D1/R2, apply migrations, configure secrets, and deploy the Worker.
+5. Enable R2 in the Side Projects account, create the private bucket, configure secrets, and deploy the Worker. D1 and its migration are already provisioned.
 6. Exercise deployed ownership, image recovery, deletion, and scheduled expiry.
 7. Test an actual iPhone and Android device, including camera selection, browser chrome, landscape, and long translated text.
 
