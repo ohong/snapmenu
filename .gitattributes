@@ -1,0 +1,4 @@
+# Preserve downloaded source bytes. Review provenance and hashes in manifest.json.
+evals/menus/sources/**/*.pdf binary
+evals/menus/sources/**/*.html binary
+evals/menus/sources/**/*.svg binary

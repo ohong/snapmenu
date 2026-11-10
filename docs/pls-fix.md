@@ -12,7 +12,7 @@ The previous FastAPI/static/SQLite implementation had useful recovery and privac
 
 Default `AI_PROVIDER=muse`: Muse Ember reads menus; Muse Image renders dishes. `openai` selects Luna/Flare. D1 claims prevent duplicate paid submissions, R2 stores private WebP output, and tasks keep their original provider. Pictures start automatically only for visible dish cards. The sample makes no paid calls. The screen uses two or four cards with Next/Back; long detail dialogs can scroll internally.
 
-Five Terra collectors produced 50 distinct SF restaurant source snapshots. Original PDFs/SVGs or genuine menu screenshots have source manifests, dates, hashes, and partial dish/price anchors. Historical and sample menus are flagged. Offline normalization produces 58 JPEG pages, 40 development cases and 10 holdout cases. This is an extraction benchmark input set, not proof of model accuracy or a current restaurant directory.
+Five Terra collectors produced 50 distinct SF restaurant source snapshots. Original PDFs/SVGs or genuine menu screenshots have source manifests, dates, hashes, and partial dish/price anchors. Historical and sample menus are flagged. Offline normalization produces 53 JPEG pages, 40 development cases and 10 holdout cases. This is an extraction benchmark input set, not proof of model accuracy or a current restaurant directory.
 
 ## Evidence and limits
 

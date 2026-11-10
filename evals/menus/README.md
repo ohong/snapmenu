@@ -4,7 +4,7 @@
 
 `cases.json` records each source manifest, normalized input hashes, and 3–5 manually transcribed dish checks. The fixed split contains 40 development cases and 10 holdout cases. Do not tune prompts on the holdout results.
 
-`inputs/` contains JPEG pages at a maximum of 1800 pixels, matching the phone upload path. `sources/` preserves originals and provenance. Some screenshots show only a menu section. Each source manifest identifies the original page or captured section. Screenshots are not recreated from scraped text.
+`inputs/` contains JPEG pages at a maximum of 1800 pixels, matching the phone upload path. `sources/` preserves originals and provenance. Only manifest-selected menu pages become evaluation inputs; event-packet covers and other unselected pages stay out of extraction. Some screenshots show only a menu section. Each source manifest identifies the original page or captured section. Screenshots are not recreated from scraped text.
 
 ## Validate without model calls
 

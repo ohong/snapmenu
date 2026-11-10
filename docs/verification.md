@@ -19,7 +19,7 @@ A separate Chromium smoke check ran against actual `wrangler dev` static asset d
 
 ## Real-menu corpus
 
-Offline preparation validated 50 distinct restaurants, source hashes, and normalized files: **58 JPEG pages, 211 dish anchors, 184 price anchors**, with 40 development cases and 10 fixed holdout cases. Source collectors visually inspected menu pages or captured regions for dish photos. The corpus contains original restaurant files and genuine browser screenshots; it is not synthetic test content. Some menus are historical or samples. See `evals/menus/README.md`.
+Offline preparation validated 50 distinct restaurants, source hashes, and normalized files: **53 JPEG pages, 211 dish anchors, 184 price anchors**, with 40 development cases and 10 fixed holdout cases. Source collectors visually inspected menu pages or captured regions for dish photos. The corpus contains original restaurant files and genuine browser screenshots; it is not synthetic test content. Some menus are historical or samples. See `evals/menus/README.md`.
 
 The extraction runner was checked against the local unconfigured Muse runtime. It stopped after the first HTTP 503 with zero completed cases and no model request. The optional image-review helper also completed a real local Worker/D1/R2 HTTP flow using simulated image output. These checks validate runner plumbing and failure handling only. No accuracy or latency result exists for live Muse or OpenAI inference.
 
@@ -31,4 +31,4 @@ The initial browser JavaScript bundle is about 120 kB gzip. PDF.js and its worke
 
 ## Reproduce the source identity
 
-Run `node scripts/source-digest.mjs`. It hashes sorted paths, a NUL separator, file bytes, and a trailing NUL. It includes runtime code, dependencies, QA, migrations, and corpus artifacts. It excludes documentation, screenshots, secrets, and generated builds. Final SHA-256: `faf541c4575285034ea1fa9da1899d15dad643622be7999c84a8a64faa772144` across 201 files.
+Run `node scripts/source-digest.mjs`. It hashes sorted paths, a NUL separator, file bytes, and a trailing NUL. It includes runtime code, dependencies, QA, migrations, and corpus artifacts. It excludes documentation, screenshots, secrets, and generated builds. Final SHA-256: `cc9ca1f6276421e722fc6b0c6f6972b030a525cc953b91395f5e4de97f410a49` across 196 files.

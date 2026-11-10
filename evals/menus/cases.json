@@ -333,16 +333,6 @@
     "inputs": [
       {
         "file": "inputs/absinthe/page-1.jpg",
-        "sha256": "8e1d602356cefa43aafff9b8341aa487d12150a4fc32b09c1e76e3e54e3896d4",
-        "bytes": 62785
-      },
-      {
-        "file": "inputs/absinthe/page-2.jpg",
-        "sha256": "de23e5a506a6f3aad1a835dc0c3e0379f6cdf248e5f7ad1134631d3233061fb0",
-        "bytes": 201646
-      },
-      {
-        "file": "inputs/absinthe/page-3.jpg",
         "sha256": "533408942f750bce9ffd77ae8fa942073b07d0ae8a2ae0d34dc0d697994a9a96",
         "bytes": 155608
       }
@@ -407,16 +397,6 @@
     "inputs": [
       {
         "file": "inputs/bix/page-1.jpg",
-        "sha256": "426c3482405267f2fd4bf1de376c2dd311c01b7ee934e0237ea7898bfefc6d61",
-        "bytes": 210183
-      },
-      {
-        "file": "inputs/bix/page-2.jpg",
-        "sha256": "05c3a8c5c064608613f188d640577aa80b2fb829ef2ac575a8bd509ec73fd9ce",
-        "bytes": 89155
-      },
-      {
-        "file": "inputs/bix/page-3.jpg",
         "sha256": "b5c0dc4d6e20066bdad961df572a54091f4e31a16c38eb5d464bc494a9adb99d",
         "bytes": 95827
       }
@@ -451,11 +431,6 @@
         "file": "inputs/delfina/page-1.jpg",
         "sha256": "d62eaa9f40d7413c603c5e4d3b6bac55a4fdc3a5468b31159260f3c80a9cbae7",
         "bytes": 244530
-      },
-      {
-        "file": "inputs/delfina/page-2.jpg",
-        "sha256": "870a401dc8fc8b1a0a63cfb5402a23877a84d56998584b390dacb6f5556cc795",
-        "bytes": 248199
       }
     ],
     "anchors": [
