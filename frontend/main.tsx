@@ -13,8 +13,13 @@ type Config = {
   reading_available: boolean;
   images_available: boolean;
 };
+const lifetime = new AbortController();
+window.addEventListener("pagehide", () => lifetime.abort());
 async function api<T>(path: string, init?: RequestInit): Promise<T> {
-  const response = await fetch("/api" + path, init);
+  const response = await fetch("/api" + path, {
+    ...init,
+    signal: lifetime.signal,
+  });
   let data: any;
   try {
     data = await response.json();
@@ -178,6 +183,13 @@ function App() {
     try {
       const pages = await prepare(file);
       setStage("reading");
+      if (
+        new Blob([JSON.stringify({ pages, language })]).size >
+        4 * 1024 * 1024
+      )
+        throw Error(
+          "These pages are too large together. Upload one menu page at a time.",
+        );
       const result = await api<Menu>("/menus", post({ pages, language }));
       setLatest(result);
       openMenu(result);

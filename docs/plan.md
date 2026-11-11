@@ -1,22 +1,14 @@
 # Release plan
 
-## Implemented locally
+Implemented: Vercel Node API, Neon Postgres, private Vercel Blob, authenticated expiry cron, React/Base UI mobile screen, browser photo/PDF preparation, Muse/OpenAI switch, recovery, ownership, budgets, and the 50-menu corpus.
 
-- TypeScript Worker, D1 migration, private R2 storage, and scheduled expiry.
-- React/Base UI single-screen upload and paged visual menu.
-- Browser image normalization and lazy PDF rendering.
-- Muse/OpenAI provider flag with persisted provider-specific task ownership.
-- Visible-dish automatic generation, recovery, duplicate claims, and request caps.
-- 50 real SF source menus with provenance and a fixed 40/10 evaluation split.
+Remaining live AI qualification:
 
-## Required before claiming live readiness
+1. Add a valid Meta key as Production `MODEL_API_KEY` and redeploy.
+2. Run five real menu extractions and review all source/output pairs.
+3. Generate five diverse dishes and review the saved image rubric.
+4. Measure first text, first picture, and complete visible-page latency on real phone networks.
+5. Check actual iPhone and Android camera behavior, browser chrome, HEIC support, and long translations.
+6. Exercise populated production expiry and backup restoration in a safe environment.
 
-1. Configure an active Meta key, or a working OpenAI key.
-2. Run a five-case live extraction check on each enabled provider.
-3. Review complete outputs and five diverse generated dish pictures against source descriptions.
-4. Measure upload, first text, first image, and complete visible-page latency on a phone network.
-5. Enable R2 in the Side Projects account, create the private bucket, configure secrets, and deploy the Worker. D1 and its migration are already provisioned.
-6. Exercise deployed ownership, image recovery, deletion, and scheduled expiry.
-7. Test an actual iPhone and Android device, including camera selection, browser chrome, landscape, and long translated text.
-
-The repo is not a live deployment. Simulated provider checks do not establish model quality, speed, price, or account access. No Decisions API call is part of the current product.
+Simulated provider tests do not establish model quality, cost, speed, or account access. The Decisions API remains a separate proposal.

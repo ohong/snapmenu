@@ -29,9 +29,9 @@ Default: Muse Ember for reading and Muse Image for pictures. Set the server prov
 
 ## Privacy and cost controls
 
-No accounts or public share links. Menus and R2 pictures require the originating browser cookie and expire after seven days. Changing devices or clearing cookies loses access. Deletion removes private app data and attempts provider cancellation/deletion. Background provider retention is disclosed.
+No accounts or public share links. Menus and private Blob pictures require the originating browser cookie and expire after seven days. Changing devices or clearing cookies loses access. Deletion removes private app data and attempts provider cancellation/deletion. Background provider retention is disclosed.
 
-Only visible dishes create new image requests. Reloads reuse persisted tasks; uncertain submissions never retry automatically. Failed images allow one explicit retry. The sample menu makes no model requests and is clearly labeled. Global daily and per-browser hourly request limits survive Worker restarts in D1.
+Only visible dishes create new image requests. Reloads reuse persisted tasks; uncertain submissions never retry automatically. Failed images allow one explicit retry. The sample menu makes no model requests and is clearly labeled. Global daily and per-browser hourly request limits survive function restarts in Postgres.
 
 ## Acceptance conditions
 
@@ -42,6 +42,6 @@ Only visible dishes create new image requests. Reloads reuse persisted tasks; un
 - Reload and repeated requests do not duplicate a paid image submission.
 - Cross-browser sessions cannot read, delete, or download another browser's menu.
 - Provider failure produces a visible error rather than a substitute menu.
-- No production Python service is required.
+- No production Python service or Cloudflare account is required.
 
 Search, personal picks, random meal suggestions, accounts, payments, restaurant lookup, and the Decisions API are outside the current screen. The old broader UI was removed to make the core task direct.

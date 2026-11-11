@@ -19,7 +19,7 @@ class Server:
 
     def start(self):
         self.process = subprocess.Popen(
-            ["node", "tests/runtime.mjs"],
+            ["node", "--env-file=.env.local", "--import", "tsx", "tests/runtime.mjs"],
             cwd=ROOT,
             env={
                 **os.environ,
@@ -28,7 +28,7 @@ class Server:
             },
             stdout=subprocess.DEVNULL,
         )
-        for _ in range(100):
+        for _ in range(300):
             try:
                 if httpx.get(self.url + "/api/health").status_code == 200:
                     return
@@ -41,7 +41,7 @@ class Server:
 
     def stop(self):
         self.process.terminate()
-        self.process.wait(timeout=15)
+        self.process.wait(timeout=45)
 
 
 @pytest.fixture(scope="session", params=["muse", "openai"])
@@ -62,5 +62,5 @@ def phone(browser, server):
     page.on("pageerror", lambda error: errors.append(str(error)))
     page.goto(server.url)
     yield page
-    context.close()
     assert not errors, errors
+    context.close()

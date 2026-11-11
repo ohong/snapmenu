@@ -1,39 +1,36 @@
 # Operations
 
-## Local setup
+Production: https://snapmenu-gamma.vercel.app
+Project: `ohong-projects/snapmenu` (Pacific Systems). Vercel project ID: `prj_YjtkMWXmnbOB6RZPtFJYhcY7vQaT`.
 
-`npm ci`, copy `.env.local.example` to ignored `.env.local`, add a provider key, then run `npm run build`, `npm run db:local`, and `npm run dev:worker`. The Worker serves the built frontend at port 8787. `npm run dev` provides frontend hot reload with an API proxy.
+Neon `snapmenu-db` was provisioned through Vercel Marketplace using the existing integration's default plan. The initial attempt to select Free was rejected because it would downgrade an existing account with a branch above the free limit; no existing data was changed. Provisioning without a plan override succeeded. Private Blob `snapmenu-images` is linked. Both resources and functions use iad1.
 
-Runtime configuration is in `wrangler.jsonc`. Use `AI_PROVIDER=muse` or `openai`. Muse reads `MODEL_API_KEY`; OpenAI reads `OPENAI_API_KEY`. Optional `MUSE_MENU_MODEL`, `MUSE_IMAGE_MODEL`, `OPENAI_MENU_MODEL`, and `OPENAI_IMAGE_MODEL` override defaults. Never use Vite-prefixed secret variables.
+## Secrets
 
-Local `.env.local` is supported by Wrangler. If `.dev.vars` exists, Wrangler ignores all `.env` files; use one convention. Local files never configure production secrets. For production, use `npx wrangler secret put MODEL_API_KEY --name snapmenu` or Cloudflare Dashboard → Workers & Pages → snapmenu → Settings → Variables and Secrets → Add → Secret.
+Add `MODEL_API_KEY` as a sensitive Production environment variable in Vercel project Settings → Environment Variables. Redeploy afterward. Alternatively run `vercel env add MODEL_API_KEY production --sensitive` and enter it in the masked prompt. Do not send credentials in chat. OpenAI uses `OPENAI_API_KEY` when `AI_PROVIDER=openai`.
 
-## Provision and release
+`DATABASE_URL` and `BLOB_READ_WRITE_TOKEN` are supplied by the linked resources. `CRON_SECRET` is generated and installed in Production. No real AI key was copied into Vercel. `AI_PROVIDER=muse` is configured in Production.
 
-D1 `snapmenu` is provisioned in the Side Projects account. Its ID is recorded in `wrangler.jsonc`. R2 activation is pending: Cloudflare returned code 10042. After activation, create private R2 `snapmenu-images`, add provider secrets through `wrangler secret put`, and deploy with `npm run deploy`. Verify the account with `wrangler whoami` first. The existing local OAuth session points to the Side Projects account; recheck before provisioning.
+Use `vercel env pull .env.local` for local development. This file is ignored. Never put backend secrets in Vite-prefixed variables. `npm run dev:api` runs Vercel locally. `npm run dev` provides frontend hot reload with the API proxy at port 8787.
 
-Keep R2 private. Do not expose a bucket public URL. Serve pictures only through the authenticated Worker route. The cron runs hourly at minute 17. Keep both provider secrets available if there are pending tasks from both providers.
+## Migrations and release
 
-Before public launch, set account/provider spending limits, run the five-case live evaluation, check a real phone, test deletion, confirm scheduled expiry, and verify deployed bindings. Local workerd tests and a deployment dry run do not prove these conditions.
+`npm run db:migrate` applies the additive Postgres schema using local linked credentials. Use the intended environment's credentials, and export a backup before changing populated schemas. The new SnapMenu database began empty. Tests use uniquely named disposable schemas and private Blob prefixes inside that database; they never delete public application tables.
 
-## Budgets and failures
+Run `npm run check` and `npm test`, then `vercel deploy --prod`. Verify the public alias, `/api/health`, `/api/config`, saved-menu route, and unauthorized maintenance rejection. Test the public mobile screen. Build success alone does not establish runtime health or model access.
 
-Defaults: 100 scans/day, 100 pictures/day, 10 scans/hour/browser, 20 pictures/hour/browser. Failed submissions count. Limits are rolling windows in D1. `HOURLY_SCAN_LIMIT` and `HOURLY_IMAGE_LIMIT` can override the per-browser defaults. For a deliberate 50-menu local evaluation, set the local scan cap to 60; do not copy that override into production. Set a daily limit to zero to stop new paid requests without breaking saved-menu reading. D1 transaction batches make claim and usage updates atomic.
+The cron is configured in `vercel.json`, hourly at minute 17. It requires an Authorization bearer token matching `CRON_SECRET`. Requests without that secret return 401. Keep both AI provider credentials configured while either provider has pending tasks.
 
-An interrupted image submission becomes uncertain and never automatically retries. Known failed images allow one explicit retry. A stale starting request becomes uncertain after two minutes when checked. Background tasks retain their provider even if the configured default changes.
+Daily limits default to 100 scans and 100 pictures. Hourly browser limits default to 10 and 20. `DAILY_SCAN_LIMIT`, `DAILY_IMAGE_LIMIT`, `HOURLY_SCAN_LIMIT`, and `HOURLY_IMAGE_LIMIT` override these. A zero daily limit stops new paid requests. For a full local 50-menu evaluation, deliberately set the local hourly scan cap to 60. Do not copy that override into production by accident.
 
-A `503` can mean missing credentials, provider authorization, quota, or provider availability. Logs record safe status information, never provider keys or complete menu payloads. Check `/api/health` for D1 availability; it does not test R2 or model credentials. Provider failures need a live credentialed check.
+## Recovery and old resources
 
-## Backup and recovery
+Postgres and private Blob objects must be backed up/restored together. Validate ownership and image retrieval in a separate environment after restoring. Restore has not been exercised. A Vercel rollback does not undo schema changes, image writes, or provider charges. Never replay uncertain submissions.
 
-Export D1 before schema changes with `wrangler d1 export snapmenu --remote --output <backup.sql>`. Protect backups as private menu data. Back up R2 objects with their original `menu-id/dish-id.webp` keys if persistence beyond the short retention window matters. Restore D1 and R2 together into a separate environment, then exercise ownership and image retrieval before promotion. Restore has not been verified in this rebuild.
+The empty Cloudflare D1 resource `snapmenu` (`4db9f5b6-f399-4bfa-b8f8-a07d41ed7e85`) remains untouched. R2 was never activated. The app has no dependency on either. Older local `.env`, `data/`, and unrelated Neon resources also remain untouched. This version does not migrate old sessions or menus.
 
-The old ignored `data/` directory and `.env` are untouched. This release does not import old SQLite data, cookies, or generated files into D1/R2. Keep the old checkout from Git history if existing local sessions must remain available. Do not overwrite or remove legacy data as part of deploying this version. Older Neon infrastructure remains outside the deployment and needs a separate review before deletion.
+## Diagnostics
 
-## Rollback
+`/api/health` checks the actual database. It does not prove Blob or model access. Use `vercel logs --project snapmenu --since 1h --json` for current runtime errors; startup failures can appear at info level with stderr content. Logs must never contain credentials or complete private menu payloads.
 
-Keep the previous Worker version and D1 export before deployment. Roll back the Worker only when its schema remains compatible. The initial Cloudflare schema is additive and separate from the old SQLite database. A Worker rollback does not roll back provider charges or generated objects. Do not replay uncertain submissions during recovery.
-
-## Credentials now
-
-No Meta key is present locally. The existing OpenAI key returned HTTP 401 `account_deactivated` on November 10, 2026. These checks made no paid generation requests. Runtime tests use inert fixture credentials and intercept only external AI HTTP. Never put real keys into the test fixture.
+Production storage is provisioned and migrated. AI scanning remains unavailable until a working provider key is added. The existing local OpenAI key previously returned HTTP 401 `account_deactivated`.

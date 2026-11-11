@@ -7,27 +7,28 @@
     "dev": "vite --host 127.0.0.1",
     "build": "vite build",
     "check": "tsc --noEmit",
-    "dev:worker": "wrangler dev --ip 127.0.0.1",
-    "db:local": "wrangler d1 migrations apply snapmenu --local",
-    "deploy": "npm run build && wrangler deploy",
-    "test:prepare": "npm run build && wrangler deploy --dry-run --outdir build/worker",
-    "test": "npm run test:prepare && .venv/bin/pytest --browser chromium --browser webkit"
+    "deploy": "vercel deploy --prod",
+    "test:prepare": "npm run build",
+    "test": "npm run test:prepare && .venv/bin/pytest --browser chromium --browser webkit",
+    "dev:api": "vercel dev --listen 8787",
+    "db:migrate": "node --env-file=.env.local --import tsx scripts/migrate.ts"
   },
   "dependencies": {
     "@base-ui/react": "^1.9.0",
+    "@neondatabase/serverless": "^1.2.0",
+    "@vercel/blob": "^2.4.0",
     "pdfjs-dist": "^6.5.438",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "zod": "^4.6.7"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^5.20261110.1",
+    "@types/node": "^26.6.6",
     "@types/react": "^19.2.0",
     "@types/react-dom": "^19.2.0",
-    "miniflare": "^5.20261110.0-beta",
     "prettier": "^3.9.10",
+    "tsx": "^4.23.15",
     "typescript": "^5.9.3",
-    "vite": "^7.2.2",
-    "wrangler": "^4.160.0"
+    "vite": "^7.2.2"
   }
 }

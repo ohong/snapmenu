@@ -16,10 +16,10 @@ Checks 50 unique restaurants, source hashes, input preparation, and minimum anch
 
 ## Run a small paid extraction evaluation
 
-Start the real Worker with a valid provider key in `.env.local`. Then:
+Start the real Vercel API with a valid provider key in `.env.local`. Then:
 
 ```sh
-.venv/bin/python evals/menus/run.py --url http://127.0.0.1:8787 --limit 5 --allow-paid
+.venv/bin/python evals/menus/run.py --url https://snapmenu-gamma.vercel.app --limit 5 --allow-paid
 ```
 
 For the entire dataset, use `--split all --limit 50`. First set `HOURLY_SCAN_LIMIT=60` in your local `.env.local`; the default ten-scan browser cap otherwise stops the run. Keep the normal production cap unchanged. The default five-case run limits cost. This runner requests extraction only. It does not generate dish pictures unless `--images` is supplied. It stops on rate limits or unavailable credentials and saves results after every case.

@@ -15,13 +15,15 @@ const files = [
     (path) =>
       existsSync(path) &&
       !path.endsWith(".md") &&
-      (/^(src|frontend|static|migrations|tests|evals|scripts)\//.test(path) ||
+      (/^(api|src|frontend|static|migrations|tests|evals|scripts)\//.test(
+        path,
+      ) ||
         [
           "package.json",
           "package-lock.json",
           "tsconfig.json",
           "vite.config.ts",
-          "wrangler.jsonc",
+          "vercel.json",
           "pytest.ini",
           "requirements-dev.txt",
         ].includes(path)),

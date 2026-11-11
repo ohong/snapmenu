@@ -1,5 +1,10 @@
-// Real workerd + D1 + R2. Only paid external HTTP is simulated.
-import { Miniflare, convertV4MiniflareOptions } from "miniflare";
+// Real Node API + Neon + private Vercel Blob. Only paid external HTTP is simulated.
+import { createServer } from "node:http";
+import { neon } from "@neondatabase/serverless";
+import { list, del } from "@vercel/blob";
+import app from "../src/app.ts";
+import { database, imageStore } from "../src/storage.ts";
+import { randomUUID } from "node:crypto";
 import { readFileSync, existsSync } from "node:fs";
 import { resolve, extname } from "node:path";
 import assert from "node:assert/strict";
@@ -70,7 +75,8 @@ function menu(es) {
   };
 }
 const image = readFileSync("tests/provider-image.webp").toString("base64");
-async function external(req) {
+async function external(req, init) {
+  if (!(req instanceof Request)) req = new Request(req, init);
   const url = new URL(req.url);
   assert.equal(
     url.origin,
@@ -111,8 +117,8 @@ async function external(req) {
         assert.equal(data.tools[0].model, "gpt-image-2.5-flare");
         assert.equal(data.tool_choice.type, "image_generation");
       }
-      scenario = nextScenario;
-      nextScenario = "ok";
+      scenario = nextScenario.startsWith("image_") ? nextScenario : "ok";
+      if (nextScenario.startsWith("image_")) nextScenario = "ok";
       if (scenario === "image_timeout")
         throw Error("simulated transport failure");
       const task = "resp_fixture-" + stats.image_submissions;
@@ -132,8 +138,8 @@ async function external(req) {
     assert.equal(data.store, false);
     assert.equal(data.text.format.strict, true);
     assert.equal(data.text.format.type, "json_schema");
-    scenario = nextScenario;
-    nextScenario = "ok";
+    scenario = nextScenario.startsWith("image_") ? "ok" : nextScenario;
+    if (!nextScenario.startsWith("image_")) nextScenario = "ok";
     if (scenario === "scan_unavailable")
       return Response.json({ error: "fixture" }, { status: 503 });
     let result = menu(data.instructions.includes("Español"));
@@ -176,66 +182,90 @@ async function external(req) {
         },
   );
 }
-const mf = new Miniflare(
-  convertV4MiniflareOptions({
-    port: Number(process.env.FIXTURE_PORT || 8788),
-    host: "127.0.0.1",
-    workers: [
-      {
-        name: "snapmenu",
-        modules: true,
-        scriptPath: "build/worker/worker.js",
-        compatibilityDate: "2026-11-10",
-        d1Databases: { DB: "test-db" },
-        r2Buckets: { IMAGES: "test-images" },
-        bindings: {
-          AI_PROVIDER: provider,
-          MODEL_API_KEY: "fixture-muse",
-          OPENAI_API_KEY: "fixture-openai",
-          DAILY_SCAN_LIMIT: "1000",
-          DAILY_IMAGE_LIMIT: "1000",
+
+const schema = "qa_" + randomUUID().replaceAll("-", "");
+const sql = neon(process.env.DATABASE_URL);
+await sql.query(`CREATE SCHEMA "${schema}"`);
+const ddl = readFileSync("migrations/0001_initial.sql", "utf8")
+  .replace(/\b(scans|images|usage)\b/g, (name) => `"${schema}"."${name}"`)
+  .split(";")
+  .map((x) => x.trim())
+  .filter(Boolean);
+await sql.transaction(ddl.map((text) => sql.query(text)));
+const prefix = "qa/" + schema + "/";
+const env = {
+  DB: database(process.env.DATABASE_URL, schema),
+  IMAGES: imageStore(process.env.BLOB_READ_WRITE_TOKEN, prefix),
+  AI_PROVIDER: provider,
+  MODEL_API_KEY: "fixture-muse",
+  OPENAI_API_KEY: "fixture-openai",
+  DAILY_SCAN_LIMIT: "1000",
+  DAILY_IMAGE_LIMIT: "1000",
+  request: external,
+  ASSETS: {
+    async fetch(req) {
+      const path = new URL(req.url).pathname;
+      if (path === "/__fixture/stats") return Response.json(stats);
+      if (path.startsWith("/__fixture/mode/")) {
+        nextScenario = path.split("/").at(-1);
+        return Response.json({ ok: true });
+      }
+      let file = resolve("dist", "." + (path === "/" ? "/index.html" : path));
+      if (!file.startsWith(resolve("dist") + "/") || !existsSync(file))
+        file = resolve("dist/index.html");
+      return new Response(readFileSync(file), {
+        headers: {
+          "content-type":
+            {
+              ".html": "text/html",
+              ".js": "text/javascript",
+              ".mjs": "text/javascript",
+              ".css": "text/css",
+              ".svg": "image/svg+xml",
+            }[extname(file)] || "application/octet-stream",
         },
-        outboundService: external,
-        serviceBindings: {
-          ASSETS: async (req) => {
-            const path = new URL(req.url).pathname;
-            if (path === "/__fixture/stats") return Response.json(stats);
-            if (path.startsWith("/__fixture/mode/")) {
-              nextScenario = path.split("/").at(-1);
-              return Response.json({ ok: true });
-            }
-            let file = resolve(
-              "dist",
-              "." + (path === "/" ? "/index.html" : path),
-            );
-            if (!file.startsWith(resolve("dist") + "/") || !existsSync(file))
-              file = resolve("dist/index.html");
-            const mime =
-              {
-                ".html": "text/html",
-                ".js": "text/javascript",
-                ".mjs": "text/javascript",
-                ".css": "text/css",
-                ".svg": "image/svg+xml",
-                ".png": "image/png",
-              }[extname(file)] || "application/octet-stream";
-            return new Response(readFileSync(file), {
-              headers: { "Content-Type": mime },
-            });
-          },
-        },
-      },
-    ],
-  }),
+      });
+    },
+  },
+};
+const server = createServer(async (req, res) => {
+  try {
+    const chunks = [];
+    for await (const chunk of req) chunks.push(chunk);
+    const request = new Request("http://" + req.headers.host + req.url, {
+      method: req.method,
+      headers: req.headers,
+      body: ["GET", "HEAD"].includes(req.method)
+        ? undefined
+        : Buffer.concat(chunks),
+    });
+    const response = await app.fetch(request, env);
+    res.writeHead(response.status, Object.fromEntries(response.headers));
+    res.end(Buffer.from(await response.arrayBuffer()));
+  } catch (error) {
+    console.error(error.name, error.message);
+    res.writeHead(500);
+    res.end("Fixture failure");
+  }
+});
+server.listen(Number(process.env.FIXTURE_PORT || 8788), "127.0.0.1", () =>
+  console.log("Fixture ready"),
 );
-const db = await mf.getD1Database("DB");
-await db.exec(
-  readFileSync("migrations/0001_initial.sql", "utf8").replaceAll("\n", " "),
-);
-await mf.ready;
-console.log("Fixture ready");
 for (const signal of ["SIGTERM", "SIGINT"])
   process.on(signal, async () => {
-    await mf.dispose();
-    process.exit();
+    server.close();
+    try {
+      const objects = await list({
+        prefix,
+        token: process.env.BLOB_READ_WRITE_TOKEN,
+      });
+      if (objects.blobs.length)
+        await del(
+          objects.blobs.map((b) => b.url),
+          { token: process.env.BLOB_READ_WRITE_TOKEN },
+        );
+      await sql.query(`DROP SCHEMA "${schema}" CASCADE`);
+    } finally {
+      process.exit();
+    }
   });

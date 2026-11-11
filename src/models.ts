@@ -1,3 +1,4 @@
+import type { Database, ImageStore } from "./storage.js";
 import { z } from "zod";
 export const languages: Record<string, string> = {
   en: "English",
@@ -49,9 +50,10 @@ export type Menu = Omit<z.infer<typeof menuSchema>, "dishes"> & {
   demo?: boolean;
 };
 export interface Env {
-  DB: D1Database;
-  IMAGES: R2Bucket;
-  ASSETS: Fetcher;
+  DB: Database;
+  IMAGES: ImageStore;
+  ASSETS: { fetch(request: Request): Promise<Response> };
+  request?: typeof fetch;
   AI_PROVIDER?: string;
   MODEL_API_KEY?: string;
   OPENAI_API_KEY?: string;

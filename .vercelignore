@@ -1,0 +1,13 @@
+node_modules
+.venv
+.env*
+.dev.vars*
+.wrangler
+.vercel
+.git
+build
+dist
+data
+evals
+tests
+docs

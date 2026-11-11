@@ -1,25 +1,15 @@
 # SnapMenu handoff
 
-## Creator decisions
+The user wants a simple phone-browser tool: photograph a text-only menu, then see translated dish cards and illustrative pictures. Keep system fonts and a utilitarian single-screen flow. The main page does not scroll; two or four cards paginate. Long dialogs can scroll internally for accessibility.
 
-SnapMenu turns a text-only restaurant menu into a visual menu for diners, especially travellers. The user requested plain system typography, minimal controls, a mobile single-page app without page scrolling, Muse compatibility through a provider flag, and Base UI. They explicitly chose TypeScript Worker/D1/R2 on Cloudflare over retaining Python hosting. They authorized a Terra team to collect 50 real SF menus.
+After Cloudflare R2 activation failed in billing, the user explicitly authorized a move to Vercel and selection of Marketplace storage. Production now targets https://snapmenu-gamma.vercel.app in `ohong-projects/snapmenu`. Neon `snapmenu-db` and private Blob `snapmenu-images` are provisioned and linked. The Postgres migration passed. No unrelated database was modified and no Cloudflare resource was deleted.
 
-## Architecture decision
+The React screen and Muse/OpenAI provider contracts remain. `api/index.ts` is the Vercel function entry; `src/app.ts` is HTTP logic; `src/storage.ts` provides Neon transactions and private Blob access. The API uses an HTTP-only private browser session and seven-day expiry. Claims and usage records commit together; model calls never hold the transaction lock. Ambiguous image submissions never retry automatically.
 
-The previous FastAPI/static/SQLite implementation had useful recovery and privacy rules, but depended on a persistent Python server and native codecs. This version moves the runtime to TypeScript and Cloudflare. React/Base UI handles the screen; device-side normalization removes production Python codec dependencies. Background response handles preserve recovery. User data files and old infrastructure remain untouched.
+No real Meta key is configured. Production `AI_PROVIDER=muse` selects Ember/Image. Add `MODEL_API_KEY` securely in Vercel project environment settings and redeploy to enable scans. The old OpenAI key was not copied and previously returned `account_deactivated`.
 
-## Integrated state
+The five Terra menu collectors produced 50 distinct SF restaurant snapshots. Only selected text-menu pages become inputs: 53 JPEG pages, 211 dish checks, 184 price checks, 40 development cases and 10 holdout cases. Historical and sample menus are flagged. The corpus is not served to diners.
 
-Default `AI_PROVIDER=muse`: Muse Ember reads menus; Muse Image renders dishes. `openai` selects Luna/Flare. D1 claims prevent duplicate paid submissions, R2 stores private WebP output, and tasks keep their original provider. Pictures start automatically only for visible dish cards. The sample makes no paid calls. The screen uses two or four cards with Next/Back; long detail dialogs can scroll internally.
+Verification drives the real Node API, Neon, private Blob, Chromium, and WebKit. Only external AI HTTP is simulated. See `docs/verification.md` for final results and limits. Deployment checks include the public alias, health/config/latest routes, cron authorization, and public mobile UI. No live model-quality claim is made.
 
-Five Terra collectors produced 50 distinct SF restaurant source snapshots. Original PDFs/SVGs or genuine menu screenshots have source manifests, dates, hashes, and partial dish/price anchors. Historical and sample menus are flagged. Offline normalization produces 53 JPEG pages, 40 development cases and 10 holdout cases. This is an extraction benchmark input set, not proof of model accuracy or a current restaurant directory.
-
-## Evidence and limits
-
-See `docs/verification.md` for final checks against the current source digest. Provider-boundary simulation drives real workerd, D1, R2, Chromium, and WebKit. No live Muse extraction or image generation ran: a Meta key is absent. The existing OpenAI key still returns `401 account_deactivated`. Local Cloudflare migration and deployment dry run passed. D1 snapmenu was provisioned in the Side Projects account and its initial migration passed. R2 activation is blocked by Cloudflare code 10042. No new deployment was published.
-
-No independent code-review agent was used; the user authorized the agent team for menu collection. Runtime integration and review stayed in the main chat.
-
-## Next action
-
-Add a working provider key securely, run the small live evaluation, and complete the release checks in `docs/plan.md`. The Cloudflare D1 ID is configured. Enable R2 in the account, then create the private image bucket and deploy. The previous Python runtime and its data remain recoverable from Git history and the untouched ignored local data directory. The original October 16 archive also remains at `/Users/ohong/.codex/backups/snapmenu-2026-10-16/source.tar` if present; its continued existence was not checked in this rebuild.
+Old local Python data, original Git history, the empty Cloudflare D1 database, and unrelated Neon resources remain untouched. No automatic legacy data or session migration occurs. The original archive path recorded in history was not rechecked.

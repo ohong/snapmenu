@@ -58,3 +58,7 @@ node_modules/
 !.dev.vars.example
 
 !.env.local.example
+.vercel
+.env*
+!.env.example
+!.env.local.example

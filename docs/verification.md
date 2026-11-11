@@ -1,34 +1,36 @@
 # Verification
 
-## Final local run
+## Vercel migration — November 10, 2026
 
-November 10, 2026: `npm run check` passed. The production Vite build and Cloudflare deployment dry run passed. The local D1 migration applied successfully. The combined real-browser/API suite passed **72 checks in 53.39 seconds**:
+`npm run check` and the Vite production build passed. The Postgres migration applied to the newly provisioned Neon SnapMenu database. The final Chromium/WebKit/API run passed **72 checks in 137.37 seconds**:
 
 ```sh
-npm run test:prepare
+npm run build
 .venv/bin/pytest --browser chromium --browser webkit --tb=short --junitxml=test-results/junit.xml
 ```
 
-Both `AI_PROVIDER=muse` and `AI_PROVIDER=openai` run in Cloudflare's real local Worker runtime with D1 and R2. The external paid provider HTTP boundary alone is simulated by the test harness. It checks fixed provider origins, model IDs, schema requests, extraction storage settings, background image requests, Muse tool settings, and OpenAI image-tool settings. Production has no fixture routes or simulation flag.
+Tests run the actual Node API, actual Neon queries and transactions, and actual private Vercel Blob reads/writes. Every fixture instance creates a disposable `qa_*` schema and `qa/` object prefix, then removes only that namespace. Only external model HTTP is simulated. Fixture credentials are inert; production has no simulation route or flag. Fixtures separate scan and image scenarios so pending background submissions cannot consume a later scan's failure scenario. Reload checks wait for submission acknowledgement before testing persisted background tasks. Error capture excludes browser-context teardown, which cancels outstanding network traffic.
 
-The browser suite verifies automatic reading after file selection, language changes, category selection, pagination, image appearance, reload reuse, original text, no-scroll layouts at 320×568, 390×844, 768×1024, and 844×390, real PDF rendering, invalid uploads, model refusals, incomplete JSON, escaped model markup, missing dishes, and provider failures, and explicit retries of the same photo after a failed scan. API checks verify ownership, duplicate concurrent image claims, private R2 image delivery, deletion, uncertain submissions, corrupt image output, known failures, one explicit image retry, and request guards.
+Coverage includes 320×568, 390×844, 768×1024, and 844×390 layouts; upload/camera controls; automatic scan; translations; category selection; pagination; real PDF preparation; invalid files; refusals and incomplete outputs; escaped markup; private ownership; duplicate concurrent claims; private image delivery; reload reuse; ambiguous submissions; malformed images; explicit retry limits; deletion; cross-origin guards; and explicit same-photo retries after a failed scan.
 
-Screenshots under `docs/screenshots/` show the current UI. The green picture blocks are test-only image bytes, not live model output. They demonstrate layout and delivery, not image quality. No physical iPhone or Android device was tested.
+The public production alias is https://snapmenu-gamma.vercel.app. Unauthenticated HTTP checks verified `/` 200, `/api/health` 200 with real database access, `/api/config` 200, `/api/menus/latest` 200 with no private menu, and `/api/maintenance` 401 without the cron secret. The actual public UI was opened in the in-app browser; the sample menu and original dish details worked under the production CSP. The real scan controls correctly show unavailable while the Meta secret is absent.
 
-A separate Chromium smoke check ran against actual `wrangler dev` static asset delivery, including its CSP. Base UI category selection and the dish dialog worked without page errors. `/api/health` and `/api/config` returned 200. Manually triggering the local scheduled handler returned 200 on an empty local store. Expiry with populated remote data, backup restoration, and hosted R2 delivery remain unverified.
+An initial production attempt exposed extensionless server imports that Node could not resolve. Server imports now name `.js` outputs explicitly, and the function exports the documented default fetch handler. The corrected production API returned the successful statuses above. The final release is redeployed from the committed source.
 
-## Real-menu corpus
+The Blob SDK is pinned to 2.4.0 because the newer installed version introduced advisories through transitive CLI dependencies. `npm audit` reports zero known vulnerabilities with the selected dependency set. This is dependency metadata, not a full security audit.
 
-Offline preparation validated 50 distinct restaurants, source hashes, and normalized files: **53 JPEG pages, 211 dish anchors, 184 price anchors**, with 40 development cases and 10 fixed holdout cases. Source collectors visually inspected menu pages or captured regions for dish photos. The corpus contains original restaurant files and genuine browser screenshots; it is not synthetic test content. Some menus are historical or samples. See `evals/menus/README.md`.
+## Evaluation corpus
 
-The extraction runner was checked against the local unconfigured Muse runtime. It stopped after the first HTTP 503 with zero completed cases and no model request. The optional image-review helper also completed a real local Worker/D1/R2 HTTP flow using simulated image output. These checks validate runner plumbing and failure handling only. No accuracy or latency result exists for live Muse or OpenAI inference.
+Offline preparation verifies 50 distinct restaurant snapshots, 53 selected JPEG pages, 211 dish anchors, 184 price anchors, and a fixed 40/10 development/holdout split. Historical and sample menus are flagged. Original event-packet covers are retained as source evidence but excluded from normalized inputs. The corpus is not served to diners.
 
-## Credential and deployment limits
+The eval runner can call the real deployment once a valid AI key is installed. `--images` adds up to five image requests and blank human-review fields. No live AI-quality or latency result exists yet. Screenshots generated by the fixture use solid-color image bytes and do not demonstrate model image quality.
 
-No Meta `MODEL_API_KEY` is configured locally. A read-only metadata request with the existing OpenAI key returned HTTP 401 `account_deactivated` on November 10. No paid extraction or image generation was run. D1 snapmenu was created in the Side Projects account on November 10, and the remote initial migration passed (8 commands). R2 bucket creation failed because R2 is not enabled (Cloudflare code 10042). No Cloudflare release was deployed. The checked-in D1 ID now references the provisioned database. Runtime code is unchanged from the 72-check run; release configuration and local-secret documentation were updated afterward.
+## Limits
 
-The initial browser JavaScript bundle is about 120 kB gzip. PDF.js and its worker load only for PDF input. This is a build artifact size, not a measured mobile startup time. Provider quality, model access, real-device upload time, first-text latency, first-image latency, browser HEIC compatibility, provider retention, and production capacity require live checks.
+No working Meta key was available, and the old OpenAI key previously returned `account_deactivated`. It was not copied into production. No live extraction or dish generation ran. Physical iPhone/Android camera behavior, HEIC compatibility, real network latency, populated scheduled expiry, and backup/restore remain unverified. The cron is configured and its public route rejects unauthenticated calls; the populated expiry job still needs a safe live exercise.
 
-## Reproduce the source identity
+Cloudflare resources and unrelated databases were not deleted. The old Cloudflare runtime test results remain historical; the current release uses Node, Neon, and Blob.
 
-Run `node scripts/source-digest.mjs`. It hashes sorted paths, a NUL separator, file bytes, and a trailing NUL. It includes runtime code, dependencies, QA, migrations, and corpus artifacts. It excludes documentation, screenshots, secrets, and generated builds. Final SHA-256: `90f7efc75b34b46257f29c142e2832924a97b9fd110abb04650285d1bea07f49` across 196 files.
+## Source identity
+
+`node scripts/source-digest.mjs` hashes runtime, QA, dependencies, migrations, and corpus files. Documentation, generated builds, private files, and screenshots are excluded. Final SHA-256: `68d9b83a8d47d274d08ba8d642eb80b4307f1f3277aa12828e5bbb63a39380d3` across 199 files.

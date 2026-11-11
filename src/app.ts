@@ -6,7 +6,7 @@ import {
   type Menu,
   type Provider,
   type ImageState,
-} from "./models";
+} from "./models.js";
 import {
   key,
   models,
@@ -15,7 +15,7 @@ import {
   request as aiRequest,
   removeResponse,
   imageBytes,
-} from "./providers";
+} from "./providers.js";
 const now = () => Math.floor(Date.now() / 1000);
 const id = () => crypto.randomUUID();
 const json = (value: unknown, status = 200) => Response.json(value, { status });
@@ -33,7 +33,7 @@ function limit(value: string | undefined) {
     throw new AppError(503, "The service limit setting is invalid.");
   return n;
 }
-async function body(request: Request, max = 10 * 1024 * 1024) {
+async function body(request: Request, max = 4 * 1024 * 1024) {
   if (Number(request.headers.get("content-length") ?? 0) > max)
     throw new AppError(413, "Choose a smaller photo or PDF.");
   const reader = request.body?.getReader();
@@ -65,7 +65,7 @@ async function body(request: Request, max = 10 * 1024 * 1024) {
     );
   }
 }
-// Client normalization avoids native codecs and large original-photo uploads at the edge.
+// Client normalization avoids native codecs and large original-photo uploads in the API.
 function validPage(page: unknown): page is string {
   if (
     typeof page !== "string" ||
@@ -213,13 +213,13 @@ async function route(req: Request, env: Env, owner: string): Promise<Response> {
     }
     const menuId = id(),
       stamp = now();
-    // D1 batches are transactions. The claim and usage record either commit together or roll back.
+    // Database batches are transactions. The claim and usage record either commit together or roll back.
     const results = await env.DB.batch([
       env.DB.prepare(
-        `INSERT OR IGNORE INTO scans(id,owner,fingerprint,created_at,status) SELECT ?,?,?,?,'starting'
+        `INSERT INTO scans(id,owner,fingerprint,created_at,status) SELECT ?,?,?,?,'starting'
  WHERE (SELECT count(*) FROM usage WHERE kind='scan' AND created_at>?)<?
  AND (SELECT count(*) FROM usage WHERE kind='scan' AND owner=? AND created_at>?)<?
- AND (SELECT count(*) FROM scans WHERE status='starting' AND created_at>?)<3`,
+ AND (SELECT count(*) FROM scans WHERE status='starting' AND created_at>?)<3 ON CONFLICT(owner,fingerprint) DO NOTHING`,
       ).bind(
         menuId,
         owner,
@@ -336,7 +336,7 @@ async function route(req: Request, env: Env, owner: string): Promise<Response> {
  AND (SELECT count(*) FROM usage WHERE kind='image' AND created_at>?)<?
  AND (SELECT count(*) FROM usage WHERE kind='image' AND owner=? AND created_at>?)<?
  AND (SELECT count(*) FROM images WHERE status='starting' AND created_at>?)<12
- ON CONFLICT(menu_id,dish_id) DO UPDATE SET provider=excluded.provider,task_id=excluded.task_id,status='starting',error='',attempts=attempts+1,created_at=excluded.created_at,checked_at=0,lease_until=0
+ ON CONFLICT(menu_id,dish_id) DO UPDATE SET provider=excluded.provider,task_id=excluded.task_id,status='starting',error='',attempts=images.attempts+1,created_at=excluded.created_at,checked_at=0,lease_until=0
  WHERE images.status='failed' AND images.attempts<2`,
       ).bind(
         menuId,
@@ -525,7 +525,7 @@ export default {
       );
     return response;
   },
-  async scheduled(_event: ScheduledEvent, env: Env) {
+  async scheduled(_event: unknown, env: Env) {
     const expired = await env.DB.prepare(
       "SELECT * FROM images WHERE menu_id IN (SELECT id FROM scans WHERE created_at<?)",
     )

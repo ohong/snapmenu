@@ -1,4 +1,4 @@
-"""Real browser and workerd/D1/R2; only external model HTTP is simulated."""
+"""Real browser and Node/Neon/Blob; only external model HTTP is simulated."""
 
 import base64
 import io
@@ -104,6 +104,7 @@ def test_scan_translation_pagination_categories_reload(phone, server):
     phone.get_by_role("combobox", name="Menu category").click()
     phone.get_by_role("option", name="Desserts", exact=True).click()
     expect(phone.locator(".dish-card")).to_have_count(2)
+    phone.wait_for_load_state("networkidle")
     phone.reload()
     phone.get_by_role("button", name="Back to your last menu").click()
     expect(phone.locator(".dish-card").first).to_contain_text("Ensalada fresca")
@@ -119,6 +120,7 @@ def test_images_appear_and_reload_does_not_resubmit(phone, server):
     )
     if server.provider == "muse":
         phone.screenshot(path=ROOT / "docs/screenshots/mobile-menu.png")
+    phone.wait_for_load_state("networkidle")
     phone.reload()
     phone.get_by_role("button", name="Back to your last menu").click()
     expect(phone.locator(".dish-visual img")).to_have_count(4)

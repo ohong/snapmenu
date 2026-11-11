@@ -6,7 +6,7 @@ import {
   type Dish,
   type Env,
   type Provider,
-} from "./models";
+} from "./models.js";
 export function key(env: Env, p: Provider) {
   return p === "muse" ? env.MODEL_API_KEY : env.OPENAI_API_KEY;
 }
@@ -37,7 +37,7 @@ export async function request(
     );
   let response: Response;
   try {
-    response = await fetch(
+    response = await (env.request ?? fetch)(
       (p === "muse" ? "https://api.meta.ai/v1" : "https://api.openai.com/v1") +
         path,
       {
